@@ -9,17 +9,16 @@ public partial class Puppet3DBone: Puppet3DControl
 {
     private static QuadMesh SharedMesh = null;
     private MeshInstance3D Mesh;
-    private MeshInstance3D BackMesh;
 
     private PuppetSpriteData CurrentSprite;
 
     [ExportGroup("Storage")]
     [Export]
-    private int FrontOrder;
-    [Export]
-    private int BackOrder;
+    private int Order;
     [Export]
     private Puppet2DBone.SortOrderEnum SortOrder;
+    [Export]
+    private float RotationOffset;
 
     [ExportGroup("Sprite Info")]
     [Export]
@@ -117,31 +116,30 @@ public partial class Puppet3DBone: Puppet3DControl
         NotifyPropertyListChanged();
     }
 
-    public override void UpdateLook()
+    public void UpdateLook()
     {
         if(Mesh == null)
             return;
         
+        Mesh.Scale = (((Vector2)CurrentSprite.SpriteRegion.Size)/Puppet.TileSize).ToVec3scale();
+            
         if(CurrentSprite != null)
         {
-            var flip = new Vector2(_FlipH?-1:1, _FlipV?-1:1);
-            Mesh.Scale = (((Vector2)CurrentSprite.SpriteRegion.Size)/Puppet.TileSize * flip).ToVec3scale();
-            if(BackMesh != null)
-                BackMesh.Scale = (((Vector2)CurrentSprite.SpriteRegion.Size)/Puppet.TileSize * flip).ToVec3scale();
+            var bflip = new Vector2(CurrentSprite.SpriteData.FlipH?1:0, CurrentSprite.SpriteData.FlipV?1:0);
+            Mesh.SetInstanceShaderParameter("flip", bflip);
             
             var region = ((Rect2)CurrentSprite.SpriteRegion).Scale(Puppet.TextureSize.Inverse()).ToVec4();
             Mesh.SetInstanceShaderParameter("region", region);
-            BackMesh?.SetInstanceShaderParameter("region", region);
 
-            var offset = (CurrentSprite.SpriteData.GetCustomData("Offset").AsVector2() / Puppet.TileSize * flip).ToVec3pos() / Mesh.Scale;
+            var offset = (CurrentSprite.SpriteData.GetCustomData("Offset").AsVector2() / Puppet.TileSize).ToVec3pos() / Mesh.Scale;
             Mesh.SetInstanceShaderParameter("offset", offset);
-            BackMesh?.SetInstanceShaderParameter("offset", offset);
         }
         else
         {
             Mesh.SetInstanceShaderParameter("region", new Vector4(0, 0, 0, 0));
-            BackMesh?.SetInstanceShaderParameter("region", new Vector4(0, 0, 0, 0));
         }
+
+        Mesh.Rotation = new Vector3(0, 0, -RotationOffset);
     }
 
     public override void _EnterTree()
@@ -161,12 +159,7 @@ public partial class Puppet3DBone: Puppet3DControl
         }
 
         Mesh ??= GetMesh("Mesh");
-        Mesh.Position = new(0, 0, FrontOrder*Puppet.ZScale);
-        if(SortOrder == Puppet2DBone.SortOrderEnum.BOTH)
-        {
-            BackMesh ??= GetMesh("BackMesh");
-            BackMesh.Position = new(0, 0, BackOrder*Puppet.ZScale);
-        }
+        Mesh.Position = new(0, 0, Order*Puppet.ZScale);
 
         if(SpriteGroup != "")
             SetSprite(SpriteGroup, SpriteName);
@@ -205,33 +198,18 @@ public partial class Puppet3DBone: Puppet3DControl
         SortOrder = bone.SortOrder;
 
         Mesh ??= GetMesh("Mesh");
-        if(SortOrder == Puppet2DBone.SortOrderEnum.BOTH)
-            BackMesh ??= GetMesh("BackMesh");
 
-        _FlipH = bone.FlipH;
-        _FlipV = bone.FlipV;
         Position = (bone.Position / Puppet.TileSize).ToVec3pos();
         Rotation = new Vector3(0, 0, -bone.Rotation);
         var (group, name) = bone.GetSprite();
         SetSprite(group, name);
-
-        Mesh.Rotation = new Vector3(0, 0, -bone.RotationOffset);
-        if(BackMesh != null)
-            BackMesh.Rotation = new Vector3(0, 0, -bone.RotationOffset);
+        RotationOffset = bone.RotationOffset;
     }
 
-    public void SetOrder(int order, bool front)
+    public void SetOrder(int order)
     {
-        if(front || BackMesh == null)
-        {
-            Mesh.Position = new(0, 0, order*Puppet.ZScale);
-            FrontOrder = order;
-        }
-        else
-        {
-            BackMesh.Position = new(0, 0, order*Puppet.ZScale);
-            BackOrder = order;
-        }
+        Mesh.Position = new(0, 0, order*Puppet.ZScale);
+        Order = order;
     }
 
     public void SetSprite(StringName group, StringName name)

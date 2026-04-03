@@ -108,10 +108,6 @@ public partial class Puppet3D: Node3D
                         case Puppet2DBone.SortOrderEnum.BACK:
                             BackwardOrder.Add(bone3d);
                             break;
-                        case Puppet2DBone.SortOrderEnum.BOTH:
-                            ForwardOrder.Add(bone3d);
-                            BackwardOrder.Add(bone3d);
-                            break;
                     }
 
                     newNode = bone3d;
@@ -122,7 +118,8 @@ public partial class Puppet3D: Node3D
                     newNode = control3D;
                     break;
                 case PuppetBoneModifier modifier:
-                    newNode = modifier.Make3DDuplicate();
+                    Vector2 sizeDown = new(1f/TileSize.X, 1f/TileSize.Y);
+                    newNode = modifier.Make3DDuplicate(sizeDown);
                     break;
                 default:
                     return;
@@ -143,11 +140,11 @@ public partial class Puppet3D: Node3D
 
         int order = 0;
         foreach(var bone in ForwardOrder)
-            bone.SetOrder(order++, true);
+            bone.SetOrder(order++);
         BackwardOrder.Reverse();
         order = -1;
         foreach(var bone in BackwardOrder)
-            bone.SetOrder(order--, false);
+            bone.SetOrder(order--);
     }
 
 }

@@ -36,11 +36,4 @@ public partial class PointAtModifier: PuppetBoneModifier
         trans = new(diff.Angle() + Offset, trans.Scale, trans.Skew, trans.Origin);
         Receiver.SetRootTransform(trans);
     }
-
-    public override PuppetBoneModifier Make3DDuplicate()
-    {
-        return Duplicate() as PointAtModifier;
-    }
-
-
 }

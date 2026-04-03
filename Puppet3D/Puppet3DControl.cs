@@ -10,36 +10,6 @@ public partial class Puppet3DControl: Node3D, PuppetTransform
     [Export]
     public Puppet3D Puppet;
 
-    [Export]
-    public bool FlipH
-    {
-        get => _FlipH;
-        set
-        {
-            if(_FlipH != value)
-            {
-                _FlipH = value;
-                UpdateLook();
-            }
-        }
-    }
-    protected bool _FlipH;
-
-    [Export]
-    public bool FlipV
-    {
-        get => _FlipV;
-        set
-        {
-            if(_FlipV != value)
-            {
-                _FlipV = value;
-                UpdateLook();
-            }
-        }
-    }
-    protected bool _FlipV;
-
     public virtual void Initialize(Puppet3D puppet, Puppet2DControl control)
     {
         Puppet = puppet;
@@ -59,9 +29,4 @@ public partial class Puppet3DControl: Node3D, PuppetTransform
 
     public Transform2D GetLocalTransform() => Transform.To2D();
     public void SetLocalTransform(Transform2D trans) => Transform = trans.To3D();
-
-    public virtual void UpdateLook()
-    {
-        Scale = new Vector3(FlipH?-1:1, FlipV?-1:1, 1);
-    }
 }

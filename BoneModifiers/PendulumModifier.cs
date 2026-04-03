@@ -14,10 +14,10 @@ public partial class PendulumModifier: ImpulseModifier
         Receiver.SetLocalTransform(trans);
     }
 
-    public override PuppetBoneModifier Make3DDuplicate()
+    public override PuppetBoneModifier Make3DDuplicate(Vector2 resize)
     {
         var duplicate = Duplicate() as PendulumModifier;
-        duplicate.Sensitivity /= To3DScale;
+        duplicate.Sensitivity /= Mathf.Min(resize.X, resize.Y);
         return duplicate;
     }
 }

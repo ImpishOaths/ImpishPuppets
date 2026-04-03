@@ -25,36 +25,6 @@ public partial class Puppet2DControl: Node2D, PuppetTransform
     [Export]
     public Puppet2D Puppet;
 
-    [Export]
-    public bool FlipH
-    {
-        get => _FlipH;
-        set
-        {
-            if(_FlipH != value)
-            {
-                _FlipH = value;
-                UpdateLook();
-            }
-        }
-    }
-    protected bool _FlipH;
-
-    [Export]
-    public bool FlipV
-    {
-        get => _FlipV;
-        set
-        {
-            if(_FlipV != value)
-            {
-                _FlipV = value;
-                UpdateLook();
-            }
-        }
-    }
-    protected bool _FlipV;
-
     public bool HasRoot() => Puppet != null && Puppet.InverseTransform != null;
     public Transform2D GetRootTransform() => Puppet.InverseTransform.Value * GlobalTransform;
     public void SetRootTransform(Transform2D transform) => GlobalTransform = Puppet.GlobalTransform * transform;
@@ -64,15 +34,6 @@ public partial class Puppet2DControl: Node2D, PuppetTransform
 
     public Transform2D GetLocalTransform() => Transform;    
     public void SetLocalTransform(Transform2D transform) => Transform = transform;
-
-
-    public virtual void UpdateLook()
-    {
-        if(Puppet == null)
-            return;
-        
-        Scale = new Vector2(FlipH?-1:1, FlipV?-1:1);
-    }
 
     [ExportToolButton("Add Bone")]
     public Callable AddBoneCallable => Callable.From(AddBone);

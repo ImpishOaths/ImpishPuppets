@@ -7,8 +7,6 @@ namespace ImpishPuppets;
 [GlobalClass]
 public abstract partial class PuppetBoneModifier: Node
 {
-    public const float To3DScale = 0.05f;
-
     protected PuppetTransform Receiver = null;
 
     public override string[] _GetConfigurationWarnings()
@@ -31,5 +29,8 @@ public abstract partial class PuppetBoneModifier: Node
 
     public abstract void Apply(float delta);
 
-    public abstract PuppetBoneModifier Make3DDuplicate();
+    public virtual PuppetBoneModifier Make3DDuplicate(Vector2 resize)
+    {
+        return Duplicate() as PuppetBoneModifier;
+    }
 }

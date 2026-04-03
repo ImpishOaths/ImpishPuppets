@@ -73,10 +73,10 @@ public partial class IKModifier: PuppetBoneModifier
         Receiver.SetRootTransform(trans);
     }
 
-    public override PuppetBoneModifier Make3DDuplicate()
+    public override PuppetBoneModifier Make3DDuplicate(Vector2 resize)
     {
         var duplicate = Duplicate() as IKModifier;
-        duplicate.Length *= To3DScale;
+        duplicate.Length *= Mathf.Min(resize.X,resize.Y);
         return duplicate;
     }
 

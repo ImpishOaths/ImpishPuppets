@@ -19,6 +19,8 @@ public partial class IKTipModifier: IKModifier
     }
     private NodePath _TargetPath = null;
     private PuppetTransform Target = null;
+    [Export]
+    public bool debug;
 
     private int GetNudgeSign()
     {

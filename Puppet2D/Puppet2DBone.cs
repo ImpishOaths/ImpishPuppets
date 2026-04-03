@@ -9,7 +9,6 @@ namespace ImpishPuppets;
 public partial class Puppet2DBone: Puppet2DControl
 {
     private PuppetSpriteData CurrentSprite = null;
-    
     private Sprite2D Sprite;
 
     [Export]
@@ -34,8 +33,7 @@ public partial class Puppet2DBone: Puppet2DControl
     public enum SortOrderEnum
     {
         FRONT,
-        BACK,
-        BOTH
+        BACK
     }
 
     [Export]
@@ -257,7 +255,7 @@ public partial class Puppet2DBone: Puppet2DControl
         Puppet = editor;
     }
 
-    public override void UpdateLook()
+    public void UpdateLook()
     {
         if(Sprite == null)
             return;
@@ -276,7 +274,6 @@ public partial class Puppet2DBone: Puppet2DControl
             Sprite.Offset = Vector2.Zero;
             Sprite.RegionRect = new Rect2(0,0,0,0);
         }
-        Sprite.Scale = new Vector2(FlipH?-1:1, FlipV?-1:1);
         Sprite.Rotation = _RotationOffset;
     }
 
