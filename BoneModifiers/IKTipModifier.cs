@@ -8,29 +8,30 @@ namespace ImpishPuppets;
 public partial class IKTipModifier: IKModifier
 {
     [Export(PropertyHint.NodePathValidTypes, "Puppet2DBone,Puppet2DControl,Puppet3DBone,Puppet3DControl")]
-    private NodePath TargetPath;
-    public PuppetTransform Target;
-
-    public override void Initialize()
+    public NodePath TargetPath
     {
-        base.Initialize();
-        Target = GetPuppetTransform(TargetPath);
+        get => _TargetPath;
+        set
+        {
+            _TargetPath = value;
+            Target = null;
+        }
     }
-    
+    private NodePath _TargetPath = null;
+    private PuppetTransform Target = null;
+
     private int GetNudgeSign()
     {
-        Vector2 targetPos = Target.GetRootScale();
-        return Mathf.Sign(targetPos.X*targetPos.Y);
+        Vector2 targetScale = Target.GetRootTransform().Scale;
+        return Mathf.Sign(targetScale.X*targetScale.Y);
     }
 
     public override void Apply(float delta)
     {
-        if(Target == null || !Target.HasRoot())
+        Target ??= GetNodeOrNull<PuppetTransform>(TargetPath);
+        if(Target == null || ! Target.HasRoot())
             return;
 
-        Vector2 rootPos = GetChainRootPos();
-
         ForwardPass(Target, GetNudgeSign());
-        BackwardPass(rootPos);
     }
 }

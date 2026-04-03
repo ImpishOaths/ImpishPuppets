@@ -13,8 +13,13 @@ public partial class Puppet3DBone: Puppet3DControl
 
     private PuppetSpriteData CurrentSprite;
 
+    [ExportGroup("Storage")]
     [Export]
-    private int Order;
+    private int FrontOrder;
+    [Export]
+    private int BackOrder;
+    [Export]
+    private Puppet2DBone.SortOrderEnum SortOrder;
 
     [ExportGroup("Sprite Info")]
     [Export]
@@ -44,7 +49,7 @@ public partial class Puppet3DBone: Puppet3DControl
             if(Mesh == null || Puppet == null)
                 return;
             if(check)
-                SetSprite(Puppet.GetSpriteReference(_SpriteGroup, _SpriteName));
+                SetSprite(_SpriteGroup, _SpriteName);
         }
     }
     private StringName _SpriteName;
@@ -139,41 +144,51 @@ public partial class Puppet3DBone: Puppet3DControl
         }
     }
 
-    private void GetMesh()
+    public override void _EnterTree()
     {
-        if(Mesh == null)
+        if(Puppet == null)
         {
-            Mesh = GetNodeOrNull<MeshInstance3D>("Mesh");
-            if(Mesh == null)
+            Node current = GetParent();
+            while(current != null)
             {
-                SharedMesh ??= GD.Load<QuadMesh>("res://addons/ImpishPuppets/Quad.tres");
-                Mesh = new MeshInstance3D
+                if(current is Puppet3D puppet)
                 {
-                    Name = "Mesh",
-                    Mesh = SharedMesh,
-                    MaterialOverride = Puppet.DefaultMaterial,
-                };
-                AddChild(Mesh, true, InternalMode.Front);
+                    Puppet = puppet;
+                    break;
+                }
+                current = current.GetParent();
             }
         }
+
+        Mesh ??= GetMesh("Mesh");
+        Mesh.Position = new(0, 0, FrontOrder*Puppet.ZScale);
+        if(SortOrder == Puppet2DBone.SortOrderEnum.BOTH)
+        {
+            BackMesh ??= GetMesh("BackMesh");
+            BackMesh.Position = new(0, 0, BackOrder*Puppet.ZScale);
+        }
+
+        if(SpriteGroup != "")
+            SetSprite(SpriteGroup, SpriteName);
+        else
+            SetSprite(null);
     }
-    private void GetBackMesh()
+
+    MeshInstance3D GetMesh(string name)
     {
-        if(BackMesh == null)
+        var mesh = GetNodeOrNull<MeshInstance3D>(name);
+        if(mesh == null)
         {
-            BackMesh = GetNodeOrNull<MeshInstance3D>("BackMesh");
-            if(BackMesh == null)
+            SharedMesh ??= GD.Load<QuadMesh>("res://addons/ImpishPuppets/Quad.tres");
+            mesh = new MeshInstance3D
             {
-                SharedMesh ??= GD.Load<QuadMesh>("res://addons/ImpishPuppets/Quad.tres");
-                BackMesh = new MeshInstance3D
-                {
-                    Name = "BackMesh",
-                    Mesh = SharedMesh,
-                    MaterialOverride = Puppet.DefaultMaterial,
-                };
-                AddChild(BackMesh, true, InternalMode.Front);
-            }
+                Name = name,
+                Mesh = SharedMesh,
+                MaterialOverride = Puppet.DefaultMaterial,
+            };
+            AddChild(mesh, true, InternalMode.Front);
         }
+        return mesh;
     }
 
     public override void Initialize(Puppet3D puppet, Puppet2DControl bone)
@@ -187,18 +202,19 @@ public partial class Puppet3DBone: Puppet3DControl
     {
         Puppet = puppet;
         
-        if(Mesh == null)
-            GetMesh();
-        
-        if(bone.SortOrder == Puppet2DBone.SortOrderEnum.BOTH)
-            GetBackMesh();
+        SortOrder = bone.SortOrder;
+
+        Mesh ??= GetMesh("Mesh");
+        if(SortOrder == Puppet2DBone.SortOrderEnum.BOTH)
+            BackMesh ??= GetMesh("BackMesh");
 
         _FlipH = bone.FlipH;
         _FlipV = bone.FlipV;
         Position = (bone.Position / Puppet.TileSize).ToVec3pos();
         Rotation = new Vector3(0, 0, -bone.Rotation);
         var (group, name) = bone.GetSprite();
-        SetSprite(Puppet.GetSpriteReference(group, name));
+        SetSprite(group, name);
+
         Mesh.Rotation = new Vector3(0, 0, -bone.RotationOffset);
         if(BackMesh != null)
             BackMesh.Rotation = new Vector3(0, 0, -bone.RotationOffset);
@@ -209,10 +225,20 @@ public partial class Puppet3DBone: Puppet3DControl
         if(front || BackMesh == null)
         {
             Mesh.Position = new(0, 0, order*Puppet.ZScale);
+            FrontOrder = order;
         }
         else
         {
             BackMesh.Position = new(0, 0, order*Puppet.ZScale);
+            BackOrder = order;
         }
+    }
+
+    public void SetSprite(StringName group, StringName name)
+    {
+        if(Puppet != null)
+            SetSprite(Puppet.GetSpriteReference(group, name));
+        else
+            SetSprite(null);
     }
 }

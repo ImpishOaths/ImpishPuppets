@@ -79,11 +79,12 @@ public partial class Puppet2DBone: Puppet2DControl
             if(Sprite == null || Puppet == null)
                 return;
             if(check)
-                SetSprite(Puppet.GetSpriteReference(_SpriteGroup, _SpriteName));
+                SetSprite(_SpriteGroup, _SpriteName);
             CallDeferred("TrySelect");
         }
     }
     private StringName _SpriteName;
+
     private bool Saving;
 
     private void TrySelect()
@@ -181,25 +182,27 @@ public partial class Puppet2DBone: Puppet2DControl
         }
     }
 
-    public void FindEditorParent()
+    public override void _EnterTree()
+    {
+        Initialize();
+    }
+
+    public void Initialize()
     {
         if(Puppet == null)
         {
             Node current = GetParent();
             while(current != null)
             {
-                if(current is Puppet2D editor)
+                if(current is Puppet2D puppet)
                 {
-                    Puppet = editor;
+                    Puppet = puppet;
                     break;
                 }
                 current = current.GetParent();
             }
         }
-    }
 
-    public void FindSprite()
-    {
         if(Sprite == null)
         {
             Sprite = GetNodeOrNull<Sprite2D>("Sprite");
@@ -209,30 +212,14 @@ public partial class Puppet2DBone: Puppet2DControl
                 {
                     Name = "Sprite",
                     UseParentMaterial = true,
-                    Texture = Puppet.PuppetImageTexture
+                    Texture = Puppet.PuppetImageTexture,
+                    RegionFilterClipEnabled = true,
+                    RegionEnabled = true,
                 };
                 AddChild(Sprite, true, InternalMode.Front);
             }
         }
-    }
 
-    public override void _EnterTree()
-    {
-        Initialize();
-    }
-
-    public void Initialize()
-    {
-        FindEditorParent();
-        FindSprite();
-        ReselectSprite();
-    }
-
-    private void ReselectSprite()
-    {
-        if(Puppet == null)
-            return;
-        
         if(SpriteGroup != "")
             SetSprite(SpriteGroup, SpriteName);
         else
@@ -241,15 +228,12 @@ public partial class Puppet2DBone: Puppet2DControl
 
     private void SetGroup(StringName group)
     {
-        if(Puppet == null)
-            return;
-        
         SetSprite(Puppet.GetFirstSprite(group));
     }
 
     public void SetSprite(PuppetSpriteData sprite)
     {
-        if(Puppet == null || Saving)
+        if(Saving)
             return;
 
         CurrentSprite = sprite;
@@ -268,13 +252,6 @@ public partial class Puppet2DBone: Puppet2DControl
         NotifyPropertyListChanged();
     }
 
-    public override void _Ready()
-    {
-        AddToGroup("EditorBone", true);
-        Sprite.RegionFilterClipEnabled = true;
-        Sprite.RegionEnabled = true;
-    }
-
     private void SetEditor(Puppet2D editor)
     {
         Puppet = editor;
@@ -287,18 +264,19 @@ public partial class Puppet2DBone: Puppet2DControl
         
         if(CurrentSprite != null)
         {
-            Sprite.FlipH = CurrentSprite.SpriteData.FlipH ^ FlipH;
-            Sprite.FlipV = CurrentSprite.SpriteData.FlipV ^ FlipV;
-            Sprite.Offset = CurrentSprite.SpriteData.GetCustomData("Offset").AsVector2() * new Vector2(Sprite.FlipH?-1:1, Sprite.FlipV?-1:1);
+            Sprite.FlipH = CurrentSprite.SpriteData.FlipH;
+            Sprite.FlipV = CurrentSprite.SpriteData.FlipV;
+            Sprite.Offset = CurrentSprite.SpriteData.GetCustomData("Offset").AsVector2();
             Sprite.RegionRect = CurrentSprite.SpriteRegion;
         }
         else
         {
-            Sprite.FlipH = FlipH;
-            Sprite.FlipV = FlipV;
+            Sprite.FlipH = false;
+            Sprite.FlipV = false;
             Sprite.Offset = Vector2.Zero;
             Sprite.RegionRect = new Rect2(0,0,0,0);
         }
+        Sprite.Scale = new Vector2(FlipH?-1:1, FlipV?-1:1);
         Sprite.Rotation = _RotationOffset;
     }
 
@@ -313,15 +291,5 @@ public partial class Puppet2DBone: Puppet2DControl
             SetSprite(Puppet.GetSpriteReference(group, name));
         else
             SetSprite(null);
-    }
-
-    public override void SetLocalPosition(Vector2 pos)
-    {
-        Sprite.Position = pos;
-    }
-
-    public override void SetLocalRotation(float angle)
-    {
-        Sprite.Rotation = angle;
     }
 }

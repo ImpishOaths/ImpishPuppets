@@ -21,7 +21,7 @@ public abstract partial class ImpulseModifier: PuppetBoneModifier
     private float Value = 0;
     private float Velocity = 0;
 
-    protected void CalculateSpring(Vector2 pos, float rootAngle, float delta)
+    private void SimulateImpulse(Vector2 pos, float rootAngle, float delta)
     {
         if(PreviousPosition == null)
             PreviousPosition = pos;
@@ -41,14 +41,12 @@ public abstract partial class ImpulseModifier: PuppetBoneModifier
         PreviousPosition = pos;
     }
 
-    public override void Initialize() {}
     public override void Apply(float delta)
     {
         var parentTrans = Receiver.GetOriginTransform();
-        CalculateSpring(parentTrans.Origin, parentTrans.Rotation, delta);
+        SimulateImpulse(parentTrans.Origin, parentTrans.Rotation, delta);
         ApplyImpulse(Value);
     }
 
     public abstract void ApplyImpulse(float value);
-
 }

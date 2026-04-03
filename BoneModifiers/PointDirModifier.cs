@@ -12,9 +12,13 @@ public partial class PointDirModifier: PuppetBoneModifier
     
     public override void Apply(float delta)
     {
-        Receiver.SetRootRotation(dir.Angle());
+        var trans = Receiver.GetRootTransform();
+        trans = new(dir.Angle(), trans.Scale, trans.Skew, trans.Origin);
+        Receiver.SetRootTransform(trans);
     }
 
-    public override void Initialize() {}
-
+    public override PuppetBoneModifier Make3DDuplicate()
+    {
+        return Duplicate() as PointDirModifier;
+    }
 }

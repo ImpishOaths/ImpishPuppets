@@ -7,6 +7,8 @@ namespace ImpishPuppets;
 [GlobalClass]
 public abstract partial class PuppetBoneModifier: Node
 {
+    public const float To3DScale = 0.05f;
+
     protected PuppetTransform Receiver = null;
 
     public override string[] _GetConfigurationWarnings()
@@ -14,38 +16,20 @@ public abstract partial class PuppetBoneModifier: Node
         var parent = GetParent();
         if(parent is PuppetTransform)
             return [];
-        return ["PuppetBonePhysics node must be child of PuppetTransform node"];
+        return ["PuppetBoneModifier node must be child of PuppetTransform node"];
     }
 
-    public PuppetTransform GetPuppetTransform(NodePath path)
-    {
-        var trans = GetNodeOrNull(path);
-        if(trans == null)
-            return null;
-        if(trans is PuppetTransform transform)
-            return transform;
-        return null;
-    }
-
-    public abstract void Initialize();
-    public override void _Ready()
-    {
-        var parent = GetParent();
-        if(parent is PuppetTransform trans)
-        {
-            Receiver = trans;
-            Initialize();
-        }
-        else
-            GD.PrintErr("PuppetBonePhysics node must be child of PuppetTransform node");
-    }
-
-    public abstract void Apply(float delta);
     public override void _PhysicsProcess(double delta)
     {
-        if(Receiver == null || !Receiver.HasRoot())
+        Receiver ??= GetParent<PuppetTransform>();
+
+        if(Receiver == null || ! Receiver.HasRoot())
             return;
         
         Apply((float)delta);
     }
+
+    public abstract void Apply(float delta);
+
+    public abstract PuppetBoneModifier Make3DDuplicate();
 }

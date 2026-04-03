@@ -13,60 +13,27 @@ public partial class Puppet3D: Node3D
     [Export]
     public Material DefaultMaterial;
     [Export]
-    public float ZScale = 0.01f;
+    public float ZScale = 0.001f;
 
     private Texture2D PuppetTexture;
     private TileSet SpriteSheet;
     public Vector2 TextureSize {get; private set;}
     public Vector2 TileSize {get; private set;}
-    private TileSetAtlasSource SpriteAtlas;
     private Dictionary<StringName, Dictionary<StringName, PuppetSpriteData>> SpriteDict = null;
+    
+    public Transform3D? InverseTransform {get; private set;} = null;
+    public override void _PhysicsProcess(double delta)
+    {
+        InverseTransform = Transform.AffineInverse();
+    }
 
     public override void _EnterTree()
     {
-        if(Puppet2D != null)
-        {
-            var puppet = Puppet2D.Instantiate<Puppet2D>();
-            LoadPuppetSprites(puppet);
-        }
-    }
-
-    private void AddSprite(PuppetSpriteData reference)
-    {
-        if(! SpriteDict.TryGetValue(reference.SpriteGroup, out var names))
-        {
-            names = [];
-            SpriteDict[reference.SpriteGroup] = names;
-        }
-        names[reference.SpriteName] = reference;
-    }
-
-    private void InitializeSprites()
-    {
-        SpriteDict ??= [];
-        SpriteDict.Clear();
-
-        if(SpriteSheet == null || PuppetTexture == null)
+        if(Puppet2D == null)
             return;
-
-        SpriteAtlas = (TileSetAtlasSource)SpriteSheet.GetSource(0);
-        for(int i = 0; i < SpriteAtlas.GetTilesCount(); ++i)
-        {
-            Vector2I pos = SpriteAtlas.GetTileId(i);
-            for(int j = 0; j < SpriteAtlas.GetAlternativeTilesCount(pos); ++j)
-            {
-                var altId = SpriteAtlas.GetAlternativeTileId(pos, j);
-                var spriteData = SpriteAtlas.GetTileData(pos, altId);
-                PuppetSpriteData sprite = new()
-                {
-                    SpriteGroup = (StringName)spriteData.GetCustomData("Group"),
-                    SpriteName = (StringName)spriteData.GetCustomData("Name"),
-                    SpriteRegion = SpriteAtlas.GetTileTextureRegion(pos),
-                    SpriteData = spriteData
-                };
-                AddSprite(sprite);
-            }
-        }
+        
+        var puppet = Puppet2D.Instantiate<Puppet2D>();
+        LoadPuppetSprites(puppet);
     }
 
     public Array<StringName> GetSpriteGroups() => [..SpriteDict.Keys];
@@ -104,66 +71,7 @@ public partial class Puppet3D: Node3D
         SpriteSheet = puppet.SpriteSheet;
         TextureSize = PuppetTexture.GetSize();
         TileSize = SpriteSheet.TileSize;
-
-        InitializeSprites();
-    }
-
-    private void BuildPuppet(Puppet2D puppet)
-    {
-        Node storage = new();
-        AddChild(storage);
-        foreach(var child in GetChildren())
-            if(child != storage)
-                child.Reparent(storage);
-        storage.QueueFree();
-        
-        System.Collections.Generic.List<Puppet3DBone> ForwardOrder = [];
-        System.Collections.Generic.List<Puppet3DBone> BackwardOrder = [];
-
-        void makeComponent(Node parent, Node node)
-        {
-            Node newNode;
-            switch(node)
-            {
-                case Puppet2DBone bone:
-                    var bone3d = new Puppet3DBone();
-                    bone3d.Initialize(this, bone);
-
-                    switch(bone.SortOrder)
-                    {
-                        case Puppet2DBone.SortOrderEnum.FRONT:
-                            ForwardOrder.Add(bone3d);
-                            break;
-                        case Puppet2DBone.SortOrderEnum.BACK:
-                            BackwardOrder.Add(bone3d);
-                            break;
-                        case Puppet2DBone.SortOrderEnum.BOTH:
-                            ForwardOrder.Add(bone3d);
-                            BackwardOrder.Add(bone3d);
-                            break;
-                    }
-
-                    newNode = bone3d;
-                    break;
-                case Puppet2DControl control:
-                    var control3D = new Puppet3DControl();
-                    control3D.Initialize(this, control);
-                    newNode = control3D;
-                    break;
-                case PuppetBoneModifier modifier:
-                    newNode = modifier.Duplicate();
-                    break;
-                default:
-                    return;
-            }
-
-            newNode.Name = node.Name;
-            parent.AddChild(newNode, true);
-            newNode.Owner = Owner ?? this;
-
-            foreach(var child in node.GetChildren())
-                makeComponent(newNode, child);
-        }
+        SpriteDict = SpriteSheet.MakeSpriteDict();
     }
 
     [ExportToolButton("Reload Puppet")]
@@ -172,7 +80,13 @@ public partial class Puppet3D: Node3D
     {
         var puppet = Puppet2D.Instantiate<Puppet2D>();
         LoadPuppetSprites(puppet);
-
+        
+        Node storage = new();
+        AddChild(storage);
+        foreach(var child in GetChildren())
+            if(child != storage)
+                child.Reparent(storage);
+        storage.QueueFree();
 
         System.Collections.Generic.List<Puppet3DBone> ForwardOrder = [];
         System.Collections.Generic.List<Puppet3DBone> BackwardOrder = [];
@@ -208,7 +122,7 @@ public partial class Puppet3D: Node3D
                     newNode = control3D;
                     break;
                 case PuppetBoneModifier modifier:
-                    newNode = modifier.Duplicate();
+                    newNode = modifier.Make3DDuplicate();
                     break;
                 default:
                     return;

@@ -6,35 +6,16 @@ namespace ImpishPuppets;
 public interface PuppetTransform
 {
     public bool HasRoot();
-
+    public NodePath GetPath();
+    
     public Transform2D GetRootTransform();
+    public void SetRootTransform(Transform2D transform);
+
     public Transform2D GetOriginTransform();
-    //public Transform2D GetLocalTransform();
+    public void SetOriginTransform(Transform2D transform);
 
-    public Vector2 GetRootPosition();
-    public float GetRootRotation();
-    public Vector2 GetRootScale();
-
-    public void SetRootPosition(Vector2 pos);
-    //public void SetOriginPosition(Vector2 pos);
-    public void SetLocalPosition(Vector2 pos);
-
-    public void SetRootRotation(float angle);
-    //public void SetOriginRotation(Vector2 pos);
-    public void SetLocalRotation(float angle);
-
-    //public void SetRootScale(Vector2 scale);
-    //public void SetOriginScale(Vector2 scale);
-    public void SetLocalScale(Vector2 scale);
-
-    public void SetRootTransform(Transform2D trans);
-    public void SetOriginTransform(Transform2D trans);
-    //public void SetLocalTransform(Transform2D trans);
-
-    public void SetFlipH(bool flip);
-    public bool GetFlipH();
-    public void SetFlipV(bool flip);
-    public bool GetFlipV();
+    public Transform2D GetLocalTransform();
+    public void SetLocalTransform(Transform2D transform);
 }
 
 [Tool]
@@ -58,8 +39,6 @@ public partial class Puppet2DControl: Node2D, PuppetTransform
         }
     }
     protected bool _FlipH;
-    public void SetFlipH(bool flip) => FlipH = flip;
-    public bool GetFlipH() => FlipH;
 
     [Export]
     public bool FlipV
@@ -75,67 +54,24 @@ public partial class Puppet2DControl: Node2D, PuppetTransform
         }
     }
     protected bool _FlipV;
-    public void SetFlipV(bool flip) => FlipV = flip;
-    public bool GetFlipV() => FlipV;
 
-    public bool HasRoot() => Puppet != null;
-    public Transform2D GetRootTransform()
-    {
-        return  Puppet.GlobalTransform.AffineInverse() * GlobalTransform;
-    }
-    public Transform2D GetOriginTransform()
-    {
-        return GlobalTransform;
-    }
-    public Transform2D GetLocalTransform()
-    {
-        return Transform;
-    }
+    public bool HasRoot() => Puppet != null && Puppet.InverseTransform != null;
+    public Transform2D GetRootTransform() => Puppet.InverseTransform.Value * GlobalTransform;
+    public void SetRootTransform(Transform2D transform) => GlobalTransform = Puppet.GlobalTransform * transform;
 
-    public Vector2 GetRootPosition()
-    {
-        return Puppet.GlobalTransform.AffineInverse() * GlobalPosition;
-    }
-    public float GetRootRotation()
-    {
-        float scaleSign = Mathf.Sign(Puppet.GlobalTransform.Scale.X * Puppet.GlobalTransform.Scale.Y);
-        return (GlobalRotation - Puppet.GlobalRotation) * scaleSign;
-    }
-    public Vector2 GetRootScale()
-    {
-        return GlobalScale / Puppet.GlobalScale;
-    }
+    public Transform2D GetOriginTransform() => GlobalTransform;
+    public void SetOriginTransform(Transform2D transform) => GlobalTransform = transform;
 
-    public void SetRootTransform(Transform2D trans)
-    {
-        GlobalTransform = Puppet.GlobalTransform * trans;
-    }
-    public void SetOriginTransform(Transform2D trans)
-    {
-        GlobalTransform = trans;
-    }
+    public Transform2D GetLocalTransform() => Transform;    
+    public void SetLocalTransform(Transform2D transform) => Transform = transform;
 
-    public void SetRootPosition(Vector2 pos)
-    {
-        GlobalPosition = Puppet.GlobalTransform * pos;
-    }
-    public virtual void SetLocalPosition(Vector2 pos)
-    {
-        Position = pos;
-    }
 
-    public void SetRootRotation(float angle)
+    public virtual void UpdateLook()
     {
-        float scaleSign = Mathf.Sign(Puppet.GlobalTransform.Scale.X * Puppet.GlobalTransform.Scale.Y);
-        GlobalRotation = (angle * scaleSign) + Puppet.GlobalRotation;
-    }
-    public virtual void SetLocalRotation(float angle)
-    {
-        Rotation = angle;
-    }
-    public virtual void SetLocalScale(Vector2 scale)
-    {
-        Scale = scale.Abs() * new Vector2(_FlipH?-1f:1f, _FlipV?-1f:1f);
+        if(Puppet == null)
+            return;
+        
+        Scale = new Vector2(FlipH?-1:1, FlipV?-1:1);
     }
 
     [ExportToolButton("Add Bone")]
@@ -155,13 +91,5 @@ public partial class Puppet2DControl: Node2D, PuppetTransform
             return;
         
         Puppet.MakeNewControl(this);
-    }
-
-    public virtual void UpdateLook()
-    {
-        if(Puppet == null)
-            return;
-        
-        SetLocalScale(Scale);
     }
 }
