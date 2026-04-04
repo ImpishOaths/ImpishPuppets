@@ -12,8 +12,6 @@ public partial class Puppet3D: Node3D
     public PackedScene Puppet2D;
     [Export]
     public Material DefaultMaterial;
-    [Export]
-    public float ZScale = 0.001f;
 
     private Texture2D PuppetTexture;
     private TileSet SpriteSheet;

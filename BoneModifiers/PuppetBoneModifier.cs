@@ -7,7 +7,7 @@ namespace ImpishPuppets;
 [GlobalClass]
 public abstract partial class PuppetBoneModifier: Node
 {
-    protected PuppetTransform Receiver = null;
+    public PuppetTransform Receiver {get; private set;} = null;
 
     public override string[] _GetConfigurationWarnings()
     {
@@ -17,11 +17,15 @@ public abstract partial class PuppetBoneModifier: Node
         return ["PuppetBoneModifier node must be child of PuppetTransform node"];
     }
 
+    public override void _EnterTree()
+    {
+        Receiver ??= GetParent<PuppetTransform>();
+    }
+
     public override void _PhysicsProcess(double delta)
     {
         Receiver ??= GetParent<PuppetTransform>();
-
-        if(Receiver == null || ! Receiver.HasRoot())
+        if(Receiver == null || ! Receiver.Active())
             return;
         
         Apply((float)delta);

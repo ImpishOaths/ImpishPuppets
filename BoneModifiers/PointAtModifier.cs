@@ -8,16 +8,7 @@ namespace ImpishPuppets;
 public partial class PointAtModifier: PuppetBoneModifier
 {
     [Export(PropertyHint.NodePathValidTypes, "Puppet2DBone,Puppet2DControl,Puppet3DBone,Puppet3DControl")]
-    public NodePath TargetPath
-    {
-        get => _TargetPath;
-        set
-        {
-            _TargetPath = value;
-            Target = null;
-        }
-    }
-    private NodePath _TargetPath = null;
+    public NodePath TargetPath;
     private PuppetTransform Target = null;
 
     [Export]
@@ -26,7 +17,7 @@ public partial class PointAtModifier: PuppetBoneModifier
     public override void Apply(float delta)
     {
         Target ??= GetNodeOrNull<PuppetTransform>(TargetPath);
-        if(Target == null || ! Target.HasRoot())
+        if(Target == null || ! Target.Active())
             return;
         
         var trans = Receiver.GetRootTransform();

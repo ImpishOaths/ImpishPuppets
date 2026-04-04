@@ -120,24 +120,27 @@ public partial class Puppet3DBone: Puppet3DControl
     {
         if(Mesh == null)
             return;
-        
+
         Mesh.Scale = (((Vector2)CurrentSprite.SpriteRegion.Size)/Puppet.TileSize).ToVec3scale();
-            
         if(CurrentSprite != null)
         {
-            var bflip = new Vector2(CurrentSprite.SpriteData.FlipH?1:0, CurrentSprite.SpriteData.FlipV?1:0);
+            var bflip = new Vector2I(CurrentSprite.SpriteData.FlipH?1:0, CurrentSprite.SpriteData.FlipV?1:0);
             Mesh.SetInstanceShaderParameter("flip", bflip);
             
             var region = ((Rect2)CurrentSprite.SpriteRegion).Scale(Puppet.TextureSize.Inverse()).ToVec4();
             Mesh.SetInstanceShaderParameter("region", region);
 
-            var offset = (CurrentSprite.SpriteData.GetCustomData("Offset").AsVector2() / Puppet.TileSize).ToVec3pos() / Mesh.Scale;
+            var offset = CurrentSprite.SpriteData.GetCustomData("Offset").AsVector2() / (Mesh.Scale.ToVec2pos() * Puppet.TileSize);
             Mesh.SetInstanceShaderParameter("offset", offset);
         }
         else
         {
+            Mesh.SetInstanceShaderParameter("flip", new Vector2I(0, 0));
+            Mesh.SetInstanceShaderParameter("offset", new Vector2(0, 0));
             Mesh.SetInstanceShaderParameter("region", new Vector4(0, 0, 0, 0));
         }
+
+        Mesh.SetInstanceShaderParameter("zOffset", (float)Order);
 
         Mesh.Rotation = new Vector3(0, 0, -RotationOffset);
     }
@@ -159,12 +162,13 @@ public partial class Puppet3DBone: Puppet3DControl
         }
 
         Mesh ??= GetMesh("Mesh");
-        Mesh.Position = new(0, 0, Order*Puppet.ZScale);
 
         if(SpriteGroup != "")
             SetSprite(SpriteGroup, SpriteName);
         else
             SetSprite(null);
+        
+        UpdateLook();
     }
 
     MeshInstance3D GetMesh(string name)
@@ -184,32 +188,29 @@ public partial class Puppet3DBone: Puppet3DControl
         return mesh;
     }
 
-    public override void Initialize(Puppet3D puppet, Puppet2DControl bone)
+    public override void Initialize(Puppet3D puppet, Puppet2DControl control)
     {
-        Puppet = puppet;
-        if(bone is Puppet2DBone bone2)
-            InitializeBone(puppet, bone2);
+        base.Initialize(puppet, control);
+        if(control is Puppet2DBone bone)
+            InitializeBone(bone);
     }
 
-    public void InitializeBone(Puppet3D puppet, Puppet2DBone bone)
+    public void InitializeBone(Puppet2DBone bone)
     {
-        Puppet = puppet;
-        
         SortOrder = bone.SortOrder;
 
         Mesh ??= GetMesh("Mesh");
 
-        Position = (bone.Position / Puppet.TileSize).ToVec3pos();
-        Rotation = new Vector3(0, 0, -bone.Rotation);
+        RotationOffset = bone.RotationOffset;
+        
         var (group, name) = bone.GetSprite();
         SetSprite(group, name);
-        RotationOffset = bone.RotationOffset;
     }
 
     public void SetOrder(int order)
     {
-        Mesh.Position = new(0, 0, order*Puppet.ZScale);
         Order = order;
+        UpdateLook();
     }
 
     public void SetSprite(StringName group, StringName name)

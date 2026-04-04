@@ -27,7 +27,7 @@ public partial class PuppetHandle: Node2D
     {
         Receiver ??= GetNodeOrNull<PuppetTransform>(ReceiverPath);
 
-        if(Receiver == null || ! Receiver.HasRoot())
+        if(Receiver == null || ! Receiver.Active())
             return;
             
         var trans = new Transform2D(GlobalRotation, AnimScale, 0, GlobalPosition);

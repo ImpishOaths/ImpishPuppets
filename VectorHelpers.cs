@@ -14,9 +14,9 @@ public static class VectorHelpers
     public static Vector2 ToVec2scale(this Vector3 vec) => new(vec.X, vec.Y);
     public static Vector3 ToVec3scale(this Vector2 vec) => new(vec.X, vec.Y, 1);
 
-    public static Transform2D To2D(this Transform3D trans3) =>
-    new(trans3[0,0], trans3[1,0],
-        trans3[0,1], trans3[1,1],
+    public static Transform2D To2D(this Transform3D trans3, bool flip = false) =>
+    new(trans3[0,0], trans3[1,0] * (flip?-1:1),
+        trans3[0,1] * (flip?-1:1), trans3[1,1],
         trans3[3,0], -trans3[3,1]);
     
     public static Transform3D To3D(this Transform2D trans2) =>

@@ -126,6 +126,7 @@ public partial class Puppet2D: Node2D
     {
         var pControl = new Puppet2DControl()
         {
+            Puppet = this,
             UseParentMaterial = true,
         };
         parent.AddChild(pControl, true);
