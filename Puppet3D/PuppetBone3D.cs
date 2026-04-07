@@ -5,7 +5,7 @@ namespace ImpishPuppets;
 
 [Tool]
 [GlobalClass]
-public partial class Puppet3DBone: Puppet3DControl
+public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
 {
     private static QuadMesh SharedMesh = null;
     private MeshInstance3D Mesh;
@@ -14,15 +14,39 @@ public partial class Puppet3DBone: Puppet3DControl
 
     [ExportGroup("Storage")]
     [Export]
-    private int Order;
+    private Vector2I FrontBackOrder;
     [Export]
-    private Puppet2DBone.SortOrderEnum SortOrder;
+    public SortOrderEnum SortOrder;
     [Export]
-    private float RotationOffset;
+    public bool Order;
+
+    public void SetOrder(bool front)
+    {
+        Order = front;
+        int order = SortOrder switch
+        {
+            SortOrderEnum.FRONT => FrontBackOrder.X,
+            SortOrderEnum.BACK => FrontBackOrder.Y,
+            SortOrderEnum.BOTH => Order ? FrontBackOrder.X : FrontBackOrder.Y,
+            _ => 1,
+        };
+        Mesh.SetInstanceShaderParameter("zOffset", (float)order);
+    }
+
+    [Export]
+    public float RotationOffset
+    {
+        get => _RotationOffset;
+        set
+        {
+            _RotationOffset = value;
+        }
+    }
+    private float _RotationOffset;
 
     [ExportGroup("Sprite Info")]
     [Export]
-    private StringName SpriteGroup
+    public StringName SpriteGroup
     {
         get => _SpriteGroup;
         set
@@ -38,7 +62,7 @@ public partial class Puppet3DBone: Puppet3DControl
     private StringName _SpriteGroup;
 
     [Export]
-    private StringName SpriteName
+    public StringName SpriteName
     {
         get => _SpriteName;
         set
@@ -103,13 +127,11 @@ public partial class Puppet3DBone: Puppet3DControl
         {
             _SpriteGroup = CurrentSprite.SpriteGroup;
             _SpriteName = CurrentSprite.SpriteName;
-
         }
         else
         {
             _SpriteGroup = "";
             _SpriteName = "";
-
         }
 
         UpdateLook();
@@ -140,8 +162,6 @@ public partial class Puppet3DBone: Puppet3DControl
             Mesh.SetInstanceShaderParameter("region", new Vector4(0, 0, 0, 0));
         }
 
-        Mesh.SetInstanceShaderParameter("zOffset", (float)Order);
-
         Mesh.Rotation = new Vector3(0, 0, -RotationOffset);
     }
 
@@ -169,6 +189,7 @@ public partial class Puppet3DBone: Puppet3DControl
             SetSprite(null);
         
         UpdateLook();
+        SetOrder(Order);
     }
 
     MeshInstance3D GetMesh(string name)
@@ -176,7 +197,7 @@ public partial class Puppet3DBone: Puppet3DControl
         var mesh = GetNodeOrNull<MeshInstance3D>(name);
         if(mesh == null)
         {
-            SharedMesh ??= GD.Load<QuadMesh>("res://addons/ImpishPuppets/Quad.tres");
+            SharedMesh ??= GD.Load<QuadMesh>("res://addons/ImpishPuppets/Shared/Quad.tres");
             mesh = new MeshInstance3D
             {
                 Name = name,
@@ -188,14 +209,14 @@ public partial class Puppet3DBone: Puppet3DControl
         return mesh;
     }
 
-    public override void Initialize(Puppet3D puppet, Puppet2DControl control)
+    public override void Initialize(Puppet3D puppet, PuppetTransform2D control)
     {
         base.Initialize(puppet, control);
-        if(control is Puppet2DBone bone)
+        if(control is PuppetBone2D bone)
             InitializeBone(bone);
     }
 
-    public void InitializeBone(Puppet2DBone bone)
+    public void InitializeBone(PuppetBone2D bone)
     {
         SortOrder = bone.SortOrder;
 
@@ -207,10 +228,10 @@ public partial class Puppet3DBone: Puppet3DControl
         SetSprite(group, name);
     }
 
-    public void SetOrder(int order)
+    public void SetOrder(Vector2I order)
     {
-        Order = order;
-        UpdateLook();
+        FrontBackOrder = order;
+        SetOrder(true);
     }
 
     public void SetSprite(StringName group, StringName name)

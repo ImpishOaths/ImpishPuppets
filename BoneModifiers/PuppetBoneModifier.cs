@@ -33,7 +33,7 @@ public abstract partial class PuppetBoneModifier: Node
 
     public abstract void Apply(float delta);
 
-    public virtual PuppetBoneModifier Make3DDuplicate(Vector2 resize)
+    public virtual PuppetBoneModifier MakeDuplicate3D(Vector2 resize)
     {
         return Duplicate() as PuppetBoneModifier;
     }

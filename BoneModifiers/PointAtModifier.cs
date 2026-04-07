@@ -7,7 +7,7 @@ namespace ImpishPuppets;
 [GlobalClass]
 public partial class PointAtModifier: PuppetBoneModifier
 {
-    [Export(PropertyHint.NodePathValidTypes, "Puppet2DBone,Puppet2DControl,Puppet3DBone,Puppet3DControl")]
+    [Export(PropertyHint.NodePathValidTypes, "PuppetBone2D,PuppetTransform2D,PuppetBone3D,PuppetTransform3D")]
     public NodePath TargetPath;
     private PuppetTransform Target = null;
 

@@ -4,18 +4,67 @@ using Godot.Collections;
 
 namespace ImpishPuppets;
 
+public enum SortOrderEnum
+{
+    FRONT,
+    BACK,
+    BOTH,
+}
+
+public interface PuppetBone: PuppetTransform
+{
+    public void SetSprite(StringName group, StringName name);
+    public StringName SpriteGroup {get; set;}
+    public StringName SpriteName {get; set;}
+    public float RotationOffset {get; set;}
+    public void SetVisible(bool visible);
+    public void SetOrder(bool front);
+}
+
 [Tool]
 [GlobalClass]
-public partial class Puppet2DBone: Puppet2DControl
+public partial class PuppetBone2D: PuppetTransform2D, PuppetBone
 {
     private PuppetSpriteData CurrentSprite = null;
     private Sprite2D Sprite;
 
     [Export]
-    private Vector2 Offset
+    public Vector2 SpriteOffset
     {
-        get => Get("offset").AsVector2();
-        set => Set("offset", value);
+        get
+        {
+            if(CurrentSprite != null)
+            {
+                if(CurrentSprite.SpriteData.HasCustomData("Offset"))
+                    return CurrentSprite.SpriteData.GetCustomData("Offset").AsVector2();
+                return default;
+            }
+            return default;
+        }
+        set
+        {
+            if(CurrentSprite != null)
+            {
+                if(CurrentSprite.SpriteData.HasCustomData("Offset"))
+                    CurrentSprite.SpriteData.SetCustomData("Offset", value);
+                UpdateLook();
+            }
+        }
+    }
+
+    [Export]
+    public SortOrderEnum SortOrder;
+
+    public void SetOrder(bool front)
+    {
+        ZIndex = SortOrder switch
+        {
+            SortOrderEnum.FRONT => 1,
+            SortOrderEnum.BACK => -1,
+            SortOrderEnum.BOTH => front ? 1 : -1,
+            _ => 1,
+        };
+
     }
 
     [Export]
@@ -30,27 +79,9 @@ public partial class Puppet2DBone: Puppet2DControl
     }
     private float _RotationOffset = 0;
 
-    public enum SortOrderEnum
-    {
-        FRONT,
-        BACK
-    }
-
-    [Export]
-    public SortOrderEnum SortOrder
-    {
-        get => _SortOrder;
-        set
-        {
-            _SortOrder = value;
-            ZIndex = _SortOrder == SortOrderEnum.BACK ? -1 : 1;
-        }
-    }
-    private SortOrderEnum _SortOrder;
-
     [ExportGroup("Sprite Info")]
     [Export]
-    private StringName SpriteGroup
+    public StringName SpriteGroup
     {
         get => _SpriteGroup;
         set
@@ -67,7 +98,7 @@ public partial class Puppet2DBone: Puppet2DControl
     private StringName _SpriteGroup;
 
     [Export]
-    private StringName SpriteName
+    public StringName SpriteName
     {
         get => _SpriteName;
         set
@@ -94,13 +125,6 @@ public partial class Puppet2DBone: Puppet2DControl
     {
         if(property == "material")
             return Puppet.Material;
-        
-        if(property == "offset" && CurrentSprite != null)
-        {
-            if(CurrentSprite.SpriteData.HasCustomData("Offset"))
-                return CurrentSprite.SpriteData.GetCustomData("Offset");
-            return default;
-        }
 
         if(property == "texture" && Sprite != null)
             return Sprite.Texture;
@@ -112,6 +136,11 @@ public partial class Puppet2DBone: Puppet2DControl
         if(property == "region_enabled" && Sprite != null)
             return Sprite.RegionEnabled;
         
+        if(property == "SpriteGroupDropdown")
+            return SpriteGroup;
+        if(property == "SpriteNameDropdown")
+            return SpriteName;
+
         return default;
     }
 
@@ -120,14 +149,10 @@ public partial class Puppet2DBone: Puppet2DControl
         if(Puppet == null)
             return false;
 
-        if(property == "offset" && CurrentSprite != null)
-        {
-            Vector2 vec = value.AsVector2();
-            if(CurrentSprite.SpriteData.HasCustomData("Offset"))
-                CurrentSprite.SpriteData.SetCustomData("Offset", vec);
-            UpdateLook();
-            return true;
-        }
+        if(property == "SpriteGroupDropdown")
+            SpriteGroup = value.AsStringName();
+        if(property == "SpriteNameDropdown")
+            SpriteName = value.AsStringName();
 
         return false;
     }
@@ -145,7 +170,7 @@ public partial class Puppet2DBone: Puppet2DControl
         });
         var groups = Puppet.GetSpriteGroups();
         properties.Add(new(){
-            {"name","SpriteGroup"},
+            {"name","SpriteGroupDropdown"},
             {"type", (int)Variant.Type.StringName},
             {"hint", (int)PropertyHint.Enum},
             {"hint_string", string.Join(',', groups)}
@@ -154,7 +179,7 @@ public partial class Puppet2DBone: Puppet2DControl
         {
             var sprites = Puppet.GetSpritesInGroup(_SpriteGroup);
             properties.Add(new(){
-                {"name","SpriteName"},
+                {"name","SpriteNameDropdown"},
                 {"type", (int)Variant.Type.StringName},
                 {"hint", (int)PropertyHint.Enum},
                 {"hint_string", string.Join(',', sprites)}
@@ -177,6 +202,7 @@ public partial class Puppet2DBone: Puppet2DControl
             Saving = false;
             if(Sprite != null)
                 Sprite.Texture = Puppet.PuppetImageTexture;
+            UpdateLook();
         }
     }
 

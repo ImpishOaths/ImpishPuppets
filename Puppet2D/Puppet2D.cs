@@ -105,7 +105,7 @@ public partial class Puppet2D: Node2D
 
     public void MakeNewBone(Node parent)
     {
-        var pBone = new Puppet2DBone()
+        var pBone = new PuppetBone2D()
         {
             Puppet = this,
             UseParentMaterial = true,
@@ -115,21 +115,21 @@ public partial class Puppet2D: Node2D
         pBone.Owner = Owner ?? this;
     }
 
-    [ExportToolButton("Add Control")]
-    public Callable AddControlCallable => Callable.From(AddControl);
-    private void AddControl()
+    [ExportToolButton("Add Transform")]
+    public Callable AddTransformCallable => Callable.From(AddTransform);
+    private void AddTransform()
     {
-        MakeNewControl(this);
+        MakeNewTransform(this);
     }
 
-    public void MakeNewControl(Node parent)
+    public void MakeNewTransform(Node parent)
     {
-        var pControl = new Puppet2DControl()
+        var pTransform = new PuppetTransform2D()
         {
             Puppet = this,
             UseParentMaterial = true,
         };
-        parent.AddChild(pControl, true);
-        pControl.Owner = Owner ?? this;
+        parent.AddChild(pTransform, true);
+        pTransform.Owner = Owner ?? this;
     }
 }

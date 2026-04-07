@@ -1,0 +1,72 @@
+[gd_resource type="Resource" script_class="HandPoseList" format=3 uid="uid://dqtgtepl6wkfp"]
+
+[ext_resource type="Script" uid="uid://bue3srhbiyql5" path="res://addons/ImpishPuppets/Controllers/HandPoses/HandPoseList.cs" id="1_5rcrj"]
+[ext_resource type="Script" uid="uid://clj3otv10wr8u" path="res://addons/ImpishPuppets/Controllers/HandPoses/HandPose.cs" id="1_iroel"]
+
+[sub_resource type="Resource" id="Resource_q5lov"]
+script = ExtResource("1_iroel")
+PalmBack = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_iroel"]
+script = ExtResource("1_iroel")
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_hwbl8"]
+script = ExtResource("1_iroel")
+PalmBack = true
+MiddleUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_ie7a7"]
+script = ExtResource("1_iroel")
+PinkyUp = true
+RingUp = true
+MiddleUp = true
+IndexUp = true
+ThumbUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_7a3s4"]
+script = ExtResource("1_iroel")
+IndexUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_2kal3"]
+script = ExtResource("1_iroel")
+ThumbUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_lauob"]
+script = ExtResource("1_iroel")
+PalmBack = true
+PinkyUp = true
+RingUp = true
+MiddleUp = true
+IndexUp = true
+ThumbUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_gjyt7"]
+script = ExtResource("1_iroel")
+HandBehind = true
+PinkyUp = true
+RingUp = true
+MiddleUp = true
+IndexUp = true
+ThumbUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[resource]
+script = ExtResource("1_5rcrj")
+Poses = {
+&"Fist": SubResource("Resource_q5lov"),
+&"FistForward": SubResource("Resource_iroel"),
+&"FlipOff": SubResource("Resource_hwbl8"),
+&"Open": SubResource("Resource_ie7a7"),
+&"OpenBack": SubResource("Resource_lauob"),
+&"OpenFlip": SubResource("Resource_gjyt7"),
+&"Point": SubResource("Resource_7a3s4"),
+&"ThumbsUp": SubResource("Resource_2kal3")
+}
+metadata/_custom_type_script = "uid://bue3srhbiyql5"

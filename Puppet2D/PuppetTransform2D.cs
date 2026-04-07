@@ -23,7 +23,7 @@ public interface PuppetTransform
 
 [Tool]
 [GlobalClass]
-public partial class Puppet2DControl: Node2D, PuppetTransform
+public partial class PuppetTransform2D: Node2D, PuppetTransform
 {
     [Export]
     public Puppet2D Puppet;
@@ -34,7 +34,7 @@ public partial class Puppet2DControl: Node2D, PuppetTransform
         get => _Flip;
         set => SetFlip(value);
     }
-    private bool _Flip;
+    protected bool _Flip;
 
     public bool Active() => Puppet != null && Puppet.InverseTransform != null;
     public Transform2D GetRootTransform() => Puppet.InverseTransform.Value * GlobalTransform;
@@ -51,8 +51,9 @@ public partial class Puppet2DControl: Node2D, PuppetTransform
     {
         if(_Flip == flip)
             return;
-        Scale = new Vector2(flip?-1:1,1);
+
         _Flip = flip;
+        Scale = new Vector2(_Flip?-1:1,1);
     }
 
     [ExportToolButton("Add Bone")]
@@ -64,13 +65,13 @@ public partial class Puppet2DControl: Node2D, PuppetTransform
         
         Puppet.MakeNewBone(this);
     }
-    [ExportToolButton("Add Control")]
-    public Callable AddControlCallable => Callable.From(AddControl);
-    private void AddControl()
+    [ExportToolButton("Add Transform")]
+    public Callable AddTransformCallable => Callable.From(AddTransform);
+    private void AddTransform()
     {
         if(Puppet == null)
             return;
         
-        Puppet.MakeNewControl(this);
+        Puppet.MakeNewTransform(this);
     }
 }

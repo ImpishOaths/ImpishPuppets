@@ -6,7 +6,7 @@ namespace ImpishPuppets;
 
 [Tool]
 [GlobalClass]
-public partial class Face2DControl: Puppet2DControl
+public partial class Face2DControl: PuppetTransform2D
 {
     public static readonly StringName EyeGroup = "Eye";
     public static readonly StringName EyebrowGroup = "Eyebrow";
@@ -218,19 +218,19 @@ public partial class Face2DControl: Puppet2DControl
     }
 
     private bool IsReady;
-    private Puppet2DBone EyeRBone;
-    private Puppet2DBone EyeLBone;
-    private Puppet2DBone EyebrowLBone;
-    private Puppet2DBone EyebrowRBone;
-    private Puppet2DBone MouthBone;
+    private PuppetBone2D EyeRBone;
+    private PuppetBone2D EyeLBone;
+    private PuppetBone2D EyebrowLBone;
+    private PuppetBone2D EyebrowRBone;
+    private PuppetBone2D MouthBone;
 
     public override void _Ready()
     {
-        EyebrowLBone = GetNode<Puppet2DBone>("EyebrowR");
-        EyebrowRBone = GetNode<Puppet2DBone>("EyebrowL");
-        EyeRBone = GetNode<Puppet2DBone>("EyeR");
-        EyeLBone = GetNode<Puppet2DBone>("EyeL");
-        MouthBone = GetNode<Puppet2DBone>("Mouth");
+        EyebrowLBone = GetNode<PuppetBone2D>("EyebrowR");
+        EyebrowRBone = GetNode<PuppetBone2D>("EyebrowL");
+        EyeRBone = GetNode<PuppetBone2D>("EyeR");
+        EyeLBone = GetNode<PuppetBone2D>("EyeL");
+        MouthBone = GetNode<PuppetBone2D>("Mouth");
 
         IsReady = true;
         StopBlink();

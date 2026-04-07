@@ -5,7 +5,7 @@ namespace ImpishPuppets;
 
 [Tool]
 [GlobalClass]
-public partial class Puppet3DControl: Node3D, PuppetTransform
+public partial class PuppetTransform3D: Node3D, PuppetTransform
 {
     [Export]
     public Puppet3D Puppet;
@@ -18,7 +18,7 @@ public partial class Puppet3DControl: Node3D, PuppetTransform
     }
     private bool _Flip;
 
-    public virtual void Initialize(Puppet3D puppet, Puppet2DControl control)
+    public virtual void Initialize(Puppet3D puppet, PuppetTransform2D control)
     {
         Puppet = puppet;
 

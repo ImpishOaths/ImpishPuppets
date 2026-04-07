@@ -17,7 +17,7 @@ public partial class PointDirModifier: PuppetBoneModifier
         Receiver.SetRootTransform(trans);
     }
 
-    public override PuppetBoneModifier Make3DDuplicate(Vector2 resize)
+    public override PuppetBoneModifier MakeDuplicate3D(Vector2 resize)
     {
         return Duplicate() as PointDirModifier;
     }

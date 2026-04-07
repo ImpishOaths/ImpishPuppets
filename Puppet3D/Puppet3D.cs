@@ -86,38 +86,38 @@ public partial class Puppet3D: Node3D
                 child.Reparent(storage);
         storage.QueueFree();
 
-        System.Collections.Generic.List<Puppet3DBone> ForwardOrder = [];
-        System.Collections.Generic.List<Puppet3DBone> BackwardOrder = [];
+        System.Collections.Generic.List<PuppetBone3D> bone3ds = [];
+        int backwardCount = 0;
+
+        foreach(var child in puppet.GetChildren())
+            initializeComponent(this, child);
 
         void initializeComponent(Node parent, Node node)
         {
             Node newNode;
             switch(node)
             {
-                case Puppet2DBone bone:
-                    var bone3d = new Puppet3DBone();
-                    bone3d.Initialize(this, bone);
-
-                    switch(bone.SortOrder)
-                    {
-                        case Puppet2DBone.SortOrderEnum.FRONT:
-                            ForwardOrder.Add(bone3d);
-                            break;
-                        case Puppet2DBone.SortOrderEnum.BACK:
-                            BackwardOrder.Add(bone3d);
-                            break;
-                    }
+                case PuppetBone2D bone2D:
+                    var bone3d = new PuppetBone3D();
+                    bone3d.Initialize(this, bone2D);
+                    bone3ds.Add(bone3d);
+                    bone3d.Visible = bone2D.Visible;
+                    if(bone3d.SortOrder != SortOrderEnum.FRONT)
+                        backwardCount++;
 
                     newNode = bone3d;
                     break;
-                case Puppet2DControl control:
-                    var control3D = new Puppet3DControl();
-                    control3D.Initialize(this, control);
-                    newNode = control3D;
+                case PuppetTransform2D trans2D:
+                    var trans3D = new PuppetTransform3D();
+                    trans3D.Initialize(this, trans2D);
+                    newNode = trans3D;
                     break;
                 case PuppetBoneModifier modifier:
                     Vector2 sizeDown = new(1f/TileSize.X, 1f/TileSize.Y);
-                    newNode = modifier.Make3DDuplicate(sizeDown);
+                    newNode = modifier.MakeDuplicate3D(sizeDown);
+                    break;
+                case PuppetController controller:
+                    newNode = controller.MakeDuplicate3D();
                     break;
                 default:
                     return;
@@ -131,18 +131,16 @@ public partial class Puppet3D: Node3D
                 initializeComponent(newNode, child);
         }
 
-        foreach(var child in puppet.GetChildren())
+        int forward = 0;
+        int backward = backwardCount+1;
+        foreach(var bone in bone3ds)
         {
-            initializeComponent(this, child);
+            var order = Vector2I.Zero;
+            if(bone.SortOrder == SortOrderEnum.FRONT || bone.SortOrder == SortOrderEnum.BOTH)
+                order.X = forward++;
+            if(bone.SortOrder == SortOrderEnum.BACK || bone.SortOrder == SortOrderEnum.BOTH)
+                order.Y = -backward--;
+            bone.SetOrder(order);
         }
-
-        int order = 0;
-        foreach(var bone in ForwardOrder)
-            bone.SetOrder(order++);
-        BackwardOrder.Reverse();
-        order = -1;
-        foreach(var bone in BackwardOrder)
-            bone.SetOrder(order--);
     }
-
 }
