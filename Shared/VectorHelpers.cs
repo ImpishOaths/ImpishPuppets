@@ -41,7 +41,8 @@ public static class VectorHelpers
                     SpriteGroup = (StringName)spriteData.GetCustomData("Group"),
                     SpriteName = (StringName)spriteData.GetCustomData("Name"),
                     SpriteRegion = spriteAtlas.GetTileTextureRegion(pos),
-                    SpriteData = spriteData
+                    SpriteData = spriteData,
+                    AlternateID = altId
                 };
 
                 if(! SpriteDict.TryGetValue(sprite.SpriteGroup, out var names))

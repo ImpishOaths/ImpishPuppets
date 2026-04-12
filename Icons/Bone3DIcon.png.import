@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjnmc56v7io6n"
-path="res://.godot/imported/Control2DIcon.png-a664cf6cd68a58350abe816eff28cd50.ctex"
+uid="uid://b5f8uivrk5dn4"
+path="res://.godot/imported/Bone3DIcon.png-97832a51ce200b17c8e125a51c313e92.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/ImpishPuppets/Icons/Control2DIcon.png"
-dest_files=["res://.godot/imported/Control2DIcon.png-a664cf6cd68a58350abe816eff28cd50.ctex"]
+source_file="res://addons/ImpishPuppets/Icons/Bone3DIcon.png"
+dest_files=["res://.godot/imported/Bone3DIcon.png-97832a51ce200b17c8e125a51c313e92.ctex"]
 
 [params]
 

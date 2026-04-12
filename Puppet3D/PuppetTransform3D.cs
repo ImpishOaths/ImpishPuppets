@@ -18,14 +18,18 @@ public partial class PuppetTransform3D: Node3D, PuppetTransform
     }
     private bool _Flip;
 
-    public virtual void Initialize(Puppet3D puppet, PuppetTransform2D control)
+    public virtual void Initialize(Puppet3D puppet, PuppetTransform2D trans)
     {
         Puppet = puppet;
 
-        Position = (control.Position / Puppet.TileSize).ToVec3pos();
-        Rotation = new Vector3(0, 0, -control.Rotation);
-        _Flip = control.Flip;
-        SetFlip(control.Flip);
+        Position = (trans.Position / Puppet.TileSize).ToVec3pos();
+        Rotation = new Vector3(0, 0, -trans.Rotation);
+
+        if(trans.Flip) //Prevents an annoying bug where it dosen't flip when it's supposed to
+        {
+            SetFlip(false);
+            SetFlip(true);
+        }
     }
     
     public bool Active() => Puppet != null && Puppet.InverseTransform != null;
@@ -44,6 +48,7 @@ public partial class PuppetTransform3D: Node3D, PuppetTransform
     {
         if(_Flip == flip)
             return;
+        
         Rotation = new Vector3(0, flip?Mathf.Pi:0, ((Scale.X < 0) ^ flip) ? Mathf.Pi - Rotation.Z : Rotation.Z);
         Scale = new Vector3(flip?-1:1, flip?-1:1, flip?-1:1);
         _Flip = flip;

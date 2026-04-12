@@ -51,22 +51,28 @@ public partial class HandControl: PuppetController
 
         UpperArm = GetNodeOrNull<PuppetBone>(UpperArmPath);
         LowerArm = GetNodeOrNull<PuppetBone>(LowerArmPath);
-        
-        SelectedPose = _SelectedPose;
     }
+
+    public override void Initialize()
+    {
+        _Ready();
+        SetPose(_SelectedPose);
+    }
+
 
     [Export]
     public HandPoseList Poses;
+    
     [Export]
     public string SelectedPose
     {
         get => _SelectedPose;
         set
         {
-            if(Poses != null && Poses.Poses.TryGetValue(value, out var pose))
+            if(_SelectedPose != value)
             {
                 _SelectedPose = value;
-                SetPose(pose);
+                SetPose(value);
             }
         }
     }
@@ -105,7 +111,13 @@ public partial class HandControl: PuppetController
         return properties;
     }
 
-    public void SetPose(HandPose pose)
+    private void SetPose(StringName name)
+    {
+        if(Poses != null && Poses.Poses.TryGetValue(name, out var pose))
+            SetPose(pose);
+    }
+
+    private void SetPose(HandPose pose)
     {
         static void setFinger(PuppetBone bone, bool up, bool front)
         {
@@ -140,6 +152,21 @@ public partial class HandControl: PuppetController
     public override PuppetController MakeDuplicate3D()
     {
         return Duplicate() as HandControl;
+    }
+
+    public override Array<Dictionary> ControlPropertyList()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool ControlSet(StringName property, Variant variant)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Variant ControlGet(StringName property)
+    {
+        throw new NotImplementedException();
     }
 
 }

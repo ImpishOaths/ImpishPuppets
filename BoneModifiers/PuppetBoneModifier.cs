@@ -7,7 +7,7 @@ namespace ImpishPuppets;
 [GlobalClass]
 public abstract partial class PuppetBoneModifier: Node
 {
-    public PuppetTransform Receiver {get; private set;} = null;
+    protected PuppetTransform Receiver = null;
 
     public override string[] _GetConfigurationWarnings()
     {

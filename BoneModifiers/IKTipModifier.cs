@@ -22,13 +22,17 @@ public partial class IKTipModifier: IKModifier
         if(Target == null || ! Target.Active())
             return;
         
-        Base ??= GetNodeOrNull<PuppetTransform>(BasePath);
-        if(Base == null || ! Base.Active())
-            return;
+        Vector2? basePos = null;
+        if(BasePath != null)
+        {
+            Base ??= GetNodeOrNull<PuppetTransform>(BasePath);
+            if(Base == null || ! Base.Active())
+                return;
+            var baseTrans = Base.GetRootTransform();
+            basePos = baseTrans.TranslatedLocal(BaseOffset).Origin;
+        }
 
-        var trans = Base.GetRootTransform().TranslatedLocal(BaseOffset);
-
-        ForwardPass(Target, Target.GetFlip(), trans.Origin);
+        ForwardPass(Target, Target.GetFlip(), basePos);
     }
 
     

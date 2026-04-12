@@ -4,9 +4,19 @@ using Godot.Collections;
 
 namespace ImpishPuppets;
 
+public interface Puppet
+{
+    public Array<StringName> GetSpriteGroups();
+    public Array<StringName> GetSpritesInGroup(StringName group);
+    public StringName GetFirstGroup();
+    public PuppetSpriteData GetFirstSprite(StringName group);
+    public PuppetSpriteData GetSpriteReference(StringName group, StringName sprite);
+    public Vector2 GetResize();
+}
+
 [Tool]
 [GlobalClass]
-public partial class Puppet2D: Node2D
+public partial class Puppet2D: Node2D, Puppet
 {
     [Export]
     public Texture2D PuppetTexture {get; private set;}
@@ -18,8 +28,10 @@ public partial class Puppet2D: Node2D
     public Transform2D? InverseTransform {get; private set;} = null;
     public override void _PhysicsProcess(double delta)
     {
-        InverseTransform = Transform.AffineInverse();
+        InverseTransform = GlobalTransform.AffineInverse();
     }
+
+    public Vector2 GetResize() => Vector2.One;
 
     public override Variant _Get(StringName property)
     {
@@ -45,6 +57,24 @@ public partial class Puppet2D: Node2D
 
     public override void _Notification(int what)
     {
+        if(what == NotificationEditorPreSave && SpriteSheet != null && SpriteSheet.GetMeta("dirty", false).As<bool>())
+        {
+            SpriteSheet.SetMeta("dirty", false);
+            var tempSet = ResourceLoader.Load<TileSet>(SpriteSheet.ResourcePath);
+            var spriteAtlas = (TileSetAtlasSource)tempSet.GetSource(0);
+            foreach(var group in SpriteDict.Values)
+            {
+                foreach(var sprite in group.Values)
+                {
+                    var data = spriteAtlas.GetTileData(sprite.SpriteRegion.Position/tempSet.TileSize, sprite.AlternateID);
+                    var offset = sprite.SpriteData.GetCustomData("Offset").As<Vector2>();
+                    data.SetCustomData("Offset", offset);
+                    sprite.SpriteData = data;
+                }
+            }
+            GD.Print("Offsets Updated");
+        }
+
         if(what == NotificationEditorPostSave)
             SaveImage();
     }

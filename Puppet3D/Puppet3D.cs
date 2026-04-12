@@ -6,7 +6,7 @@ namespace ImpishPuppets;
 
 [Tool]
 [GlobalClass]
-public partial class Puppet3D: Node3D
+public partial class Puppet3D: Node3D, Puppet
 {
     [Export]
     public PackedScene Puppet2D;
@@ -22,7 +22,7 @@ public partial class Puppet3D: Node3D
     public Transform3D? InverseTransform {get; private set;} = null;
     public override void _PhysicsProcess(double delta)
     {
-        InverseTransform = Transform.AffineInverse();
+        InverseTransform = GlobalTransform.AffineInverse();
     }
 
     public override void _EnterTree()
@@ -72,6 +72,8 @@ public partial class Puppet3D: Node3D
         SpriteDict = SpriteSheet.MakeSpriteDict();
     }
 
+    public Vector2 GetResize() => new(1f/TileSize.X, 1f/TileSize.Y);
+
     [ExportToolButton("Reload Puppet")]
     public Callable ReloadPuppetCallable => Callable.From(ReloadPuppet);
     private void ReloadPuppet()
@@ -87,6 +89,7 @@ public partial class Puppet3D: Node3D
         storage.QueueFree();
 
         System.Collections.Generic.List<PuppetBone3D> bone3ds = [];
+        System.Collections.Generic.List<PuppetController> controllers = [];
         int backwardCount = 0;
 
         foreach(var child in puppet.GetChildren())
@@ -113,11 +116,12 @@ public partial class Puppet3D: Node3D
                     newNode = trans3D;
                     break;
                 case PuppetBoneModifier modifier:
-                    Vector2 sizeDown = new(1f/TileSize.X, 1f/TileSize.Y);
-                    newNode = modifier.MakeDuplicate3D(sizeDown);
+                    newNode = modifier.MakeDuplicate3D(GetResize());
                     break;
                 case PuppetController controller:
-                    newNode = controller.MakeDuplicate3D();
+                    var controller3D = controller.MakeDuplicate3D();
+                    newNode = controller3D;
+                    controllers.Add(controller3D);
                     break;
                 default:
                     return;
@@ -140,7 +144,10 @@ public partial class Puppet3D: Node3D
                 order.X = forward++;
             if(bone.SortOrder == SortOrderEnum.BACK || bone.SortOrder == SortOrderEnum.BOTH)
                 order.Y = -backward--;
-            bone.SetOrder(order);
+            bone.SetOrderValues(order);
         }
+
+        foreach(var control in controllers)
+            control.Initialize();
     }
 }

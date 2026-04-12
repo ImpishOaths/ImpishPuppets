@@ -20,12 +20,14 @@ public partial class IKModifier: PuppetBoneModifier
     [Export]
     public float LockAngleSign = 0f;
 
-    private Transform2D tempTrans;
-
     public override void Apply(float delta) {}
 
-    public void ForwardPass(PuppetTransform target, bool doFlip, Vector2 basePosition)
+    public void ForwardPass(PuppetTransform target, bool doFlip, Vector2? basePos)
     {
+        Receiver ??= GetParent<PuppetTransform>();
+        if(Receiver == null || ! Receiver.Active())
+            return;
+
         if(NextPath != null)
             Next ??= GetNodeOrNull<IKModifier>(NextPath);
 
@@ -43,20 +45,18 @@ public partial class IKModifier: PuppetBoneModifier
                 angle = targetTrans.Rotation;
         }
         Vector2 pos = targetPos - diff;
-        if(Next == null)
-            pos = trans.Origin;
         trans = new Transform2D(angle, trans.Scale, trans.Skew, pos);
-        Receiver.SetRootTransform(trans);
 
         if(Next != null)
         {
-            Next.ForwardPass(Receiver, doFlip, basePosition);
+            Receiver.SetRootTransform(trans);
+            Next.ForwardPass(Receiver, doFlip, basePos);
             BackwardPass();
         }
         else
         {
-            trans = Receiver.GetRootTransform();
-            trans.Origin = basePosition;
+            if(basePos.HasValue)
+                trans.Origin = basePos.Value;
             Receiver.SetRootTransform(trans);
         }
     }

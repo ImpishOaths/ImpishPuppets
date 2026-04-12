@@ -19,28 +19,11 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
     public SortOrderEnum SortOrder;
     [Export]
     public bool Order;
-
-    public void SetOrder(bool front)
-    {
-        Order = front;
-        int order = SortOrder switch
-        {
-            SortOrderEnum.FRONT => FrontBackOrder.X,
-            SortOrderEnum.BACK => FrontBackOrder.Y,
-            SortOrderEnum.BOTH => Order ? FrontBackOrder.X : FrontBackOrder.Y,
-            _ => 1,
-        };
-        Mesh.SetInstanceShaderParameter("zOffset", (float)order);
-    }
-
     [Export]
     public float RotationOffset
     {
         get => _RotationOffset;
-        set
-        {
-            _RotationOffset = value;
-        }
+        set => _RotationOffset = value;
     }
     private float _RotationOffset;
 
@@ -143,7 +126,6 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
         if(Mesh == null)
             return;
 
-        Mesh.Scale = (((Vector2)CurrentSprite.SpriteRegion.Size)/Puppet.TileSize).ToVec3scale();
         if(CurrentSprite != null)
         {
             var bflip = new Vector2I(CurrentSprite.SpriteData.FlipH?1:0, CurrentSprite.SpriteData.FlipV?1:0);
@@ -154,12 +136,14 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
 
             var offset = CurrentSprite.SpriteData.GetCustomData("Offset").AsVector2() / (Mesh.Scale.ToVec2pos() * Puppet.TileSize);
             Mesh.SetInstanceShaderParameter("offset", offset);
+            Mesh.Scale = (((Vector2)CurrentSprite.SpriteRegion.Size)/Puppet.TileSize).ToVec3scale();
         }
         else
         {
             Mesh.SetInstanceShaderParameter("flip", new Vector2I(0, 0));
             Mesh.SetInstanceShaderParameter("offset", new Vector2(0, 0));
             Mesh.SetInstanceShaderParameter("region", new Vector4(0, 0, 0, 0));
+            Mesh.Scale = (Vector2.One/Puppet.TileSize).ToVec3scale();
         }
 
         Mesh.Rotation = new Vector3(0, 0, -RotationOffset);
@@ -223,15 +207,34 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
         Mesh ??= GetMesh("Mesh");
 
         RotationOffset = bone.RotationOffset;
+
+        if(bone.Flip) //Prevents an annoying bug where it dosen't flip when it's supposed to
+        {
+            SetFlip(false);
+            SetFlip(true);
+        }
         
         var (group, name) = bone.GetSprite();
         SetSprite(group, name);
     }
 
-    public void SetOrder(Vector2I order)
+    public void SetOrderValues(Vector2I order)
     {
         FrontBackOrder = order;
-        SetOrder(true);
+        SetOrder(Order);
+    }
+    
+    public void SetOrder(bool front)
+    {
+        Order = front;
+        int order = SortOrder switch
+        {
+            SortOrderEnum.FRONT => FrontBackOrder.X,
+            SortOrderEnum.BACK => FrontBackOrder.Y,
+            SortOrderEnum.BOTH => Order ? FrontBackOrder.X : FrontBackOrder.Y,
+            _ => 1,
+        };
+        Mesh.SetInstanceShaderParameter("zOffset", (float)order);
     }
 
     public void SetSprite(StringName group, StringName name)

@@ -45,26 +45,37 @@ public partial class PuppetBone2D: PuppetTransform2D, PuppetBone
         {
             if(CurrentSprite != null)
             {
-                if(CurrentSprite.SpriteData.HasCustomData("Offset"))
+                if(CurrentSprite.SpriteData.HasCustomData("Offset") && Puppet.Owner == null)
+                {
                     CurrentSprite.SpriteData.SetCustomData("Offset", value);
+                    Puppet.SpriteSheet.SetMeta("dirty", true);
+                }
                 UpdateLook();
             }
         }
     }
 
     [Export]
-    public SortOrderEnum SortOrder;
+    public SortOrderEnum SortOrder
+    {
+        get => _SortOrder;
+        set
+        {
+            _SortOrder = value;
+            SetOrder(true);
+        }
+    }
+    private SortOrderEnum _SortOrder;
 
     public void SetOrder(bool front)
     {
-        ZIndex = SortOrder switch
+        ZIndex = _SortOrder switch
         {
             SortOrderEnum.FRONT => 1,
             SortOrderEnum.BACK => -1,
             SortOrderEnum.BOTH => front ? 1 : -1,
             _ => 1,
         };
-
     }
 
     [Export]
@@ -300,6 +311,7 @@ public partial class PuppetBone2D: PuppetTransform2D, PuppetBone
             Sprite.Offset = Vector2.Zero;
             Sprite.RegionRect = new Rect2(0,0,0,0);
         }
+        SetOrder(true);
         Sprite.Rotation = _RotationOffset;
     }
 
