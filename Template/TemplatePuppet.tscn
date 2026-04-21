@@ -1,0 +1,754 @@
+[gd_scene format=3 uid="uid://t6q3eb47qb52"]
+
+[ext_resource type="Material" uid="uid://or86v7676dfn" path="res://addons/ImpishPuppets/Template/TemplateMaterial2D.tres" id="1_n5rw6"]
+[ext_resource type="Script" uid="uid://cn0nmyqd8hbei" path="res://addons/ImpishPuppets/Puppet2D/Puppet2D.cs" id="1_uown1"]
+[ext_resource type="Texture2D" uid="uid://digg1u5pscyws" path="res://addons/ImpishPuppets/Template/TemplateImage.png" id="2_n5rw6"]
+[ext_resource type="TileSet" uid="uid://bo007qffiyxbw" path="res://addons/ImpishPuppets/Template/TemplateSprites.tres" id="3_3np20"]
+[ext_resource type="Script" uid="uid://cjnnkrs1y6bf4" path="res://addons/ImpishPuppets/Puppet2D/PuppetTransform2D.cs" id="5_lq7r8"]
+[ext_resource type="Script" uid="uid://5tepakbyi5a5" path="res://addons/ImpishPuppets/Puppet2D/PuppetBone2D.cs" id="6_2ba3d"]
+[ext_resource type="Script" uid="uid://cp0duot1dk6ar" path="res://addons/ImpishPuppets/Controllers/FaceControl.cs" id="7_2ba3d"]
+[ext_resource type="Shader" uid="uid://cg6d0044dreyc" path="res://addons/ImpishPuppets/Shared/Puppet2DMaterial.gdshader" id="7_qfgpo"]
+[ext_resource type="Script" uid="uid://cs4bqyhnd7q6m" path="res://addons/ImpishPuppets/BoneModifiers/IKModifier.cs" id="8_b85v4"]
+[ext_resource type="Texture2D" uid="uid://qtldcoc7ao6o" path="res://addons/ImpishPuppets/Template/TemplateGradient.tres" id="8_dwjoh"]
+[ext_resource type="Texture2D" uid="uid://dwxxbug8ihu73" path="res://addons/ImpishPuppets/Shared/JiggleTexture.tres" id="9_6s3m2"]
+[ext_resource type="Script" uid="uid://hg46v38qaprs" path="res://addons/ImpishPuppets/BoneModifiers/IKTipModifier.cs" id="9_66lfb"]
+[ext_resource type="Script" uid="uid://bvei2omffd38e" path="res://addons/ImpishPuppets/Controllers/HandControl.cs" id="10_ux765"]
+[ext_resource type="Script" uid="uid://7de6awe3bi2m" path="res://addons/ImpishPuppets/Controllers/FootControl.cs" id="10_vawqv"]
+[ext_resource type="Resource" uid="uid://dqtgtepl6wkfp" path="res://addons/ImpishPuppets/Shared/Hands.tres" id="11_cjmyk"]
+[ext_resource type="Script" uid="uid://ceuf4vomiufij" path="res://addons/ImpishPuppets/Puppet2D/DepthMarker.cs" id="13_dwjoh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dwjoh"]
+shader = ExtResource("7_qfgpo")
+shader_parameter/colorGradient = ExtResource("8_dwjoh")
+shader_parameter/noiseTexture = ExtResource("9_6s3m2")
+shader_parameter/flatLighting = true
+
+[node name="Puppet" type="Node2D" unique_id=255594330]
+material = ExtResource("1_n5rw6")
+script = ExtResource("1_uown1")
+PuppetTexture = ExtResource("2_n5rw6")
+SpriteSheet = ExtResource("3_3np20")
+PuppetMaterial = ExtResource("1_n5rw6")
+metadata/_custom_type_script = "uid://cn0nmyqd8hbei"
+
+[node name="Lower" type="Node2D" parent="." unique_id=277780547 node_paths=PackedStringArray("Puppet")]
+use_parent_material = true
+position = Vector2(0.101379395, -32.05295)
+script = ExtResource("5_lq7r8")
+Puppet = NodePath("..")
+
+[node name="LowerBody" type="Node2D" parent="Lower" unique_id=1108982652 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(1.865, -9.29)
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Body"
+SpriteName = &"Lower"
+SpriteGroupDropdown = &"Body"
+SpriteNameDropdown = &"Lower"
+Puppet = NodePath("../..")
+
+[node name="LowerLegL" type="Node2D" parent="Lower" unique_id=956932968 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = -1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(7.5010233, 6.5903893)
+rotation = 1.7201731
+scale = Vector2(0.9999997, 0.9999997)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(1.415, 9.985)
+SortOrder = 2
+RotationOffset = -1.571
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Body"
+SpriteName = &"LowerLeg"
+SpriteGroupDropdown = &"Body"
+SpriteNameDropdown = &"LowerLeg"
+Puppet = NodePath("../..")
+
+[node name="LowerLegL" type="Node" parent="Lower/LowerLegL" unique_id=112718338]
+script = ExtResource("9_66lfb")
+TargetPath = NodePath("../../../FootL/Foot")
+NextPath = NodePath("../../UpperLegL/UpperLegL")
+Length = 12.0
+metadata/_custom_type_script = "uid://hg46v38qaprs"
+
+[node name="UpperLegL" type="Node2D" parent="Lower" unique_id=308092256 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = -1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(3.597168, -2.616127)
+rotation = 1.169746
+scale = Vector2(0.9999996, 0.9999996)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(1.005, 9.385)
+SortOrder = 2
+RotationOffset = -1.571
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Body"
+SpriteName = &"UpperLeg"
+SpriteGroupDropdown = &"Body"
+SpriteNameDropdown = &"UpperLeg"
+Puppet = NodePath("../..")
+
+[node name="UpperLegL" type="Node" parent="Lower/UpperLegL" unique_id=727407325]
+script = ExtResource("8_b85v4")
+NextPath = NodePath("")
+AngleNudge = -0.1
+LockAngleSign = 1.0
+metadata/_custom_type_script = "uid://cs4bqyhnd7q6m"
+
+[node name="LowerLegR" type="Node2D" parent="Lower" unique_id=1582483114 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-3.6217122, 6.9033127)
+rotation = 1.8605541
+scale = Vector2(0.9999993, 0.9999993)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(1.415, 9.985)
+SortOrder = 2
+Order = true
+RotationOffset = -1.571
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Body"
+SpriteName = &"LowerLeg"
+SpriteGroupDropdown = &"Body"
+SpriteNameDropdown = &"LowerLeg"
+Puppet = NodePath("../..")
+
+[node name="LowerLegR" type="Node" parent="Lower/LowerLegR" unique_id=955764296]
+script = ExtResource("9_66lfb")
+TargetPath = NodePath("../../../FootR/Foot")
+NextPath = NodePath("../../UpperLegR/UpperLegR")
+Length = 12.0
+metadata/_custom_type_script = "uid://hg46v38qaprs"
+
+[node name="UpperLegR" type="Node2D" parent="Lower" unique_id=405211307 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-6.322296, -2.7251282)
+rotation = 1.2973427
+scale = Vector2(0.9999996, 0.9999996)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(1.005, 9.385)
+SortOrder = 2
+Order = true
+RotationOffset = -1.571
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Body"
+SpriteName = &"UpperLeg"
+SpriteGroupDropdown = &"Body"
+SpriteNameDropdown = &"UpperLeg"
+Puppet = NodePath("../..")
+
+[node name="UpperLegR" type="Node" parent="Lower/UpperLegR" unique_id=2035851595]
+script = ExtResource("8_b85v4")
+NextPath = NodePath("")
+AngleNudge = -0.1
+LockAngleSign = 1.0
+metadata/_custom_type_script = "uid://cs4bqyhnd7q6m"
+
+[node name="Upper" type="Node2D" parent="." unique_id=1060946086 node_paths=PackedStringArray("Puppet")]
+use_parent_material = true
+position = Vector2(-0.74411774, -48.107365)
+script = ExtResource("5_lq7r8")
+Puppet = NodePath("..")
+
+[node name="UpperBody" type="Node2D" parent="Upper" unique_id=1281248494 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(-2.81, -13.11)
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Body"
+SpriteName = &"Upper"
+SpriteGroupDropdown = &"Body"
+SpriteNameDropdown = &"Upper"
+Puppet = NodePath("../..")
+
+[node name="LowerArmL" type="Node2D" parent="Upper" unique_id=1877030737 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = -1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(17.194212, -11.207775)
+rotation = -0.2655606
+scale = Vector2(0.9999991, 0.9999991)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(8.56, -1.66)
+SortOrder = 2
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Body"
+SpriteName = &"LowerArm"
+SpriteGroupDropdown = &"Body"
+SpriteNameDropdown = &"LowerArm"
+Puppet = NodePath("../..")
+
+[node name="LowerArmL" type="Node" parent="Upper/LowerArmL" unique_id=1801492307]
+script = ExtResource("9_66lfb")
+TargetPath = NodePath("../../../HandL")
+NextPath = NodePath("../../UpperArmL/UpperArmL")
+metadata/_custom_type_script = "uid://hg46v38qaprs"
+
+[node name="UpperArmL" type="Node2D" parent="Upper" unique_id=1940855150 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = -1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(5.341263, -13.080635)
+rotation = 0.15671232
+scale = Vector2(0.9999976, 0.9999976)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(8.98, -1.375)
+SortOrder = 2
+RotationOffset = 0.045
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Body"
+SpriteName = &"UpperArm"
+SpriteGroupDropdown = &"Body"
+SpriteNameDropdown = &"UpperArm"
+Puppet = NodePath("../..")
+
+[node name="UpperArmL" type="Node" parent="Upper/UpperArmL" unique_id=1190571198]
+script = ExtResource("8_b85v4")
+NextPath = NodePath("")
+Length = 12.0
+AngleNudge = 0.1
+LockAngleSign = -1.0
+metadata/_custom_type_script = "uid://cs4bqyhnd7q6m"
+
+[node name="LowerArmR" type="Node2D" parent="Upper" unique_id=191811376 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-19.788277, -12.4262085)
+rotation = -2.51435
+scale = Vector2(1, -1)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(8.56, -1.66)
+SortOrder = 2
+Order = true
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Body"
+SpriteName = &"LowerArm"
+SpriteGroupDropdown = &"Body"
+SpriteNameDropdown = &"LowerArm"
+Puppet = NodePath("../..")
+Flip = true
+
+[node name="LowerArmR" type="Node" parent="Upper/LowerArmR" unique_id=2028306358]
+script = ExtResource("9_66lfb")
+TargetPath = NodePath("../../../HandR")
+NextPath = NodePath("../../UpperArmR/UpperArmR")
+metadata/_custom_type_script = "uid://hg46v38qaprs"
+
+[node name="UpperArmR" type="Node2D" parent="Upper" unique_id=2018587864 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-7.8483734, -13.625664)
+rotation = 3.041471
+scale = Vector2(1, -1)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(8.98, -1.375)
+SortOrder = 2
+Order = true
+RotationOffset = 0.13
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Body"
+SpriteName = &"UpperArm"
+SpriteGroupDropdown = &"Body"
+SpriteNameDropdown = &"UpperArm"
+Puppet = NodePath("../..")
+Flip = true
+
+[node name="UpperArmR" type="Node" parent="Upper/UpperArmR" unique_id=99502039]
+script = ExtResource("8_b85v4")
+NextPath = NodePath("")
+Length = 12.0
+AngleNudge = 0.1
+LockAngleSign = -1.0
+metadata/_custom_type_script = "uid://cs4bqyhnd7q6m"
+
+[node name="Head" type="Node2D" parent="." unique_id=1057896294 node_paths=PackedStringArray("Puppet")]
+use_parent_material = true
+position = Vector2(-0.7918701, -67.30039)
+script = ExtResource("5_lq7r8")
+Puppet = NodePath("..")
+
+[node name="Head" type="Node2D" parent="Head" unique_id=902869616 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(1.3467865, 0.057655334)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(-4.18, -7.065)
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Body"
+SpriteName = &"Head"
+SpriteGroupDropdown = &"Body"
+SpriteNameDropdown = &"Head"
+Puppet = NodePath("../..")
+
+[node name="EyebrowL" type="Node2D" parent="Head" unique_id=1383033255 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = SubResource("ShaderMaterial_dwjoh")
+use_parent_material = true
+position = Vector2(4.9439545, -17.492203)
+script = ExtResource("6_2ba3d")
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Eyebrow"
+SpriteName = &"Slant"
+SpriteGroupDropdown = &"Eyebrow"
+SpriteNameDropdown = &"Slant"
+Puppet = NodePath("../..")
+
+[node name="EyebrowR" type="Node2D" parent="Head" unique_id=414328429 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = SubResource("ShaderMaterial_dwjoh")
+use_parent_material = true
+position = Vector2(-6.937607, -17.601196)
+scale = Vector2(-1, 1)
+script = ExtResource("6_2ba3d")
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Eyebrow"
+SpriteName = &"Slant"
+SpriteGroupDropdown = &"Eyebrow"
+SpriteNameDropdown = &"Slant"
+Puppet = NodePath("../..")
+Flip = true
+
+[node name="EyeL" type="Node2D" parent="Head" unique_id=1167460960 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = SubResource("ShaderMaterial_dwjoh")
+use_parent_material = true
+position = Vector2(3.9629211, -11.060879)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(-0.29, -1.25)
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Eye"
+SpriteName = &"Forward"
+SpriteGroupDropdown = &"Eye"
+SpriteNameDropdown = &"Forward"
+Puppet = NodePath("../..")
+
+[node name="EyeR" type="Node2D" parent="Head" unique_id=1958819600 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = SubResource("ShaderMaterial_dwjoh")
+use_parent_material = true
+position = Vector2(-6.2835846, -11.060883)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(-0.29, -1.25)
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Eye"
+SpriteName = &"Forward"
+SpriteGroupDropdown = &"Eye"
+SpriteNameDropdown = &"Forward"
+Puppet = NodePath("../..")
+
+[node name="Mouth" type="Node2D" parent="Head" unique_id=1549967892 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-0.5063019, -5.8286285)
+script = ExtResource("6_2ba3d")
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Mouth"
+SpriteName = &"Smile"
+SpriteGroupDropdown = &"Mouth"
+SpriteNameDropdown = &"Smile"
+Puppet = NodePath("../..")
+
+[node name="FaceControl" type="Node" parent="Head" unique_id=855846661]
+script = ExtResource("7_2ba3d")
+PuppetPath = NodePath("../..")
+EyeL = &"Forward"
+EyeR = &"Forward"
+EyebrowL = &"Slant"
+EyebrowR = &"Slant"
+BothEyebrows = &"Slant"
+BothEyes = &"Forward"
+Mouth = &"Smile"
+metadata/_custom_type_script = "uid://cp0duot1dk6ar"
+
+[node name="FootL" type="Node2D" parent="." unique_id=104345523 node_paths=PackedStringArray("Puppet")]
+use_parent_material = true
+position = Vector2(5.9457397, -0.45043564)
+script = ExtResource("5_lq7r8")
+Puppet = NodePath("..")
+
+[node name="LowerLegMark" type="Node" parent="FootL" unique_id=485227626]
+script = ExtResource("13_dwjoh")
+Marked = NodePath("../../Lower/LowerLegL")
+
+[node name="UpperLegMark" type="Node" parent="FootL" unique_id=1417256237]
+script = ExtResource("13_dwjoh")
+Marked = NodePath("../../Lower/UpperLegL")
+
+[node name="Foot" type="Node2D" parent="FootL" unique_id=1429844753 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = -1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-0.47047424, -10.87812)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(1.11, 5.255)
+SortOrder = 2
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Body"
+SpriteName = &"Foot"
+SpriteGroupDropdown = &"Body"
+SpriteNameDropdown = &"Foot"
+Puppet = NodePath("../..")
+
+[node name="FootControl" type="Node" parent="FootL" unique_id=605286440]
+script = ExtResource("10_vawqv")
+FootPath = NodePath("../Foot")
+FootAccessoryPath = NodePath("")
+UpperLegPath = NodePath("../../Lower/UpperLegL")
+LowerLegPath = NodePath("../../Lower/LowerLegL")
+PoseDropdown = "Right"
+
+[node name="FootR" type="Node2D" parent="." unique_id=635307844 node_paths=PackedStringArray("Puppet")]
+use_parent_material = true
+position = Vector2(-7.20697, -1.0810432)
+script = ExtResource("5_lq7r8")
+Puppet = NodePath("..")
+
+[node name="LowerLegMark" type="Node" parent="FootR" unique_id=2008612359]
+script = ExtResource("13_dwjoh")
+Marked = NodePath("../../Lower/LowerLegR")
+
+[node name="UpperLegMark" type="Node" parent="FootR" unique_id=433179294]
+script = ExtResource("13_dwjoh")
+Marked = NodePath("../../Lower/UpperLegR")
+
+[node name="Foot" type="Node2D" parent="FootR" unique_id=1968193150 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-0.38038635, -10.427689)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(1.11, 5.255)
+SortOrder = 2
+Order = true
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Body"
+SpriteName = &"Foot"
+SpriteGroupDropdown = &"Body"
+SpriteNameDropdown = &"Foot"
+Puppet = NodePath("../..")
+
+[node name="FootControl" type="Node" parent="FootR" unique_id=215404277]
+script = ExtResource("10_vawqv")
+FootPath = NodePath("../Foot")
+FootAccessoryPath = NodePath("")
+UpperLegPath = NodePath("../../Lower/UpperLegR")
+LowerLegPath = NodePath("../../Lower/LowerLegR")
+RightFoot = true
+PoseDropdown = "Right"
+
+[node name="HandL" type="Node2D" parent="." unique_id=1921299967 node_paths=PackedStringArray("Puppet")]
+use_parent_material = true
+position = Vector2(29.749447, -62.932358)
+script = ExtResource("5_lq7r8")
+Puppet = NodePath("..")
+
+[node name="LowerArmMark" type="Node" parent="HandL" unique_id=865154299]
+script = ExtResource("13_dwjoh")
+Marked = NodePath("../../Upper/LowerArmL")
+
+[node name="UpperArmMark" type="Node" parent="HandL" unique_id=1991597822]
+script = ExtResource("13_dwjoh")
+Marked = NodePath("../../Upper/UpperArmL")
+
+[node name="PalmBack" type="Node2D" parent="HandL" unique_id=1020424961 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = -1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(-1.505, -3.135)
+SortOrder = 2
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"Palm"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"Palm"
+Puppet = NodePath("../..")
+
+[node name="ThumbUp" type="Node2D" parent="HandL" unique_id=1308316120 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = -1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-4.688877, -2.535469)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(-3.93, -2.23)
+SortOrder = 2
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"Thumb"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"Thumb"
+Puppet = NodePath("../..")
+
+[node name="Pinky" type="Node2D" parent="HandL" unique_id=1885699557 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = -1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(4.1331635, -4.272087)
+rotation = 0.29071856
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(0.08, -5.795)
+SortOrder = 2
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"Finger"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"Finger"
+Puppet = NodePath("../..")
+
+[node name="Ring" type="Node2D" parent="HandL" unique_id=460985537 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = -1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(1.5976906, -5.8697815)
+rotation = 0.09672906
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(0.08, -5.795)
+SortOrder = 2
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"Finger"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"Finger"
+Puppet = NodePath("../..")
+
+[node name="Middle" type="Node2D" parent="HandL" unique_id=501577660 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = -1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-1.6795998, -6.413067)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(0.08, -5.795)
+SortOrder = 2
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"Finger"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"Finger"
+Puppet = NodePath("../..")
+
+[node name="Index" type="Node2D" parent="HandL" unique_id=295720259 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = -1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-4.477913, -5.348797)
+rotation = -0.14627135
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(0.08, -5.795)
+SortOrder = 2
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"Finger"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"Finger"
+Puppet = NodePath("../..")
+
+[node name="ThumbDown" type="Node2D" parent="HandL" unique_id=1913621818 node_paths=PackedStringArray("Sprite", "Puppet")]
+visible = false
+z_index = -1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-5.348793, -3.160656)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(2.535, -0.32)
+SortOrder = 2
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"ThumbDown"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"ThumbDown"
+Puppet = NodePath("../..")
+
+[node name="PalmFront" type="Node2D" parent="HandL" unique_id=471560709 node_paths=PackedStringArray("Sprite", "Puppet")]
+visible = false
+z_index = -1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(-1.505, -3.135)
+SortOrder = 2
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"Palm"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"Palm"
+Puppet = NodePath("../..")
+
+[node name="HandControl" type="Node" parent="HandL" unique_id=336573251]
+script = ExtResource("10_ux765")
+UpperArmPath = NodePath("../../Upper/UpperArmL")
+LowerArmPath = NodePath("../../Upper/LowerArmL")
+Poses = ExtResource("11_cjmyk")
+SelectedPose = "Open"
+PoseDropdown = "Open"
+metadata/_custom_type_script = "uid://bvei2omffd38e"
+
+[node name="HandR" type="Node2D" parent="." unique_id=492871974 node_paths=PackedStringArray("Puppet")]
+use_parent_material = true
+position = Vector2(-30.281246, -67.60052)
+scale = Vector2(-1, 1)
+script = ExtResource("5_lq7r8")
+Puppet = NodePath("..")
+Flip = true
+
+[node name="LowerArmMark" type="Node" parent="HandR" unique_id=1024581160]
+script = ExtResource("13_dwjoh")
+Marked = NodePath("../../Upper/LowerArmR")
+
+[node name="UpperArmMark" type="Node" parent="HandR" unique_id=1104057695]
+script = ExtResource("13_dwjoh")
+Marked = NodePath("../../Upper/UpperArmR")
+
+[node name="PalmBack" type="Node2D" parent="HandR" unique_id=352118183 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(-1.505, -3.135)
+SortOrder = 2
+Order = true
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"Palm"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"Palm"
+Puppet = NodePath("../..")
+
+[node name="ThumbUp" type="Node2D" parent="HandR" unique_id=108198644 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-4.688877, -2.535469)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(-3.93, -2.23)
+SortOrder = 2
+Order = true
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"Thumb"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"Thumb"
+Puppet = NodePath("../..")
+
+[node name="Pinky" type="Node2D" parent="HandR" unique_id=625672428 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(4.1331635, -4.272087)
+rotation = 0.29071856
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(0.08, -5.795)
+SortOrder = 2
+Order = true
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"Finger"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"Finger"
+Puppet = NodePath("../..")
+
+[node name="Ring" type="Node2D" parent="HandR" unique_id=1889229923 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(1.5976906, -5.8697815)
+rotation = 0.09672906
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(0.08, -5.795)
+SortOrder = 2
+Order = true
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"Finger"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"Finger"
+Puppet = NodePath("../..")
+
+[node name="Middle" type="Node2D" parent="HandR" unique_id=291451989 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-1.6795998, -6.413067)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(0.08, -5.795)
+SortOrder = 2
+Order = true
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"Finger"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"Finger"
+Puppet = NodePath("../..")
+
+[node name="Index" type="Node2D" parent="HandR" unique_id=669334059 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-4.477913, -5.348797)
+rotation = -0.14627135
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(0.08, -5.795)
+SortOrder = 2
+Order = true
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"Finger"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"Finger"
+Puppet = NodePath("../..")
+
+[node name="ThumbDown" type="Node2D" parent="HandR" unique_id=828754566 node_paths=PackedStringArray("Sprite", "Puppet")]
+visible = false
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+position = Vector2(-5.348793, -3.160656)
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(2.535, -0.32)
+SortOrder = 2
+Order = true
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"ThumbDown"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"ThumbDown"
+Puppet = NodePath("../..")
+
+[node name="PalmFront" type="Node2D" parent="HandR" unique_id=489002054 node_paths=PackedStringArray("Sprite", "Puppet")]
+visible = false
+z_index = 1
+material = ExtResource("1_n5rw6")
+use_parent_material = true
+script = ExtResource("6_2ba3d")
+SpriteOffset = Vector2(-1.505, -3.135)
+SortOrder = 2
+Order = true
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Hand"
+SpriteName = &"Palm"
+SpriteGroupDropdown = &"Hand"
+SpriteNameDropdown = &"Palm"
+Puppet = NodePath("../..")
+
+[node name="HandControl" type="Node" parent="HandR" unique_id=1256552226]
+script = ExtResource("10_ux765")
+RightHand = true
+UpperArmPath = NodePath("../../Upper/UpperArmR")
+LowerArmPath = NodePath("../../Upper/LowerArmR")
+Poses = ExtResource("11_cjmyk")
+SelectedPose = "Open"
+PoseDropdown = "Open"
+metadata/_custom_type_script = "uid://bvei2omffd38e"

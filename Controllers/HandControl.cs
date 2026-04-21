@@ -156,17 +156,17 @@ public partial class HandControl: PuppetController
 
     public override Array<Dictionary> ControlPropertyList()
     {
-        throw new NotImplementedException();
+        return _GetPropertyList();
     }
 
     public override bool ControlSet(StringName property, Variant variant)
     {
-        throw new NotImplementedException();
+        return _Set(property, variant);
     }
 
     public override Variant ControlGet(StringName property)
     {
-        throw new NotImplementedException();
+        return _Get(property);
     }
 
 }

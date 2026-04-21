@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://or86v7676dfn"]
+
+[ext_resource type="Shader" uid="uid://cg6d0044dreyc" path="res://addons/ImpishPuppets/Shared/Puppet2DMaterial.gdshader" id="1_pca15"]
+[ext_resource type="Texture2D" uid="uid://dwxxbug8ihu73" path="res://addons/ImpishPuppets/Shared/JiggleTexture.tres" id="2_af1ac"]
+[ext_resource type="Texture2D" uid="uid://qtldcoc7ao6o" path="res://addons/ImpishPuppets/Template/TemplateGradient.tres" id="2_dp58e"]
+
+[resource]
+shader = ExtResource("1_pca15")
+shader_parameter/colorGradient = ExtResource("2_dp58e")
+shader_parameter/noiseTexture = ExtResource("2_af1ac")
+shader_parameter/jiggleRate = 3.0
+shader_parameter/jiggleScale = 0.0
+shader_parameter/jiggleAmount = 0.02
+shader_parameter/lightStrength = 0.005

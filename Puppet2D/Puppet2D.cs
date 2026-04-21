@@ -11,7 +11,8 @@ public interface Puppet
     public StringName GetFirstGroup();
     public PuppetSpriteData GetFirstSprite(StringName group);
     public PuppetSpriteData GetSpriteReference(StringName group, StringName sprite);
-    public Vector2 GetResize();
+    public void MakeTilesDirty();
+    public Node GetNode();
 }
 
 [Tool]
@@ -23,6 +24,10 @@ public partial class Puppet2D: Node2D, Puppet
     public ImageTexture PuppetImageTexture {get; private set;}
     [Export]
     public TileSet SpriteSheet;
+    [Export]
+    public ShaderMaterial PuppetMaterial {get; private set;}
+    public ShaderMaterial PuppetMaterialFlat {get; private set;}
+
     private Dictionary<StringName, Dictionary<StringName, PuppetSpriteData>> SpriteDict = null;
 
     public Transform2D? InverseTransform {get; private set;} = null;
@@ -31,7 +36,7 @@ public partial class Puppet2D: Node2D, Puppet
         InverseTransform = GlobalTransform.AffineInverse();
     }
 
-    public Vector2 GetResize() => Vector2.One;
+    public Node GetNode() => this;
 
     public override Variant _Get(StringName property)
     {
@@ -47,12 +52,18 @@ public partial class Puppet2D: Node2D, Puppet
 
     public override void _EnterTree()
     {
+        PuppetMaterialFlat = PuppetMaterial.Duplicate() as ShaderMaterial;
+        PuppetMaterialFlat.SetShaderParameter("flatLighting", true);
+
         if(SpriteSheet == null || PuppetTexture == null)
             return;
         SpriteDict ??= SpriteSheet.MakeSpriteDict();
-        var image = PuppetTexture.GetImage();
-        image.Decompress();
-        PuppetImageTexture = ImageTexture.CreateFromImage(image);
+        if(PuppetImageTexture == null)
+        {
+            var image = PuppetTexture.GetImage();
+            image.Decompress();
+            PuppetImageTexture = ImageTexture.CreateFromImage(image);
+        }
     }
 
     public override void _Notification(int what)
@@ -86,7 +97,9 @@ public partial class Puppet2D: Node2D, Puppet
         PuppetImageTexture.SetMeta("dirty", false);
         var path = PuppetTexture.ResourcePath;
         GD.Print($"Saved at {path}");
-        PuppetImageTexture.GetImage().SavePng(path);
+        var image = PuppetImageTexture.GetImage();
+        image.Decompress();
+        image.SavePng(path);
         EditorInterface.Singleton.GetResourceFilesystem().ReimportFiles([path]);
     }
 
@@ -138,7 +151,6 @@ public partial class Puppet2D: Node2D, Puppet
         var pBone = new PuppetBone2D()
         {
             Puppet = this,
-            UseParentMaterial = true,
         };
         pBone.Initialize();
         parent.AddChild(pBone, true);
@@ -157,9 +169,13 @@ public partial class Puppet2D: Node2D, Puppet
         var pTransform = new PuppetTransform2D()
         {
             Puppet = this,
-            UseParentMaterial = true,
         };
         parent.AddChild(pTransform, true);
         pTransform.Owner = Owner ?? this;
+    }
+
+    public void MakeTilesDirty()
+    {
+        SpriteSheet.SetMeta("dirty", true);
     }
 }

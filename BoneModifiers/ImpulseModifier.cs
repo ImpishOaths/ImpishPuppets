@@ -33,7 +33,12 @@ public abstract partial class ImpulseModifier: PuppetBoneModifier
 
         Value += Velocity * delta;
         if(MinMax.X < MinMax.Y)
+        {
+            var preValue = Value;
             Value = Mathf.Clamp(Value, MinMax.X, MinMax.Y);
+            if(Value != preValue)
+                Velocity *= -0.5f;
+        }
         
         Velocity += (power - Value*RestoreForce) * delta;
         Velocity *= Drag;

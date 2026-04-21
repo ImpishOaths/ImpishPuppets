@@ -1,0 +1,67 @@
+[gd_resource type="TileSet" format=3 uid="uid://crcraqph1bsly"]
+
+[ext_resource type="Texture2D" uid="uid://745mhnpfnagr" path="res://addons/ImpishPuppets/Clothing/Shirts1.png" id="1_my8h2"]
+[ext_resource type="Texture2D" uid="uid://cs88ojug3cr5p" path="res://addons/ImpishPuppets/Clothing/Weapons.png" id="2_ljcmd"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ljcmd"]
+texture = ExtResource("1_my8h2")
+0:0/size_in_atlas = Vector2i(3, 3)
+0:0/0 = 0
+0:0/0/custom_data_0 = &"Tops"
+0:0/0/custom_data_1 = &"Sweater"
+0:0/0/custom_data_4 = Color(0.20460002, 0.9179102, 0.93, 1)
+3:0/size_in_atlas = Vector2i(3, 3)
+3:0/0 = 0
+3:0/0/custom_data_0 = &"Pants"
+3:0/0/custom_data_1 = &"Jeans"
+3:0/0/custom_data_4 = Color(0.28899997, 1, 0.20999998, 1)
+0:3/size_in_atlas = Vector2i(3, 3)
+0:3/0 = 0
+0:3/0/custom_data_0 = &"Hats"
+0:3/0/custom_data_1 = &"Tophat"
+0:3/0/custom_data_2 = Vector2(0.255, -27.08)
+0:3/0/custom_data_4 = Color(1, 0.29000002, 0.29000002, 1)
+6:0/size_in_atlas = Vector2i(3, 3)
+6:0/0 = 0
+6:0/0/custom_data_0 = &"Tops"
+6:0/0/custom_data_1 = &"Bra"
+6:0/0/custom_data_2 = Vector2(0, -7.06)
+6:0/0/custom_data_3 = Color(0.2474798, 0.4599486, 0.728888, 1)
+6:0/0/custom_data_4 = Color(1, 0, 0, 1)
+6:0/0/custom_data_5 = Color(1, 1, 1, 1)
+3:3/size_in_atlas = Vector2i(3, 3)
+3:3/0 = 0
+3:3/0/custom_data_0 = &"Hats"
+3:3/0/custom_data_1 = &"Fez"
+3:3/0/custom_data_3 = Color(0.58, 0.12179998, 0.12179998, 1)
+6:3/size_in_atlas = Vector2i(3, 3)
+6:3/0 = 0
+6:3/0/custom_data_0 = &"Tops"
+6:3/0/custom_data_1 = &"Suit"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gidmj"]
+texture = ExtResource("2_ljcmd")
+0:0/size_in_atlas = Vector2i(3, 3)
+0:0/0 = 0
+0:0/0/custom_data_0 = &"Weapons"
+0:0/0/custom_data_1 = &"Sword1"
+0:0/0/custom_data_3 = Color(0.41981313, 0.41981313, 0.4198131, 1)
+0:0/0/custom_data_4 = Color(0.1368, 0.14052005, 0.36, 1)
+0:0/0/custom_data_5 = Color(0.3758335, 0.027500007, 0.55, 1)
+
+[resource]
+custom_data_layer_0/name = "Group"
+custom_data_layer_0/type = 21
+custom_data_layer_1/name = "Name"
+custom_data_layer_1/type = 21
+custom_data_layer_2/name = "Offset"
+custom_data_layer_2/type = 5
+custom_data_layer_3/name = "Color1"
+custom_data_layer_3/type = 20
+custom_data_layer_4/name = "Color2"
+custom_data_layer_4/type = 20
+custom_data_layer_5/name = "Color3"
+custom_data_layer_5/type = 20
+sources/0 = SubResource("TileSetAtlasSource_ljcmd")
+sources/1 = SubResource("TileSetAtlasSource_gidmj")
+metadata/dirty = true

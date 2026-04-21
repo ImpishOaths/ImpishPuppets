@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b3oja213on2pp"]
+
+[ext_resource type="Script" uid="uid://bv6y3puisb76g" path="res://addons/ImpishPuppets/Clothing/ClothingContainer.cs" id="1_vrg8g"]
+[ext_resource type="TileSet" uid="uid://crcraqph1bsly" path="res://addons/ImpishPuppets/Clothing/Clothing.tres" id="2_f6eqn"]
+[ext_resource type="Material" uid="uid://dr0nkr5y0hclw" path="res://addons/ImpishPuppets/Clothing/Puppet2DClothingMaterial.tres" id="3_l8tpj"]
+[ext_resource type="Material" uid="uid://bdpewlo1wd0di" path="res://addons/ImpishPuppets/Clothing/Puppet3DClothingMaterial.tres" id="4_10o1g"]
+[ext_resource type="Texture2DArray" uid="uid://cjh8s57xidpdk" path="res://addons/ImpishPuppets/Clothing/ClothingTextures.tres" id="5_10o1g"]
+
+[node name="ClothingContainer" type="Node" unique_id=959748436]
+script = ExtResource("1_vrg8g")
+ClothingTiles = ExtResource("2_f6eqn")
+ClothingMaterial2D = ExtResource("3_l8tpj")
+ClothingMaterial3D = ExtResource("4_10o1g")
+ClothingTextures = ExtResource("5_10o1g")

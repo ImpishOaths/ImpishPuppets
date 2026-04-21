@@ -125,15 +125,6 @@ public partial class FaceControl: PuppetController
         }
         return false;
     }
-
-    public override void _Notification(int what)
-    {
-        if(what == NotificationEditorPreSave)
-        {
-            if(IsBlinking)
-                StopBlink();
-        }
-    }
     
     public override Array<Dictionary> _GetPropertyList()
     {
@@ -308,16 +299,52 @@ public partial class FaceControl: PuppetController
 
     public override Array<Dictionary> ControlPropertyList()
     {
-        throw new NotImplementedException();
+        return _GetPropertyList();
     }
 
-    public override bool ControlSet(StringName property, Variant variant)
+    public override bool ControlSet(StringName property, Variant value)
     {
-        throw new NotImplementedException();
+        switch(property)
+        {
+            case "EyeL":
+                EyeL = value.AsStringName();
+                return true;
+            case "EyeR":
+                EyeR = value.AsStringName();
+                return true;
+            case "EyebrowL":
+                EyebrowL = value.AsStringName();
+                return true;
+            case "EyebrowR":
+                EyebrowR = value.AsStringName();
+                return true;
+            case "Mouth":
+                Mouth = value.AsStringName();
+                return true;
+            case "BothEyes":
+                BothEyes = value.AsStringName();
+                return true;
+            case "BothEyebrows":
+                BothEyebrows = value.AsStringName();
+                return true;
+            default:
+                return false;
+        }
     }
 
     public override Variant ControlGet(StringName property)
     {
-        throw new NotImplementedException();
+        return (string)property switch
+        {
+            "EyeL" => (Variant)EyeL,
+            "EyeR" => (Variant)EyeR,
+            "EyebrowL" => (Variant)EyebrowL,
+            "EyebrowR" => (Variant)EyebrowR,
+            "Mouth" => (Variant)Mouth,
+            "BothEyes" => (Variant)BothEyes,
+            "BothEyebrows" => (Variant)BothEyebrows,
+            _ => default,
+        };
+
     }
 }

@@ -7,14 +7,27 @@ namespace ImpishPuppets;
 [GlobalClass]
 public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
 {
-    private static QuadMesh SharedMesh = null;
-    private MeshInstance3D Mesh;
+    protected virtual Puppet TexPuppet => Puppet;
+    protected virtual Texture2D PuppetTexture => Puppet.PuppetTexture;
+    protected virtual Material PuppetMaterial
+    {
+        get
+        {
+            if(CurrentSprite?.SpriteData?.GetCustomData("FlatLighting").AsBool() ?? false)
+            {
+                return Puppet.PuppetMaterialFlat;
+            }
+            return Puppet.PuppetMaterial;
+        }
+    }
 
-    private PuppetSpriteData CurrentSprite;
+    protected PuppetSpriteData CurrentSprite;
 
     [ExportGroup("Storage")]
     [Export]
-    private Vector2I FrontBackOrder;
+    protected Sprite3D Sprite;
+    [Export]
+    public Vector2I FrontBackOrder;
     [Export]
     public SortOrderEnum SortOrder;
     [Export]
@@ -25,7 +38,7 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
         get => _RotationOffset;
         set => _RotationOffset = value;
     }
-    private float _RotationOffset;
+    protected float _RotationOffset;
 
     [ExportGroup("Sprite Info")]
     [Export]
@@ -36,13 +49,13 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
         {
             bool check = _SpriteGroup != value;
             _SpriteGroup = value;
-            if(Mesh == null || Puppet == null)
+            if(Sprite == null || TexPuppet == null)
                 return;
             if(check)
                 SetGroup(_SpriteGroup);
         }
     }
-    private StringName _SpriteGroup;
+    protected StringName _SpriteGroup = "";
 
     [Export]
     public StringName SpriteName
@@ -52,18 +65,18 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
         {
             bool check = _SpriteName != value;
             _SpriteName = value;
-            if(Mesh == null || Puppet == null)
+            if(Sprite == null || TexPuppet == null)
                 return;
             if(check)
                 SetSprite(_SpriteGroup, _SpriteName);
         }
     }
-    private StringName _SpriteName;
+    protected StringName _SpriteName = "";
 
     public override Array<Dictionary> _GetPropertyList()
     {
         Array<Dictionary> properties = [];
-        if(Puppet == null)
+        if(TexPuppet == null)
             return properties;
             
         properties.Add(new()
@@ -71,7 +84,7 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
             {"name","Sprite Select"},
             {"usage", (int)PropertyUsageFlags.Group}
         });
-        var groups = Puppet.GetSpriteGroups();
+        var groups = TexPuppet.GetSpriteGroups();
         properties.Add(new(){
             {"name","SpriteGroup"},
             {"type", (int)Variant.Type.StringName},
@@ -80,7 +93,7 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
         });
         if(CurrentSprite != null)
         {
-            var sprites = Puppet.GetSpritesInGroup(CurrentSprite.SpriteGroup);
+            var sprites = TexPuppet.GetSpritesInGroup(CurrentSprite.SpriteGroup);
             properties.Add(new(){
                 {"name","SpriteName"},
                 {"type", (int)Variant.Type.StringName},
@@ -93,15 +106,15 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
 
     private void SetGroup(StringName group)
     {
-        if(Puppet == null)
+        if(TexPuppet == null)
             return;
         
-        SetSprite(Puppet.GetFirstSprite(group));
+        SetSprite(TexPuppet.GetFirstSprite(group));
     }
 
     public void SetSprite(PuppetSpriteData sprite)
     {
-        if(Puppet == null)
+        if(TexPuppet == null)
             return;
 
         CurrentSprite = sprite;
@@ -121,32 +134,29 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
         NotifyPropertyListChanged();
     }
 
-    public void UpdateLook()
+    public virtual void UpdateLook()
     {
-        if(Mesh == null)
+        if(Sprite == null)
             return;
 
         if(CurrentSprite != null)
         {
-            var bflip = new Vector2I(CurrentSprite.SpriteData.FlipH?1:0, CurrentSprite.SpriteData.FlipV?1:0);
-            Mesh.SetInstanceShaderParameter("flip", bflip);
-            
-            var region = ((Rect2)CurrentSprite.SpriteRegion).Scale(Puppet.TextureSize.Inverse()).ToVec4();
-            Mesh.SetInstanceShaderParameter("region", region);
-
-            var offset = CurrentSprite.SpriteData.GetCustomData("Offset").AsVector2() / (Mesh.Scale.ToVec2pos() * Puppet.TileSize);
-            Mesh.SetInstanceShaderParameter("offset", offset);
-            Mesh.Scale = (((Vector2)CurrentSprite.SpriteRegion.Size)/Puppet.TileSize).ToVec3scale();
+            var data = CurrentSprite.SpriteData;
+            Sprite.FlipH = data.FlipH;
+            Sprite.FlipV = data.FlipV;
+            Sprite.Offset = data.GetCustomData("Offset").AsVector2() * new Vector2(1,-1);
+            Sprite.MaterialOverride = PuppetMaterial;
+            Sprite.RegionRect = CurrentSprite.SpriteRegion;
         }
         else
         {
-            Mesh.SetInstanceShaderParameter("flip", new Vector2I(0, 0));
-            Mesh.SetInstanceShaderParameter("offset", new Vector2(0, 0));
-            Mesh.SetInstanceShaderParameter("region", new Vector4(0, 0, 0, 0));
-            Mesh.Scale = (Vector2.One/Puppet.TileSize).ToVec3scale();
+            Sprite.FlipH = false;
+            Sprite.FlipV = false;
+            Sprite.Offset = Vector2.Zero;
+            Sprite.RegionRect = new Rect2(0,0,0,0);
         }
 
-        Mesh.Rotation = new Vector3(0, 0, -RotationOffset);
+        Sprite.Rotation = new Vector3(0, 0, -RotationOffset);
     }
 
     public override void _EnterTree()
@@ -165,7 +175,7 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
             }
         }
 
-        Mesh ??= GetMesh("Mesh");
+        Sprite ??= GetSprite("Sprite");
 
         if(SpriteGroup != "")
             SetSprite(SpriteGroup, SpriteName);
@@ -176,21 +186,23 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
         SetOrder(Order);
     }
 
-    MeshInstance3D GetMesh(string name)
+    Sprite3D GetSprite(string name)
     {
-        var mesh = GetNodeOrNull<MeshInstance3D>(name);
-        if(mesh == null)
+        var sprite = GetNodeOrNull<Sprite3D>(name);
+        if(sprite == null)
         {
-            SharedMesh ??= GD.Load<QuadMesh>("res://addons/ImpishPuppets/Shared/Quad.tres");
-            mesh = new MeshInstance3D
+            sprite = new Sprite3D
             {
                 Name = name,
-                Mesh = SharedMesh,
-                MaterialOverride = Puppet.DefaultMaterial,
+                Texture = PuppetTexture,
+                RegionEnabled = true,
+                MaterialOverride = PuppetMaterial,
+                PixelSize = 1f/(VectorHelpers.PixelSizeRoot*VectorHelpers.PixelSizeRoot)
             };
-            AddChild(mesh, true, InternalMode.Front);
+            AddChild(sprite, true, InternalMode.Front);
+            sprite.Owner = Owner;
         }
-        return mesh;
+        return sprite;
     }
 
     public override void Initialize(Puppet3D puppet, PuppetTransform2D control)
@@ -204,10 +216,12 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
     {
         SortOrder = bone.SortOrder;
 
-        Mesh ??= GetMesh("Mesh");
+        Sprite ??= GetSprite("Sprite");
+        
+        Visible = bone.Visible;
 
         RotationOffset = bone.RotationOffset;
-
+        
         if(bone.Flip) //Prevents an annoying bug where it dosen't flip when it's supposed to
         {
             SetFlip(false);
@@ -232,16 +246,25 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
             SortOrderEnum.FRONT => FrontBackOrder.X,
             SortOrderEnum.BACK => FrontBackOrder.Y,
             SortOrderEnum.BOTH => Order ? FrontBackOrder.X : FrontBackOrder.Y,
-            _ => 1,
+            SortOrderEnum.CLOTHING => FrontBackOrder.X,
+            _ => FrontBackOrder.X,
         };
-        Mesh.SetInstanceShaderParameter("zOffset", (float)order);
+        Sprite.Position = new Vector3(0, 0, order*0.0001f);
     }
 
     public void SetSprite(StringName group, StringName name)
     {
-        if(Puppet != null)
-            SetSprite(Puppet.GetSpriteReference(group, name));
+        if(TexPuppet != null)
+            SetSprite(TexPuppet.GetSpriteReference(group, name));
         else
             SetSprite(null);
+    }
+
+    public override Transform2D GetLocalTransform() => Sprite.Transform.To2D(Flip);
+    public override void SetLocalTransform(Transform2D transform)
+    {
+        var trans = transform.To3D();
+        trans.Origin += Vector3.Back * Sprite.Position.Z;
+        Sprite.Transform = trans;
     }
 }

@@ -43,8 +43,8 @@ public partial class PuppetTransform2D: Node2D, PuppetTransform
     public Transform2D GetOriginTransform() => GlobalTransform;
     public void SetOriginTransform(Transform2D transform) => GlobalTransform = transform;
 
-    public Transform2D GetLocalTransform() => Transform;    
-    public void SetLocalTransform(Transform2D transform) => Transform = transform;
+    public virtual Transform2D GetLocalTransform() => Transform;    
+    public virtual void SetLocalTransform(Transform2D transform) => Transform = transform;
 
     public bool GetFlip() => _Flip;
     public void SetFlip(bool flip)
@@ -53,6 +53,7 @@ public partial class PuppetTransform2D: Node2D, PuppetTransform
             return;
 
         _Flip = flip;
+        
         Scale = new Vector2(_Flip?-1:1,1);
     }
 

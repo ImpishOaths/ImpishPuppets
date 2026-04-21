@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bdpewlo1wd0di"]
+
+[ext_resource type="Shader" uid="uid://0yqdqkt2be8e" path="res://addons/ImpishPuppets/Clothing/Puppet3DClothingMaterial.gdshader" id="1_87qcd"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_87qcd")

@@ -32,6 +32,7 @@ public partial class IKModifier: PuppetBoneModifier
             Next ??= GetNodeOrNull<IKModifier>(NextPath);
 
         var trans = Receiver.GetRootTransform();
+        var basePosStore = trans.Origin;
         var targetTrans = target.GetRootTransform().TranslatedLocal(TargetOffset);
         var targetPos = targetTrans.Origin;
         var diff = (targetPos - trans.Origin).Normalized() * Length;
@@ -57,6 +58,7 @@ public partial class IKModifier: PuppetBoneModifier
         {
             if(basePos.HasValue)
                 trans.Origin = basePos.Value;
+            trans.Origin = basePosStore;
             Receiver.SetRootTransform(trans);
         }
     }

@@ -11,4 +11,5 @@ public partial class PuppetSpriteData: Resource
     public Rect2I SpriteRegion;
     public int AlternateID;
     public TileData SpriteData;
+    public int SheetIndex;
 }

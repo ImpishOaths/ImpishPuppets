@@ -7,6 +7,7 @@ namespace ImpishPuppets;
 [GlobalClass]
 public partial class PuppetTransform3D: Node3D, PuppetTransform
 {
+
     [Export]
     public Puppet3D Puppet;
     
@@ -22,7 +23,8 @@ public partial class PuppetTransform3D: Node3D, PuppetTransform
     {
         Puppet = puppet;
 
-        Position = (trans.Position / Puppet.TileSize).ToVec3pos();
+        Scale = trans.Scale.Abs().ToVec3scale();
+        Position = (trans.Position / (VectorHelpers.PixelSizeRoot*VectorHelpers.PixelSizeRoot)).ToVec3pos();
         Rotation = new Vector3(0, 0, -trans.Rotation);
 
         if(trans.Flip) //Prevents an annoying bug where it dosen't flip when it's supposed to
@@ -40,8 +42,8 @@ public partial class PuppetTransform3D: Node3D, PuppetTransform
     public Transform2D GetOriginTransform() => GlobalTransform.To2D(_Flip);
     public void SetOriginTransform(Transform2D trans) => GlobalTransform = trans.To3D();
 
-    public Transform2D GetLocalTransform() => Transform.To2D(_Flip);
-    public void SetLocalTransform(Transform2D trans) => Transform = trans.To3D();
+    public virtual Transform2D GetLocalTransform() => Transform.To2D(_Flip);
+    public virtual void SetLocalTransform(Transform2D trans) => Transform = trans.To3D();
 
     public bool GetFlip() => _Flip;
     public virtual void SetFlip(bool flip)

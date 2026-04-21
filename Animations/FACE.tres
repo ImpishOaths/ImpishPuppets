@@ -1,0 +1,10 @@
+[gd_resource type="AnimationLibrary" format=3 uid="uid://o80ija0xu7oe"]
+
+[sub_resource type="Animation" id="Animation_mcvgw"]
+resource_name = "RESET"
+length = 0.001
+
+[resource]
+_data = {
+&"RESET": SubResource("Animation_mcvgw")
+}

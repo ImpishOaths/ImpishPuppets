@@ -1,0 +1,343 @@
+[gd_scene format=3 uid="uid://yevfyrtpydur"]
+
+[ext_resource type="Script" uid="uid://bl4s8gh3i1qxq" path="res://addons/ImpishPuppets/Animations/Handles/PuppetHandlesController.cs" id="1_t8fai"]
+[ext_resource type="Script" uid="uid://bypi3xbwheue2" path="res://addons/ImpishPuppets/Animations/Handles/RemoteController.cs" id="2_kcqje"]
+[ext_resource type="Script" uid="uid://dno7b64exmpxe" path="res://addons/ImpishPuppets/Animations/Handles/RemotePuppetTransform.cs" id="3_vkg7b"]
+[ext_resource type="AnimationLibrary" uid="uid://dm75rpmjs47if" path="res://addons/ImpishPuppets/Animations/FULL.tres" id="4_v6tr7"]
+
+[sub_resource type="Animation" id="Animation_40kp7"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Root/Body/Lower:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Root/Body/Lower:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Root/Body/Lower/Upper:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Root/Body/Lower/Upper/Head:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Root/Body/Lower/Upper/ArmL/HandL:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Root/Body/Lower/Upper/ArmL/HandL:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.4374695]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Root/Body/Lower/Upper/ArmR/HandR:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Root/Body/Lower/Upper/ArmR/HandR:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.4847463]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Root/LegL/FootL:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Root/LegL/FootL:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Root/LegR/FootR:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Root/LegR/FootR:rotation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Root/Body/Lower/Upper/FaceController:BothEyebrows")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Flat"]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Root/Body/Lower/Upper/FaceController:BothEyes")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Forward"]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Root/Body/Lower/Upper/FaceController:Mouth")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Smile"]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Root/Body/Lower/Upper/ArmL/HandLController:PoseDropdown")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Open"]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Root/Body/Lower/Upper/ArmR/HandRController:PoseDropdown")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Open"]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Root/LegL/FootLController:PoseDropdown")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Right"]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Root/LegR/FootRController:PoseDropdown")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Right"]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath(".:BodyHeightOverride")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ryoy7"]
+_data = {
+&"RESET": SubResource("Animation_40kp7")
+}
+
+[node name="Handles" type="Node" unique_id=1405510454]
+script = ExtResource("1_t8fai")
+BodyHeight = 31.855
+UpperHeight = 14.56
+HeadHeight = 18.99
+ArmHeight = 13.185
+ArmLength = 32.21
+StanceWidth = 8.605
+
+[node name="Root" type="Node2D" parent="." unique_id=555935945]
+
+[node name="Body" type="Node2D" parent="Root" unique_id=744214372]
+position = Vector2(0, -31.855)
+
+[node name="Lower" type="Node2D" parent="Root/Body" unique_id=1373695785]
+script = ExtResource("3_vkg7b")
+ReceiverPath = "Lower"
+
+[node name="Upper" type="Node2D" parent="Root/Body/Lower" unique_id=1242228626]
+position = Vector2(0, -14.56)
+script = ExtResource("3_vkg7b")
+ReceiverPath = "Upper"
+
+[node name="Head" type="Node2D" parent="Root/Body/Lower/Upper" unique_id=861515038]
+position = Vector2(0, -18.99)
+script = ExtResource("3_vkg7b")
+ReceiverPath = "Head"
+
+[node name="FaceController" type="Node" parent="Root/Body/Lower/Upper" unique_id=716115665]
+unique_name_in_owner = true
+script = ExtResource("2_kcqje")
+ControllerPath = "Head/FaceControl"
+
+[node name="ArmL" type="Node2D" parent="Root/Body/Lower/Upper" unique_id=1167558759]
+position = Vector2(32.21, -13.185)
+
+[node name="HandL" type="Node2D" parent="Root/Body/Lower/Upper/ArmL" unique_id=809054792]
+rotation = 1.4374695
+script = ExtResource("3_vkg7b")
+ReceiverPath = "HandL"
+
+[node name="HandLController" type="Node" parent="Root/Body/Lower/Upper/ArmL" unique_id=252082476]
+unique_name_in_owner = true
+script = ExtResource("2_kcqje")
+ControllerPath = "HandL/HandControl"
+
+[node name="ArmR" type="Node2D" parent="Root/Body/Lower/Upper" unique_id=341703210]
+position = Vector2(-32.21, -13.185)
+
+[node name="HandR" type="Node2D" parent="Root/Body/Lower/Upper/ArmR" unique_id=600413615]
+rotation = 1.4847463
+script = ExtResource("3_vkg7b")
+ReceiverPath = "HandR"
+
+[node name="HandRController" type="Node" parent="Root/Body/Lower/Upper/ArmR" unique_id=2146322764]
+unique_name_in_owner = true
+script = ExtResource("2_kcqje")
+ControllerPath = "HandR/HandControl"
+
+[node name="LegL" type="Node2D" parent="Root" unique_id=520820005]
+position = Vector2(8.605, 0)
+
+[node name="FootL" type="Node2D" parent="Root/LegL" unique_id=15089121]
+script = ExtResource("3_vkg7b")
+ReceiverPath = "FootL"
+
+[node name="FootLController" type="Node" parent="Root/LegL" unique_id=669630985]
+unique_name_in_owner = true
+script = ExtResource("2_kcqje")
+ControllerPath = "FootL/FootControl"
+
+[node name="LegR" type="Node2D" parent="Root" unique_id=1270790663]
+position = Vector2(-8.605, 0)
+
+[node name="FootR" type="Node2D" parent="Root/LegR" unique_id=1564026178]
+script = ExtResource("3_vkg7b")
+ReceiverPath = "FootR"
+
+[node name="FootRController" type="Node" parent="Root/LegR" unique_id=857391671]
+unique_name_in_owner = true
+script = ExtResource("2_kcqje")
+ControllerPath = "FootR/FootControl"
+
+[node name="Full" type="AnimationPlayer" parent="." unique_id=2014818475]
+deterministic = true
+libraries/ = SubResource("AnimationLibrary_ryoy7")
+libraries/FULL = ExtResource("4_v6tr7")
