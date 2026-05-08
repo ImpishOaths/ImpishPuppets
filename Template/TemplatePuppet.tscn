@@ -24,8 +24,6 @@
 [ext_resource type="Script" uid="uid://c2i8tpm2x6em1" path="res://addons/ImpishPuppets/Shared/DepthSwapper.cs" id="18_6y5pn"]
 [ext_resource type="Script" uid="uid://c3fa35atmykfq" path="res://addons/ImpishPuppets/Controllers/ClothingController.cs" id="22_8ltii"]
 [ext_resource type="Script" uid="uid://vei4ktdel8l6" path="res://addons/ImpishPuppets/Controllers/NodeList.cs" id="23_v3rh1"]
-[ext_resource type="Resource" uid="uid://djg18oc54hxyd" path="res://Clothing/Simple/SimpleClothing.tres" id="24_v3rh1"]
-[ext_resource type="Material" uid="uid://bq6hvhsr4mxgq" path="res://Clothing/Simple/SimpleMaterial2D.tres" id="24_yjboh"]
 
 [sub_resource type="Resource" id="Resource_kh3vl"]
 script = ExtResource("23_v3rh1")
@@ -77,26 +75,6 @@ SpriteNameDropdown = &"Lower"
 Puppet = NodePath("../..")
 
 [node name="Squish" type="Node" parent="Lower/LowerBody" unique_id=563393823]
-script = ExtResource("7_6s3m2")
-SquishAmount = Vector2(-0.1, 0.1)
-ImpulseDir = Vector2(0, 1)
-RestoreForce = 100.0
-
-[node name="LowerClothesFront" type="Node2D" parent="Lower" unique_id=365661924 node_paths=PackedStringArray("Sprite", "Puppet")]
-visible = false
-z_index = 1
-material = ExtResource("24_yjboh")
-position = Vector2(-0.06768417, 0.46082687)
-script = ExtResource("13_6y5pn")
-Color1 = Color(0, 0, 0, 1)
-Color2 = Color(0, 0, 0, 1)
-Color3 = Color(0, 0, 0, 1)
-Sprite = NodePath("Sprite")
-SpriteGroup = &"Lower"
-SpriteName = &"Lower"
-Puppet = NodePath("../..")
-
-[node name="Squish" type="Node" parent="Lower/LowerClothesFront" unique_id=887073522]
 script = ExtResource("7_6s3m2")
 SquishAmount = Vector2(-0.1, 0.1)
 ImpulseDir = Vector2(0, 1)
@@ -230,33 +208,13 @@ SquishAmount = Vector2(-0.1, 0.1)
 ImpulseDir = Vector2(0, 1)
 RestoreForce = 100.0
 
-[node name="UpperClothesFront" type="Node2D" parent="Upper" unique_id=1914833933 node_paths=PackedStringArray("Sprite", "Puppet")]
-visible = false
-z_index = 1
-material = ExtResource("24_yjboh")
-position = Vector2(-1.5567284, 0.5414696)
-script = ExtResource("13_6y5pn")
-Color1 = Color(0, 0, 0, 1)
-Color2 = Color(0, 0, 0, 1)
-Color3 = Color(0, 0, 0, 1)
-Sprite = NodePath("Sprite")
-SpriteGroup = &"Upper"
-SpriteName = &"Upper"
-Puppet = NodePath("../..")
-
-[node name="Squish" type="Node" parent="Upper/UpperClothesFront" unique_id=72034539]
-script = ExtResource("7_6s3m2")
-SquishAmount = Vector2(-0.1, 0.1)
-ImpulseDir = Vector2(0, 1)
-RestoreForce = 100.0
-
 [node name="LowerArmL" type="Node2D" parent="Upper" unique_id=1877030737 node_paths=PackedStringArray("Sprite", "Puppet")]
 z_index = -1
 material = ExtResource("1_n5rw6")
 use_parent_material = true
 position = Vector2(16.580233, -10.104916)
-rotation = -0.27056208
-scale = Vector2(0.9999959, 0.9999959)
+rotation = -0.2705621
+scale = Vector2(0.99999917, 0.99999917)
 script = ExtResource("6_2ba3d")
 SpriteOffset = Vector2(8.56, -1.66)
 SortOrder = 3
@@ -279,7 +237,7 @@ material = ExtResource("1_n5rw6")
 use_parent_material = true
 position = Vector2(4.664425, -11.523907)
 rotation = 0.118526496
-scale = Vector2(0.99998724, 0.99998724)
+scale = Vector2(0.9999999, 0.9999999)
 script = ExtResource("6_2ba3d")
 SpriteOffset = Vector2(8.98, -1.375)
 SortOrder = 3
@@ -471,12 +429,12 @@ PuppetPath = NodePath("../..")
 ExpressionList = ExtResource("17_6y5pn")
 EyeL = &"Forward"
 EyeR = &"Forward"
-EyebrowL = &"Flat"
-EyebrowR = &"Flat"
+EyebrowL = null
+EyebrowR = null
 Expression = &"None"
-BothEyebrows = &"Flat"
+BothEyebrows = null
 BothEyes = &"Forward"
-Mouth = &"Smile"
+Mouth = null
 metadata/_custom_type_script = "uid://cp0duot1dk6ar"
 
 [node name="FootL" type="Node2D" parent="." unique_id=104345523 node_paths=PackedStringArray("Puppet")]
@@ -604,7 +562,6 @@ Puppet = NodePath("../..")
 [node name="HeldItem" type="Node2D" parent="HandL" unique_id=1109689950 node_paths=PackedStringArray("Sprite", "Puppet")]
 visible = false
 z_index = -1
-material = ExtResource("24_yjboh")
 position = Vector2(-1.2534447, -3.7836304)
 scale = Vector2(1.0000001, 1.0000001)
 script = ExtResource("13_6y5pn")
@@ -621,7 +578,7 @@ Puppet = NodePath("../..")
 z_index = -1
 material = ExtResource("1_n5rw6")
 use_parent_material = true
-position = Vector2(3.7017348, -4.8417563)
+position = Vector2(3.6242783, -4.363707)
 rotation = 0.266778
 scale = Vector2(0.99999994, 0.99999994)
 script = ExtResource("6_2ba3d")
@@ -638,7 +595,7 @@ Puppet = NodePath("../..")
 z_index = -1
 material = ExtResource("1_n5rw6")
 use_parent_material = true
-position = Vector2(1.0738413, -5.664431)
+position = Vector2(1.0641298, -5.1289163)
 rotation = 0.071522176
 script = ExtResource("6_2ba3d")
 SpriteOffset = Vector2(0.08, -5.795)
@@ -654,8 +611,8 @@ Puppet = NodePath("../..")
 z_index = -1
 material = ExtResource("1_n5rw6")
 use_parent_material = true
-position = Vector2(-1.5741655, -6.0430484)
-rotation = -0.03314231
+position = Vector2(-1.6256046, -5.081112)
+rotation = -0.033142306
 script = ExtResource("6_2ba3d")
 SpriteOffset = Vector2(0.08, -5.795)
 SortOrder = 3
@@ -670,7 +627,7 @@ Puppet = NodePath("../..")
 z_index = -1
 material = ExtResource("1_n5rw6")
 use_parent_material = true
-position = Vector2(-4.162568, -4.9212847)
+position = Vector2(-4.522152, -4.5590057)
 rotation = -0.13764417
 script = ExtResource("6_2ba3d")
 SpriteOffset = Vector2(0.08, -5.795)
@@ -687,7 +644,7 @@ visible = false
 z_index = -1
 material = ExtResource("1_n5rw6")
 use_parent_material = true
-position = Vector2(-6.7375855, -2.2944345)
+position = Vector2(-5.5994864, -2.6034455)
 rotation = -0.054552674
 script = ExtResource("6_2ba3d")
 SpriteOffset = Vector2(2.535, -0.32)
@@ -775,7 +732,6 @@ Puppet = NodePath("../..")
 
 [node name="HeldItem" type="Node2D" parent="HandR" unique_id=2104417000 node_paths=PackedStringArray("Sprite", "Puppet")]
 z_index = 1
-material = ExtResource("24_yjboh")
 position = Vector2(-1.2534381, -3.783627)
 script = ExtResource("13_6y5pn")
 Color1 = Color(0, 0, 0, 1)
@@ -792,7 +748,7 @@ Puppet = NodePath("../..")
 z_index = 1
 material = ExtResource("1_n5rw6")
 use_parent_material = true
-position = Vector2(3.7017348, -4.8417563)
+position = Vector2(3.6242783, -4.363707)
 rotation = 0.266778
 scale = Vector2(0.99999994, 0.99999994)
 script = ExtResource("6_2ba3d")
@@ -810,7 +766,7 @@ Puppet = NodePath("../..")
 z_index = 1
 material = ExtResource("1_n5rw6")
 use_parent_material = true
-position = Vector2(1.0738413, -5.664431)
+position = Vector2(1.0641298, -5.1289163)
 rotation = 0.071522176
 script = ExtResource("6_2ba3d")
 SpriteOffset = Vector2(0.08, -5.795)
@@ -827,7 +783,7 @@ Puppet = NodePath("../..")
 z_index = 1
 material = ExtResource("1_n5rw6")
 use_parent_material = true
-position = Vector2(-1.5741655, -6.0430484)
+position = Vector2(-1.6256046, -5.081112)
 rotation = -0.033142306
 script = ExtResource("6_2ba3d")
 SpriteOffset = Vector2(0.08, -5.795)
@@ -844,7 +800,7 @@ Puppet = NodePath("../..")
 z_index = 1
 material = ExtResource("1_n5rw6")
 use_parent_material = true
-position = Vector2(-4.162568, -4.9212847)
+position = Vector2(-4.522152, -4.5590057)
 rotation = -0.13764417
 script = ExtResource("6_2ba3d")
 SpriteOffset = Vector2(0.08, -5.795)
@@ -862,7 +818,7 @@ visible = false
 z_index = 1
 material = ExtResource("1_n5rw6")
 use_parent_material = true
-position = Vector2(-6.7375855, -2.2944345)
+position = Vector2(-5.5994864, -2.6034455)
 rotation = -0.054552674
 script = ExtResource("6_2ba3d")
 SpriteOffset = Vector2(2.535, -0.32)
@@ -910,4 +866,3 @@ NodeMap = {
 &"Upper": SubResource("Resource_2epkj")
 }
 TestBodyPart = &"Lower"
-TestClothing = ExtResource("24_v3rh1")
