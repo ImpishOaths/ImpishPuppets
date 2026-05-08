@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://gk8hq65gl7ph"]
+
+[ext_resource type="Script" uid="uid://dnpogbc4y0cgd" path="res://addons/ImpishPuppets/Shared/CharacterData.cs" id="1_421wm"]
+[ext_resource type="Script" uid="uid://ceku3u4ittwvx" path="res://addons/ImpishPuppets/Shared/HandData.cs" id="1_rrd4t"]
+
+[sub_resource type="Resource" id="Resource_sl5s5"]
+script = ExtResource("1_rrd4t")
+ThumbUp = Transform2D(0.3866176, -0.92224014, 0.92224014, 0.3866176, 0.17864582, -0.24044691)
+Pinky = Transform2D(0.9833928, -0.18149021, 0.18149021, 0.9833928, -0.46392846, -6.34037)
+Ring = Transform2D(0.9883753, -0.15203379, 0.15203379, 0.9883753, -0.46392846, -6.34037)
+Middle = Transform2D(0.98709536, -0.16013372, 0.16013372, 0.98709536, -0.46392846, -6.34037)
+Index = Transform2D(0.9106781, -0.4131167, 0.4131167, 0.9106781, -0.46392846, -6.34037)
+ThumbDown = Transform2D(-0.18344405, -0.98303014, 0.98303014, -0.18344405, 0, 0)
+
+[sub_resource type="Resource" id="Resource_yij45"]
+script = ExtResource("1_rrd4t")
+ThumbUp = Transform2D(0.9930696, 0.11752906, -0.11752906, 0.9930696, -4.02228, -1.4638274)
+Pinky = Transform2D(0.9646253, 0.2636248, -0.2636248, 0.9646253, 3.8764462, -5.13544)
+Ring = Transform2D(0.9974434, 0.071461216, -0.071461216, 0.9974434, 1.1367354, -5.873906)
+Middle = Transform2D(0.99945086, -0.033136245, 0.033136245, 0.99945086, -1.6347606, -6.190198)
+Index = Transform2D(0.990542, -0.13720995, 0.13720995, 0.990542, -4.499598, -5.516802)
+ThumbDown = Transform2D(0.9985124, -0.05452562, 0.05452562, 0.9985124, -6.7375855, -2.2944345)
+
+[resource]
+script = ExtResource("1_421wm")
+CharacterName = "Template"
+BodyHeight = 31.82
+UpperHeight = 15.6
+HeadHeight = 19.42
+ArmHeight = 11.835
+ArmLengthL = 27.295
+ArmLengthR = 32.7
+StanceWidth = 8.27
+PalmOutPositions = SubResource("Resource_yij45")
+PalmFlatPositions = SubResource("Resource_sl5s5")
+metadata/_custom_type_script = "uid://dnpogbc4y0cgd"

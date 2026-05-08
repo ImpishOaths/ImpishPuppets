@@ -17,8 +17,9 @@ public partial class SpringModifier: ImpulseModifier
         Receiver.SetLocalTransform(trans);
     }
 
-    public override PuppetBoneModifier MakeDuplicate3D(Vector2 resize)
+    public override Node ConvertTo3D(Puppet3D puppet)
     {
+        var resize = VectorHelpers.PixelResize;
         var duplicate = Duplicate() as SpringModifier;
         duplicate.Offset *= resize;
         duplicate.MinMax *= resize;

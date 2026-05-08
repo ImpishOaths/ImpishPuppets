@@ -10,7 +10,7 @@ public partial class PuppetHandlesController: Node
 {
     [Export]
     public string PuppetPath = "../Puppet";
-    public Puppet Puppet;
+    public Node Puppet;
 
     [Export]
     public float BodyHeight
@@ -37,7 +37,7 @@ public partial class PuppetHandlesController: Node
         }
     }
     private bool _BodyHeightOverride = false;
-    
+
     [Export]
     public float UpperHeight
     {
@@ -57,10 +57,22 @@ public partial class PuppetHandlesController: Node
         set
         {
             _HeadHeight = value;
-            Head?.SetPosition(new Vector2(0, -_HeadHeight));
+            Head?.SetPosition(new Vector2(0, -_HeadHeight*_HeadHeightScale));
         }
     }
     private float _HeadHeight = 10;
+
+    [Export]
+    public float HeadHeightScale
+    {
+        get => _HeadHeightScale;
+        set
+        {
+            _HeadHeightScale = value;
+            Head?.SetPosition(new Vector2(0, -_HeadHeight*_HeadHeightScale));
+        }
+    }
+    private float _HeadHeightScale = 1;
     
     [Export]
     public float ArmHeight
@@ -69,24 +81,35 @@ public partial class PuppetHandlesController: Node
         set
         {
             _ArmHeight = value;
-            ArmL?.SetPosition(new Vector2(_ArmLength, -_ArmHeight));
-            ArmR?.SetPosition(new Vector2(-_ArmLength, -_ArmHeight));
+            ArmL?.SetPosition(new Vector2(_ArmLengthL, -_ArmHeight));
+            ArmR?.SetPosition(new Vector2(-_ArmLengthR, -_ArmHeight));
         }
     }
     private float _ArmHeight = 10;
     
     [Export]
-    public float ArmLength
+    public float ArmLengthL
     {
-        get => _ArmLength;
+        get => _ArmLengthL;
         set
         {
-            _ArmLength = value;
-            ArmL?.SetPosition(new Vector2(_ArmLength, -_ArmHeight));
-            ArmR?.SetPosition(new Vector2(-_ArmLength, -_ArmHeight));
+            _ArmLengthL = value;
+            ArmL?.SetPosition(new Vector2(_ArmLengthL, -_ArmHeight));
         }
     }
-    private float _ArmLength = 10;
+    private float _ArmLengthL = 10;
+    
+    [Export]
+    public float ArmLengthR
+    {
+        get => _ArmLengthR;
+        set
+        {
+            _ArmLengthR = value;
+            ArmR?.SetPosition(new Vector2(-_ArmLengthR, -_ArmHeight));
+        }
+    }
+    private float _ArmLengthR = 10;
     
     [Export]
     public Vector2 HandMotionScale
@@ -148,14 +171,17 @@ public partial class PuppetHandlesController: Node
 
     public override void _Ready()
     {
-        Puppet = GetNodeOrNull<Puppet>(PuppetPath);
-        Node puppetNode = Puppet?.GetNode();
+        Puppet = GetNodeOrNull(PuppetPath);
+        CharacterData data = null;
 
-        if(puppetNode != null)
+        if(Puppet != null)
+        {
             foreach(var child in FindChildren("*","RemotePuppetTransform").Cast<RemotePuppetTransform>())
             {
-                child.SetReceiver(puppetNode);
+                child.SetReceiver(Puppet);
             }
+            data = (Puppet as PuppetTransform).GetCharacterData();
+        }
 
         Root = GetNode<Node2D>("Root");
         Root.Scale = Vector2.One / (Puppet is Node3D ? VectorHelpers.PixelSizeRoot : 1f);
@@ -169,14 +195,30 @@ public partial class PuppetHandlesController: Node
         LegL = Root.GetNode<Node2D>("LegL");
         LegR = Root.GetNode<Node2D>("LegR");
 
-        BodyHeight = _BodyHeight;
-        UpperHeight = _UpperHeight;
-        HeadHeight = _HeadHeight;
-        ArmHeight = _ArmHeight;
-        ArmLength = _ArmLength;
-        HandMotionScale = _HandMotionScale;
-        StanceWidth = _StanceWidth;
-        FootMotionScale = _FootMotionScale;
+        if(data != null)
+        {
+            BodyHeight = data.BodyHeight;
+            UpperHeight = data.UpperHeight;
+            HeadHeight = data.HeadHeight;
+            ArmHeight = data.ArmHeight;
+            ArmLengthL = data.ArmLengthL;
+            ArmLengthR = data.ArmLengthR;
+            HandMotionScale = data.HandMotionScale;
+            StanceWidth = data.StanceWidth;
+            FootMotionScale = data.FootMotionScale;
+        }
+        else
+        {
+            BodyHeight = _BodyHeight;
+            UpperHeight = _UpperHeight;
+            HeadHeight = _HeadHeight;
+            ArmHeight = _ArmHeight;
+            ArmLengthL = _ArmLengthL;
+            ArmLengthR = _ArmLengthR;
+            HandMotionScale = _HandMotionScale;
+            StanceWidth = _StanceWidth;
+            FootMotionScale = _FootMotionScale;
+        }
 
         FaceController = GetNode<RemoteController>("%FaceController");
         HandLController = GetNode<RemoteController>("%HandLController");
@@ -184,12 +226,30 @@ public partial class PuppetHandlesController: Node
         FootLController = GetNode<RemoteController>("%FootLController");
         FootRController = GetNode<RemoteController>("%FootRController");
 
-        FaceController.SetReceiver(puppetNode);
-        HandLController.SetReceiver(puppetNode);
-        HandRController.SetReceiver(puppetNode);
-        FootLController.SetReceiver(puppetNode);
-        FootRController.SetReceiver(puppetNode);
+        FaceController.SetReceiver(Puppet);
+        HandLController.SetReceiver(Puppet);
+        HandRController.SetReceiver(Puppet);
+        FootLController.SetReceiver(Puppet);
+        FootRController.SetReceiver(Puppet);
 
         Animator = GetNode<AnimationPlayer>("Full");
+    }
+
+    [ExportToolButton("Register Scales")]
+    public Callable RegisterScalesCallable => Callable.From(RegisterScales);
+    public void RegisterScales()
+    {
+        if(Puppet == null)
+            return;
+        var data = (Puppet as PuppetTransform).GetCharacterData();
+        data.BodyHeight = BodyHeight;
+        data.UpperHeight = UpperHeight;
+        data.HeadHeight = HeadHeight;
+        data.ArmHeight = ArmHeight;
+        data.ArmLengthL = ArmLengthL;
+        data.ArmLengthR = ArmLengthR;
+        data.HandMotionScale = HandMotionScale;
+        data.StanceWidth = StanceWidth;
+        data.FootMotionScale = FootMotionScale;
     }
 }

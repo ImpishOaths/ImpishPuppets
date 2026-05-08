@@ -13,10 +13,13 @@ public partial class FaceControl: PuppetController
     public static readonly StringName MouthGroup = "Mouth";
     public static readonly Array<StringName> BlinkExceptions = ["Closed","Arch","ArchDown"];
     public static readonly StringName BlinkName = "Closed";
+    public static readonly StringName ExpressionGroup = "Expression";
 
     [Export]
     private NodePath PuppetPath;
-    private Puppet Puppet;
+    private SpriteSheet SpriteSheet;
+    [Export]
+    private ExpressionList ExpressionList;
 
     [Export]
     public bool DoBlinks = true;
@@ -24,6 +27,8 @@ public partial class FaceControl: PuppetController
     public float BlinkDuration = 0.1f;
     [Export]
     public float OpenDuration = 5f;
+    [Export]
+    public Vector2 FaceScale = Vector2.One;
     
     private bool PauseBlinking;
     private bool ContinueBlinking;
@@ -112,6 +117,22 @@ public partial class FaceControl: PuppetController
         set => MouthBone?.SetSprite(MouthGroup, value);
     }
 
+    private StringName Expression
+    {
+        get => _Expression?.ExpressionName;
+        set
+        {
+            if(ExpressionList != null && value != "")
+            {
+                var express = ExpressionList.Expressions[value];
+                if(_Expression == express)
+                    return;
+                SetExpression(express);
+            }
+        }
+    }
+    private Expression _Expression;
+
     public override bool _Set(StringName property, Variant value)
     {
         if(property == "DoBlinks")
@@ -129,12 +150,12 @@ public partial class FaceControl: PuppetController
     public override Array<Dictionary> _GetPropertyList()
     {
         Array<Dictionary> properties = [];
-        if(Puppet == null)
+        if(SpriteSheet == null)
             return properties;
             
-        var eyes = string.Join(",", Puppet.GetSpritesInGroup(EyeGroup));
-        var eyebrows = string.Join(',', Puppet.GetSpritesInGroup(EyebrowGroup));
-        var mouths = string.Join(',', Puppet.GetSpritesInGroup(MouthGroup));
+        var eyes = string.Join(",", SpriteSheet.GetSpritesInGroup(EyeGroup));
+        var eyebrows = string.Join(',', SpriteSheet.GetSpritesInGroup(EyebrowGroup));
+        var mouths = string.Join(',', SpriteSheet.GetSpritesInGroup(MouthGroup));
         properties.Add(new()
         {
             {"name","Individuals"},
@@ -170,6 +191,17 @@ public partial class FaceControl: PuppetController
             {"name","Full"},
             {"usage", (int)PropertyUsageFlags.Group}
         });
+        
+        string expressions = "";
+        if(ExpressionList != null)
+            expressions = string.Join(',', ExpressionList.Expressions.Keys);
+        properties.Add(new()
+        {
+            {"name", "Expression"},
+            {"type", (int)Variant.Type.StringName},
+            {"hint", (int)PropertyHint.Enum},
+            {"hint_string", expressions}
+        });
         properties.Add(new(){
             {"name","BothEyebrows"},
             {"type", (int)Variant.Type.StringName},
@@ -191,23 +223,28 @@ public partial class FaceControl: PuppetController
         return properties;
     }
 
+    private PuppetTransform Head;
     private PuppetBone EyeRBone;
     private PuppetBone EyeLBone;
     private PuppetBone EyebrowLBone;
     private PuppetBone EyebrowRBone;
     private PuppetBone MouthBone;
+    private PuppetBone ExpressionBone;
 
     public override void _Ready()
     {
-        EyebrowLBone = GetNodeOrNull<PuppetBone>("../EyebrowL");
-        EyebrowRBone = GetNodeOrNull<PuppetBone>("../EyebrowR");
-        EyeLBone = GetNodeOrNull<PuppetBone>("../EyeL");
+        var parent = GetParent();
+        Head = parent as PuppetTransform;
+        EyebrowLBone = parent.GetNodeOrNull<PuppetBone>("EyebrowL");
+        EyebrowRBone = parent.GetNodeOrNull<PuppetBone>("EyebrowR");
+        EyeLBone = parent.GetNodeOrNull<PuppetBone>("EyeL");
         _EyeL = EyeLBone.SpriteName;
-        EyeRBone = GetNodeOrNull<PuppetBone>("../EyeR");
+        EyeRBone = parent.GetNodeOrNull<PuppetBone>("EyeR");
         _EyeR = EyeRBone.SpriteName;
-        MouthBone = GetNodeOrNull<PuppetBone>("../Mouth");
+        MouthBone = parent.GetNodeOrNull<PuppetBone>("Mouth");
+        ExpressionBone = parent.GetNodeOrNull<PuppetBone>("Expression");
 
-        Puppet = GetNodeOrNull<Puppet>(PuppetPath);
+        SpriteSheet = GetNodeOrNull<Puppet>(PuppetPath)?.GetSheet();
 
         StopBlink();
     }
@@ -219,7 +256,7 @@ public partial class FaceControl: PuppetController
 
     public void Blink()
     {
-        if(DoBlinks == false || IsBlinking || Puppet == null)
+        if(DoBlinks == false || IsBlinking || SpriteSheet == null)
             return;
 
         if(BlinkExceptions.Contains(EyeR) || BlinkExceptions.Contains(EyeL))
@@ -251,7 +288,7 @@ public partial class FaceControl: PuppetController
 
     public void StopBlink()
     {
-        if(Puppet == null)
+        if(SpriteSheet == null)
             return;
         
         EyeRBone?.SetSprite(EyeGroup, _EyeR);
@@ -263,9 +300,14 @@ public partial class FaceControl: PuppetController
 
     public override void _Process(double delta)
     {
-        if(Puppet == null && PuppetPath != null)
+        if(SpriteSheet == null && PuppetPath != null)
             _Ready();
+        HandleBlinks(delta);
+        HandleExpression(delta);
+    }
 
+    private void HandleBlinks(double delta)
+    {
         if(ContinueBlinking)
             OnContinueBlinking();
         
@@ -291,9 +333,62 @@ public partial class FaceControl: PuppetController
         }
     }
 
-    public override PuppetController MakeDuplicate3D()
+    private float ExpressionTimer;
+    private float ExpressionMaxTime;
+    private bool DoExpression;
+
+    private void SetExpressionTransform()
     {
+        float t = ExpressionTimer/ExpressionMaxTime;
+        float rotation = _Expression.RotationCurve?.Sample(t) ?? 0;
+
+        float scaleX = _Expression.ScaleXCurve?.Sample(t) ?? 1;
+        if(Mathf.Abs(scaleX) < 0.01f)
+            scaleX = 0.01f;
+
+        float scaleY = _Expression.ScaleYCurve?.Sample(t) ?? 1;
+        if(Mathf.Abs(scaleY) < 0.01f)
+            scaleY = 0.01f;
+            
+        var trans = new Transform2D(rotation, new(scaleX, scaleY), 0, new(0,0));
+        ExpressionBone.SetLocalTransform(trans);
+    }
+
+    private void HandleExpression(double delta)
+    {
+        if(DoExpression == false)
+            return;
+        
+        ExpressionTimer += (float)delta;
+        if(ExpressionTimer >= ExpressionMaxTime)
+        {
+            ExpressionTimer = ExpressionMaxTime;
+            DoExpression = false;
+        }
+        SetExpressionTransform();
+    }
+
+    private void SetExpression(Expression expression)
+    {
+        _Expression = expression;
+        if(ExpressionBone == null)
+            return;
+        ExpressionBone.SetSprite(ExpressionGroup, _Expression.ExpressionName);
+        var trans = ExpressionBone.GetRootTransform();
+        var headTrans = Head.GetRootTransform();
+        trans = headTrans.TranslatedLocal(_Expression.Position*FaceScale);
+        ExpressionBone.SetRootTransform(trans);
+
+        ExpressionTimer = 0;
+        ExpressionMaxTime = _Expression.Time;
+        DoExpression = true;
+    }
+
+    public override Node ConvertTo3D(Puppet3D puppet)
+    {
+        var resize = VectorHelpers.PixelResize;
         var duplicate = Duplicate() as FaceControl;
+        duplicate.FaceScale *= resize;
         return duplicate;
     }
 
@@ -327,6 +422,9 @@ public partial class FaceControl: PuppetController
             case "BothEyebrows":
                 BothEyebrows = value.AsStringName();
                 return true;
+            case "Expression":
+                Expression = value.AsStringName();
+                return true;
             default:
                 return false;
         }
@@ -343,8 +441,17 @@ public partial class FaceControl: PuppetController
             "Mouth" => (Variant)Mouth,
             "BothEyes" => (Variant)BothEyes,
             "BothEyebrows" => (Variant)BothEyebrows,
+            "Expression" => (Variant)Expression,
             _ => default,
         };
-
     }
+
+    public override void _Notification(int what)
+    {
+        if(what == NotificationEditorPreSave)
+        {
+            Expression = "None";
+        }
+    }
+
 }

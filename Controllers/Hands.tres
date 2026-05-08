@@ -1,0 +1,126 @@
+[gd_resource type="Resource" script_class="HandPoseList" format=3 uid="uid://dqtgtepl6wkfp"]
+
+[ext_resource type="Script" uid="uid://clj3otv10wr8u" path="res://addons/ImpishPuppets/Controllers/HandPose.cs" id="1_kgvde"]
+[ext_resource type="Script" uid="uid://bue3srhbiyql5" path="res://addons/ImpishPuppets/Controllers/HandPoseList.cs" id="2_jmxve"]
+
+[sub_resource type="Resource" id="Resource_q5lov"]
+script = ExtResource("1_kgvde")
+PalmBack = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_n1qym"]
+script = ExtResource("1_kgvde")
+FlipSide = true
+PalmBack = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_iroel"]
+script = ExtResource("1_kgvde")
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_hwbl8"]
+script = ExtResource("1_kgvde")
+PalmBack = true
+MiddleUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_jmxve"]
+script = ExtResource("1_kgvde")
+MiddleUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_ie7a7"]
+script = ExtResource("1_kgvde")
+PinkyUp = true
+RingUp = true
+MiddleUp = true
+IndexUp = true
+ThumbUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_lauob"]
+script = ExtResource("1_kgvde")
+PalmBack = true
+PinkyUp = true
+RingUp = true
+MiddleUp = true
+IndexUp = true
+ThumbUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_gjyt7"]
+script = ExtResource("1_kgvde")
+FlipSide = true
+PinkyUp = true
+RingUp = true
+MiddleUp = true
+IndexUp = true
+ThumbUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_7a3s4"]
+script = ExtResource("1_kgvde")
+IndexUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_kgvde"]
+script = ExtResource("1_kgvde")
+PinkyUp = true
+IndexUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_2kal3"]
+script = ExtResource("1_kgvde")
+ThumbUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_e5ews"]
+script = ExtResource("1_kgvde")
+PalmFlat = true
+PinkyUp = true
+RingUp = true
+ThumbUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_nbnvf"]
+script = ExtResource("1_kgvde")
+PalmFlat = true
+PalmBack = true
+PinkyUp = true
+RingUp = true
+ThumbUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_cteav"]
+script = ExtResource("1_kgvde")
+PalmFlat = true
+IndexUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_qkd2f"]
+script = ExtResource("1_kgvde")
+PalmFlat = true
+RingUp = true
+MiddleUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[resource]
+script = ExtResource("2_jmxve")
+Poses = {
+&"ClosedFlat": SubResource("Resource_cteav"),
+&"Fist": SubResource("Resource_q5lov"),
+&"FistFlip": SubResource("Resource_n1qym"),
+&"FistForward": SubResource("Resource_iroel"),
+&"FlipOff": SubResource("Resource_hwbl8"),
+&"FlipOffBack": SubResource("Resource_jmxve"),
+&"Open": SubResource("Resource_ie7a7"),
+&"OpenBack": SubResource("Resource_lauob"),
+&"OpenFlat": SubResource("Resource_e5ews"),
+&"OpenFlatBack": SubResource("Resource_nbnvf"),
+&"OpenFlip": SubResource("Resource_gjyt7"),
+&"Pinch": SubResource("Resource_qkd2f"),
+&"Point": SubResource("Resource_7a3s4"),
+&"RockOn": SubResource("Resource_kgvde"),
+&"ThumbsUp": SubResource("Resource_2kal3")
+}
+metadata/_custom_type_script = "uid://bue3srhbiyql5"

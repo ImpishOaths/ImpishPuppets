@@ -8,9 +8,9 @@ namespace ImpishPuppets;
 public partial class HandPose: Resource
 {
     [Export]
-    public bool HandBehind = false;
-    [Export]
     public bool PalmFlat = false;
+    [Export]
+    public bool FlipSide = false;
     [Export]
     public bool PalmBack = false;
     [Export]

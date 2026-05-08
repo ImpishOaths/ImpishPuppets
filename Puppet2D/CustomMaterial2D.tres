@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://s3j1rmk703tx"]
+
+[ext_resource type="Shader" uid="uid://bowgy20hyplwd" path="res://addons/ImpishPuppets/Puppet2D/Puppet2DShaderCustom.gdshader" id="1_aoavd"]
+
+[resource]
+shader = ExtResource("1_aoavd")

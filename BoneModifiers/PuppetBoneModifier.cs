@@ -5,7 +5,7 @@ namespace ImpishPuppets;
 
 [Tool]
 [GlobalClass]
-public abstract partial class PuppetBoneModifier: Node
+public abstract partial class PuppetBoneModifier: Node, Puppet2Dto3DConverter
 {
     protected PuppetTransform Receiver = null;
 
@@ -33,8 +33,8 @@ public abstract partial class PuppetBoneModifier: Node
 
     public abstract void Apply(float delta);
 
-    public virtual PuppetBoneModifier MakeDuplicate3D(Vector2 resize)
+    public virtual Node ConvertTo3D(Puppet3D puppet)
     {
-        return Duplicate() as PuppetBoneModifier;
+        return Duplicate();
     }
 }

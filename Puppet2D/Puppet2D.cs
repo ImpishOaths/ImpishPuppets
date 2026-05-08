@@ -6,29 +6,30 @@ namespace ImpishPuppets;
 
 public interface Puppet
 {
-    public Array<StringName> GetSpriteGroups();
-    public Array<StringName> GetSpritesInGroup(StringName group);
-    public StringName GetFirstGroup();
-    public PuppetSpriteData GetFirstSprite(StringName group);
-    public PuppetSpriteData GetSpriteReference(StringName group, StringName sprite);
-    public void MakeTilesDirty();
-    public Node GetNode();
+    public SpriteSheet GetSheet();
 }
 
 [Tool]
 [GlobalClass]
-public partial class Puppet2D: Node2D, Puppet
+[Icon("res://addons/ImpishPuppets/Icons/Puppet2DIcon.png")]
+public partial class Puppet2D: PuppetTransform2D, Puppet
 {
-    [Export]
-    public Texture2D PuppetTexture {get; private set;}
-    public ImageTexture PuppetImageTexture {get; private set;}
-    [Export]
-    public TileSet SpriteSheet;
-    [Export]
-    public ShaderMaterial PuppetMaterial {get; private set;}
-    public ShaderMaterial PuppetMaterialFlat {get; private set;}
+    public Puppet2D()
+    {
+        Puppet = this;
+    }
 
-    private Dictionary<StringName, Dictionary<StringName, PuppetSpriteData>> SpriteDict = null;
+    [Export]
+    public SpriteSheet SpriteSheet;
+    [Export]
+    public CharacterData CharacterData;
+
+    public SpriteSheet GetSheet() => SpriteSheet;
+    public ImageTexture PuppetImageTexture = null;
+    [Export]
+    public Array<Material> BoneMaterials2D;
+    [Export]
+    public Array<Material> BoneMaterials3D;
 
     public Transform2D? InverseTransform {get; private set;} = null;
     public override void _PhysicsProcess(double delta)
@@ -36,114 +37,29 @@ public partial class Puppet2D: Node2D, Puppet
         InverseTransform = GlobalTransform.AffineInverse();
     }
 
-    public Node GetNode() => this;
-
     public override Variant _Get(StringName property)
     {
         if(property == "texture")
             return PuppetImageTexture;
         if(property == "image_source")
-            return PuppetTexture;
+            return SpriteSheet.GetSpriteTexture(0);
+        if(property == "material" && (BoneMaterials2D?.Count ?? 0) > 0)
+            return BoneMaterials2D[0];
         if(property == "grid")
-            return ((TileSetAtlasSource)SpriteSheet.GetSource(0)).TextureRegionSize;
+            return SpriteSheet.GetTextureRegionSize();
         
         return default;
     }
 
     public override void _EnterTree()
     {
-        PuppetMaterialFlat = PuppetMaterial.Duplicate() as ShaderMaterial;
-        PuppetMaterialFlat.SetShaderParameter("flatLighting", true);
-
-        if(SpriteSheet == null || PuppetTexture == null)
-            return;
-        SpriteDict ??= SpriteSheet.MakeSpriteDict();
-        if(PuppetImageTexture == null)
+        if(SpriteSheet != null)
         {
-            var image = PuppetTexture.GetImage();
+            var text = SpriteSheet.GetSpriteTexture(0);
+            var image = text.GetImage();
             image.Decompress();
             PuppetImageTexture = ImageTexture.CreateFromImage(image);
         }
-    }
-
-    public override void _Notification(int what)
-    {
-        if(what == NotificationEditorPreSave && SpriteSheet != null && SpriteSheet.GetMeta("dirty", false).As<bool>())
-        {
-            SpriteSheet.SetMeta("dirty", false);
-            var tempSet = ResourceLoader.Load<TileSet>(SpriteSheet.ResourcePath);
-            var spriteAtlas = (TileSetAtlasSource)tempSet.GetSource(0);
-            foreach(var group in SpriteDict.Values)
-            {
-                foreach(var sprite in group.Values)
-                {
-                    var data = spriteAtlas.GetTileData(sprite.SpriteRegion.Position/tempSet.TileSize, sprite.AlternateID);
-                    var offset = sprite.SpriteData.GetCustomData("Offset").As<Vector2>();
-                    data.SetCustomData("Offset", offset);
-                    sprite.SpriteData = data;
-                }
-            }
-            GD.Print("Offsets Updated");
-        }
-
-        if(what == NotificationEditorPostSave)
-            SaveImage();
-    }
-
-    public void SaveImage()
-    {
-        if(PuppetImageTexture == null || ! PuppetImageTexture.GetMeta("dirty", false).As<bool>())
-            return;
-        PuppetImageTexture.SetMeta("dirty", false);
-        var path = PuppetTexture.ResourcePath;
-        GD.Print($"Saved at {path}");
-        var image = PuppetImageTexture.GetImage();
-        image.Decompress();
-        image.SavePng(path);
-        EditorInterface.Singleton.GetResourceFilesystem().ReimportFiles([path]);
-    }
-
-    public PuppetSpriteData GetSpriteReference(StringName group, StringName sprite)
-    {
-        if(group == null || ! SpriteDict.TryGetValue(group, out var sprites))
-            return null;
-        if(sprite == null || ! sprites.TryGetValue(sprite, out var ret))
-            return null;
-        return ret;
-    }
-
-    public Array<StringName> GetSpriteGroups() => [..SpriteDict.Keys];
-    public Array<StringName> GetSpritesInGroup(StringName group)
-    {
-        if(group != null && SpriteDict.TryGetValue(group, out var sprites))
-            return [..sprites.Keys];
-        return [];
-    }
-    public StringName GetFirstGroup()
-    {
-        if(SpriteDict.Count == 0)
-            return null;
-        return SpriteDict.First().Key;
-    }
-    public PuppetSpriteData GetFirstSprite(StringName group)
-    {
-        if(group == null || SpriteDict == null || !SpriteDict.TryGetValue(group, out var sprites) || sprites.Count == 0)
-            return null;
-        return sprites.First().Value;
-    }
-
-    [ExportToolButton("Refresh Sprites")]
-    public Callable RefreshSpritesCallable => Callable.From(RefreshSprites);
-    private void RefreshSprites()
-    {
-        SpriteDict = SpriteSheet.MakeSpriteDict();
-    }
-
-    [ExportToolButton("Add Bone")]
-    public Callable AddBoneCallable => Callable.From(AddBone);
-    private void AddBone()
-    {
-        MakeNewBone(this);
     }
 
     public void MakeNewBone(Node parent)
@@ -152,16 +68,8 @@ public partial class Puppet2D: Node2D, Puppet
         {
             Puppet = this,
         };
-        pBone.Initialize();
         parent.AddChild(pBone, true);
         pBone.Owner = Owner ?? this;
-    }
-
-    [ExportToolButton("Add Transform")]
-    public Callable AddTransformCallable => Callable.From(AddTransform);
-    private void AddTransform()
-    {
-        MakeNewTransform(this);
     }
 
     public void MakeNewTransform(Node parent)
@@ -172,10 +80,5 @@ public partial class Puppet2D: Node2D, Puppet
         };
         parent.AddChild(pTransform, true);
         pTransform.Owner = Owner ?? this;
-    }
-
-    public void MakeTilesDirty()
-    {
-        SpriteSheet.SetMeta("dirty", true);
     }
 }

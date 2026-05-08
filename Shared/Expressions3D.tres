@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://wke243fvehrx"]
+
+[ext_resource type="Shader" uid="uid://ciqpon6ldxfbk" path="res://addons/ImpishPuppets/Puppet3D/Puppet3DShaderCustom.gdshader" id="1_y03w3"]
+[ext_resource type="Texture2D" uid="uid://cnv7hr7e8v6ci" path="res://addons/ImpishPuppets/Shared/Expressions.png" id="2_elxoq"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_y03w3")
+shader_parameter/spriteSheet = ExtResource("2_elxoq")

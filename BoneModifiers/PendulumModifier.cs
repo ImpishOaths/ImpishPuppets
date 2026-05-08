@@ -31,8 +31,9 @@ public partial class PendulumModifier: ImpulseModifier
 
     }
 
-    public override PuppetBoneModifier MakeDuplicate3D(Vector2 resize)
+    public override Node ConvertTo3D(Puppet3D puppet)
     {
+        var resize = VectorHelpers.PixelResize;
         var duplicate = Duplicate() as PendulumModifier;
         duplicate.Sensitivity /= Mathf.Min(resize.X, resize.Y);
         return duplicate;

@@ -4,12 +4,11 @@ using Godot.Collections;
 
 namespace ImpishPuppets;
 
+[Flags]
 public enum SortOrderEnum
 {
-    FRONT,
-    BACK,
-    BOTH,
-    CLOTHING,
+    FRONT = 1,
+    BACK = 2,
 }
 
 public interface PuppetBone: PuppetTransform
@@ -20,77 +19,37 @@ public interface PuppetBone: PuppetTransform
     public float RotationOffset {get; set;}
     public void SetVisible(bool visible);
     public void SetOrder(bool front);
+    public Transform2D GetRealTransform();
+    public void SetRealTransform(Transform2D trans);
 }
 
 [Tool]
 [GlobalClass]
-public partial class PuppetBone2D: PuppetTransform2D, PuppetBone
+[Icon("res://addons/ImpishPuppets/Icons/Bone2DIcon.png")]
+public partial class PuppetBone2D: PuppetTransform2D, PuppetBone, Puppet2Dto3DConverter
 {
-    protected PuppetSpriteData CurrentSprite = null;
-
-    protected virtual Puppet TexPuppet => Puppet;
-    protected virtual Texture2D PuppetTexture => Puppet.PuppetImageTexture;
-    protected virtual Material PuppetMaterial
-    {
-        get
-        {
-            if(CurrentSprite?.SpriteData?.GetCustomData("FlatLighting").AsBool() ?? false)
-            {
-                return Puppet.PuppetMaterialFlat;
-            }
-            return Puppet.PuppetMaterial;
-        }
-    }
+    protected virtual SpriteSheet SpriteSheet => Puppet?.SpriteSheet;
+    protected virtual Texture2D PuppetTexture => Puppet?.PuppetImageTexture;
+    protected virtual Material PuppetMaterial => Puppet?.BoneMaterials2D[_MaterialChoice];
 
     [Export]
     public Vector2 SpriteOffset
     {
         get
         {
-            if(CurrentSprite?.SpriteData.HasCustomData("Offset") ?? false)
-                return CurrentSprite.SpriteData.GetCustomData("Offset").AsVector2();
-            return default;
+            var data = SpriteSheet?.GetSpriteData(_SpriteGroup, _SpriteName);
+            if(data == null)
+                return default;
+            return data?.GetCustomData("Offset").AsVector2() ?? Vector2.Zero;
         }
         set
         {
-            if(CurrentSprite != null)
+            if(SpriteSheet != null)
             {
-                if(CurrentSprite.SpriteData.HasCustomData("Offset") && Puppet.Owner == null)
-                {
-                    CurrentSprite.SpriteData.SetCustomData("Offset", value);
-                    TexPuppet.MakeTilesDirty();
-                }
+                SpriteSheet.UpdateData(_SpriteGroup, _SpriteName, "Offset", value);
                 UpdateLook();
             }
         }
-    }
-
-    [Export]
-    public SortOrderEnum SortOrder
-    {
-        get => _SortOrder;
-        set
-        {
-            _SortOrder = value;
-            SetOrder(Order);
-        }
-    }
-    protected SortOrderEnum _SortOrder;
-
-    [Export]
-    protected bool Order;
-
-    public void SetOrder(bool front)
-    {
-        Order = front;
-        ZIndex = _SortOrder switch
-        {
-            SortOrderEnum.FRONT => 1,
-            SortOrderEnum.BACK => -1,
-            SortOrderEnum.BOTH => Order ? 1 : -1,
-            SortOrderEnum.CLOTHING => 2,
-            _ => 1,
-        };
     }
 
     [Export]
@@ -105,6 +64,54 @@ public partial class PuppetBone2D: PuppetTransform2D, PuppetBone
     }
     protected float _RotationOffset = 0;
     
+    [Export]
+    public int MaterialChoice
+    {
+        get => _MaterialChoice;
+        set
+        {
+            _MaterialChoice = value;
+            if(Puppet?.BoneMaterials2D == null || Sprite == null)
+                return;
+            var choice = Math.Clamp(_MaterialChoice, 0, Puppet.BoneMaterials2D.Count-1);
+            Sprite.Material = Puppet.BoneMaterials2D[choice];
+        }
+    }
+    private int _MaterialChoice = 0;
+
+    [ExportGroup("Ordering")]
+
+    [Export]
+    public SortOrderEnum SortOrder
+    {
+        get => _SortOrder;
+        set
+        {
+            _SortOrder = value;
+            SetOrder(_Order);
+        }
+    }
+    protected SortOrderEnum _SortOrder = SortOrderEnum.FRONT;
+
+    [Export]
+    protected bool Order
+    {
+        get => _Order;
+        set => SetOrder(value);
+    }
+    private bool _Order;
+
+    public void SetOrder(bool front)
+    {
+        _Order = front;
+        ZIndex = _SortOrder switch
+        {
+            SortOrderEnum.FRONT => 1,
+            SortOrderEnum.BACK => -1,
+            SortOrderEnum.FRONT | SortOrderEnum.BACK => Order ? 1 : -1,
+            _ => 1,
+        };
+    }
 
     [ExportGroup("Sprite Info")]
     [Export]
@@ -116,16 +123,15 @@ public partial class PuppetBone2D: PuppetTransform2D, PuppetBone
         get => _SpriteGroup;
         set
         {
-            bool check = _SpriteGroup != value;
-            _SpriteGroup = value;
-            if(Sprite == null || TexPuppet == null)
+            if(_SpriteGroup == value)
                 return;
-            if(check)
-                SetGroup(_SpriteGroup);
-            CallDeferred("TrySelect");
+            _SpriteGroup = value;
+            if(SpriteSheet == null)
+                return;
+            SetSprite(value, SpriteSheet.GetFirstSpriteInGroup(value));
         }
     }
-    protected StringName _SpriteGroup;
+    protected StringName _SpriteGroup = "";
 
     [Export]
     public StringName SpriteName
@@ -133,34 +139,28 @@ public partial class PuppetBone2D: PuppetTransform2D, PuppetBone
         get => _SpriteName;
         set
         {
-            bool check = _SpriteName != value;
-            _SpriteName = value;
-            if(Sprite == null || TexPuppet == null)
+            if(_SpriteName == value)
                 return;
-            if(check)
-                SetSprite(_SpriteGroup, _SpriteName);
-            CallDeferred("TrySelect");
+            _SpriteName = value;
+            if(SpriteSheet == null)
+                return;
+            SetSprite(_SpriteGroup, value);
         }
     }
-    protected StringName _SpriteName;
+    protected StringName _SpriteName = "";
 
     protected bool Saving;
-
-    private void TrySelect()
-    {
-        GetTree().CallGroupFlags(6, "DrawingEditor", "TrySelect");
-    }
 
     public override Variant _Get(StringName property)
     {
         if(property == "material" && Puppet != null)
             return PuppetMaterial;
 
-        if(property == "texture" && Sprite != null)
+        if(property == "texture" && SpriteSheet != null && Sprite != null)
             return Sprite.Texture;
 
-        if(property == "image_source" && Puppet != null)
-            return Puppet.PuppetTexture;
+        if(property == "image_source" && SpriteSheet != null)
+            return SpriteSheet.GetSpriteTexture(0);
         if(property == "region_rect" && Sprite != null)
             return Sprite.RegionRect;
         if(property == "region_enabled" && Sprite != null)
@@ -177,9 +177,17 @@ public partial class PuppetBone2D: PuppetTransform2D, PuppetBone
     public override bool _Set(StringName property, Variant value)
     {
         if(property == "SpriteGroupDropdown")
+        {
             SpriteGroup = value.AsStringName();
+            if(Sprite != null)
+                GetTree().CallGroupFlags(6, "DrawingEditor", "TrySelect");
+        }
         if(property == "SpriteNameDropdown")
+        {
             SpriteName = value.AsStringName();
+            if(Sprite != null)
+                GetTree().CallGroupFlags(6, "DrawingEditor", "TrySelect");
+        }
 
         return false;
     }
@@ -187,7 +195,7 @@ public partial class PuppetBone2D: PuppetTransform2D, PuppetBone
     public override Array<Dictionary> _GetPropertyList()
     {
         Array<Dictionary> properties = [];
-        if(TexPuppet == null)
+        if(SpriteSheet == null)
             return properties;
             
         properties.Add(new()
@@ -195,7 +203,7 @@ public partial class PuppetBone2D: PuppetTransform2D, PuppetBone
             {"name","Sprite Select"},
             {"usage", (int)PropertyUsageFlags.Group}
         });
-        var groups = TexPuppet.GetSpriteGroups();
+        var groups = SpriteSheet.GetGroups();
         properties.Add(new(){
             {"name","SpriteGroupDropdown"},
             {"type", (int)Variant.Type.StringName},
@@ -204,7 +212,7 @@ public partial class PuppetBone2D: PuppetTransform2D, PuppetBone
         });
         if(_SpriteGroup != null && _SpriteGroup != "")
         {
-            var sprites = TexPuppet.GetSpritesInGroup(_SpriteGroup);
+            var sprites = SpriteSheet.GetSpritesInGroup(_SpriteGroup);
             properties.Add(new(){
                 {"name","SpriteNameDropdown"},
                 {"type", (int)Variant.Type.StringName},
@@ -233,12 +241,7 @@ public partial class PuppetBone2D: PuppetTransform2D, PuppetBone
         }
     }
 
-    public override void _EnterTree()
-    {
-        Initialize();
-    }
-
-    public virtual void Initialize()
+    public override void _Ready()
     {
         if(Puppet == null)
         {
@@ -271,53 +274,37 @@ public partial class PuppetBone2D: PuppetTransform2D, PuppetBone
             }
         }
 
-        if(SpriteGroup != "")
-            SetSprite(SpriteGroup, SpriteName);
-        else
-            SetSprite(null);
-
+        SetSprite(_SpriteGroup, _SpriteName);
         SetOrder(Order);
     }
 
-    protected void SetGroup(StringName group)
+    public void SetSprite(StringName group, StringName name)
     {
-        SetSprite(TexPuppet.GetFirstSprite(group));
-    }
-
-    public void SetSprite(PuppetSpriteData sprite)
-    {
-        if(Saving)
+        if(Saving || SpriteSheet == null)
             return;
-
-        CurrentSprite = sprite;
-        if(CurrentSprite != null)
-        {
-            _SpriteGroup = CurrentSprite.SpriteGroup;
-            _SpriteName = CurrentSprite.SpriteName;
-        }
-        else
-        {
-            _SpriteGroup = "";
-            _SpriteName = "";
-        }
+        
+        _SpriteGroup = group;
+        _SpriteName = name;
 
         UpdateLook();
         NotifyPropertyListChanged();
     }
 
-    public virtual void UpdateLook()
+    public void UpdateLook()
     {
         if(Sprite == null)
             return;
+
+        var data = SpriteSheet?.GetSpriteData(_SpriteGroup, _SpriteName);
         
-        if(CurrentSprite != null)
+        if(data != null)
         {
-            var data = CurrentSprite.SpriteData;
             Sprite.FlipH = data.FlipH;
             Sprite.FlipV = data.FlipV;
             Sprite.Offset = data.GetCustomData("Offset").AsVector2();
-            Sprite.RegionRect = CurrentSprite.SpriteRegion;
+            Sprite.RegionRect = SpriteSheet.GetSprite(_SpriteGroup, _SpriteName).SpriteRegion;
             Sprite.Material = PuppetMaterial;
+            SetUpSpriteVariables(data);
         }
         else
         {
@@ -329,19 +316,46 @@ public partial class PuppetBone2D: PuppetTransform2D, PuppetBone
         Sprite.Rotation = _RotationOffset;
     }
 
+    public virtual void SetUpSpriteVariables(TileData data) {}
+
     public (StringName group, StringName name) GetSprite()
     {
         return (_SpriteGroup, _SpriteName);
     }
 
-    public void SetSprite(StringName group, StringName name)
-    {
-        if(TexPuppet != null)
-            SetSprite(TexPuppet.GetSpriteReference(group, name));
-        else
-            SetSprite(null);
-    }
-
     public override Transform2D GetLocalTransform() => Sprite.Transform;
     public override void SetLocalTransform(Transform2D transform) => Sprite.Transform = transform;
+
+    public override Node ConvertTo3D(Puppet3D puppet)
+    {
+        return new PuppetBone3D()
+        {
+            Scale = Scale.Abs().ToVec3scale(),
+            Position = (Position / (VectorHelpers.PixelSizeRoot * VectorHelpers.PixelSizeRoot)).ToVec3pos(),
+            Rotation = new Vector3(0, 0, -Rotation),
+            Puppet = puppet,
+            SortOrder = SortOrder,
+            Order = Order,
+            Visible = Visible,
+            RotationOffset = RotationOffset,
+            MaterialChoice = MaterialChoice,
+            SpriteGroup = _SpriteGroup,
+            SpriteName = _SpriteName,
+            Flip = _Flip,
+        };
+    }
+
+    public override void PropogateOrderFlip(bool order, bool flip)
+    {
+        SetFlip(flip);
+        SetOrder(order);
+        foreach(var child in GetChildren())
+        {
+            if(child is PuppetTransform trans)
+                trans.PropogateOrderFlip(order, flip);
+        }
+    }
+
+    public Transform2D GetRealTransform() => Transform;
+    public void SetRealTransform(Transform2D trans) => Transform = trans;
 }

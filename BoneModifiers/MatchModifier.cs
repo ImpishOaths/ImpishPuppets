@@ -29,8 +29,9 @@ public partial class MatchModifier: PuppetBoneModifier
         Receiver.SetRootTransform(trans);
     }
 
-    public override PuppetBoneModifier MakeDuplicate3D(Vector2 resize)
+    public override Node ConvertTo3D(Puppet3D puppet)
     {
+        var resize = VectorHelpers.PixelResize;
         var duplicate = Duplicate() as MatchModifier;
         duplicate.Offset *= resize;
         return duplicate;

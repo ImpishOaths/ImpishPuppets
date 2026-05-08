@@ -6,10 +6,11 @@ namespace ImpishPuppets;
 public interface PuppetTransform
 {
     public bool Active();
-    public NodePath GetPath();
+    public CharacterData GetCharacterData();
     
     public Transform2D GetRootTransform();
     public void SetRootTransform(Transform2D transform);
+    public Transform2D ConvertToRootTransform(Transform2D global);
 
     public Transform2D GetOriginTransform();
     public void SetOriginTransform(Transform2D transform);
@@ -19,14 +20,22 @@ public interface PuppetTransform
 
     public bool GetFlip();
     public void SetFlip(bool flip);
+    public void PropogateOrderFlip(bool order, bool flip);
+}
+
+public interface Puppet2Dto3DConverter
+{
+    public Node ConvertTo3D(Puppet3D puppet);
 }
 
 [Tool]
 [GlobalClass]
-public partial class PuppetTransform2D: Node2D, PuppetTransform
+[Icon("res://addons/ImpishPuppets/Icons/Transform2DIcon.png")]
+public partial class PuppetTransform2D: Node2D, PuppetTransform, Puppet2Dto3DConverter
 {
     [Export]
     public Puppet2D Puppet;
+    public CharacterData GetCharacterData() => Puppet.CharacterData;
     
     [Export]
     public bool Flip
@@ -39,6 +48,7 @@ public partial class PuppetTransform2D: Node2D, PuppetTransform
     public bool Active() => Puppet != null && Puppet.InverseTransform != null;
     public Transform2D GetRootTransform() => Puppet.InverseTransform.Value * GlobalTransform;
     public void SetRootTransform(Transform2D transform) => GlobalTransform = Puppet.GlobalTransform * transform;
+    public Transform2D ConvertToRootTransform(Transform2D global) => Puppet.InverseTransform.Value * global;
 
     public Transform2D GetOriginTransform() => GlobalTransform;
     public void SetOriginTransform(Transform2D transform) => GlobalTransform = transform;
@@ -74,5 +84,27 @@ public partial class PuppetTransform2D: Node2D, PuppetTransform
             return;
         
         Puppet.MakeNewTransform(this);
+    }
+
+    public virtual Node ConvertTo3D(Puppet3D puppet)
+    {
+        return new PuppetTransform3D()
+        {
+            Scale = Scale.Abs().ToVec3scale(),
+            Position = (Position / (VectorHelpers.PixelSizeRoot * VectorHelpers.PixelSizeRoot)).ToVec3pos(),
+            Rotation = new Vector3(0, 0, -Rotation),
+            Puppet = puppet,
+            Flip = _Flip
+        };
+    }
+
+    public virtual void PropogateOrderFlip(bool order, bool flip)
+    {
+        SetFlip(flip);
+        foreach(var child in GetChildren())
+        {
+            if(child is PuppetTransform trans)
+                trans.PropogateOrderFlip(order, flip);
+        }
     }
 }

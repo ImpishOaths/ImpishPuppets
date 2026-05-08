@@ -1,6 +1,269 @@
-[gd_resource type="TileSet" format=3 uid="uid://bo007qffiyxbw"]
+[gd_resource type="TileSet" script_class="SpriteSheet" format=3 uid="uid://bo007qffiyxbw"]
 
 [ext_resource type="Texture2D" uid="uid://digg1u5pscyws" path="res://addons/ImpishPuppets/Template/TemplateImage.png" id="1_4r33w"]
+[ext_resource type="Script" uid="uid://dbg5vomegny22" path="res://addons/ImpishPuppets/Shared/SpriteSheet.cs" id="1_c13ns"]
+[ext_resource type="Script" uid="uid://dymuauvdcbbpm" path="res://addons/ImpishPuppets/Shared/PuppetSpriteData.cs" id="1_udw1t"]
+
+[sub_resource type="Resource" id="Resource_vyy2n"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Body"
+SpriteName = &"Foot"
+SpriteRegion = Rect2i(208, 48, 32, 32)
+
+[sub_resource type="Resource" id="Resource_slsm3"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Body"
+SpriteName = &"Head"
+SpriteRegion = Rect2i(48, 0, 48, 48)
+
+[sub_resource type="Resource" id="Resource_m2nyv"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Body"
+SpriteName = &"Lower"
+SpriteRegion = Rect2i(0, 48, 48, 48)
+
+[sub_resource type="Resource" id="Resource_umqtk"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Body"
+SpriteName = &"LowerArm"
+SpriteRegion = Rect2i(112, 48, 32, 32)
+
+[sub_resource type="Resource" id="Resource_oe0fn"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Body"
+SpriteName = &"LowerLeg"
+SpriteRegion = Rect2i(176, 48, 32, 32)
+
+[sub_resource type="Resource" id="Resource_udw1t"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Body"
+SpriteName = &"Upper"
+SpriteRegion = Rect2i(0, 0, 48, 48)
+
+[sub_resource type="Resource" id="Resource_x8s33"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Body"
+SpriteName = &"UpperArm"
+SpriteRegion = Rect2i(80, 48, 32, 32)
+
+[sub_resource type="Resource" id="Resource_po47b"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Body"
+SpriteName = &"UpperLeg"
+SpriteRegion = Rect2i(144, 48, 32, 32)
+
+[sub_resource type="Resource" id="Resource_beykp"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eye"
+SpriteName = &"Arch"
+SpriteRegion = Rect2i(208, 16, 16, 16)
+
+[sub_resource type="Resource" id="Resource_7yrsw"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eye"
+SpriteName = &"ArchDown"
+SpriteRegion = Rect2i(208, 16, 16, 16)
+AlternateID = 1
+
+[sub_resource type="Resource" id="Resource_hi2vw"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eye"
+SpriteName = &"Back"
+SpriteRegion = Rect2i(96, 16, 16, 16)
+AlternateID = 1
+
+[sub_resource type="Resource" id="Resource_cvw7p"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eye"
+SpriteName = &"Closed"
+SpriteRegion = Rect2i(128, 16, 16, 16)
+
+[sub_resource type="Resource" id="Resource_3w6qw"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eye"
+SpriteName = &"DownLeft"
+SpriteRegion = Rect2i(160, 16, 16, 16)
+AlternateID = 1
+
+[sub_resource type="Resource" id="Resource_skphe"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eye"
+SpriteName = &"DownRight"
+SpriteRegion = Rect2i(160, 16, 16, 16)
+
+[sub_resource type="Resource" id="Resource_g2h1n"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eye"
+SpriteName = &"Empty"
+SpriteRegion = Rect2i(192, 16, 16, 16)
+
+[sub_resource type="Resource" id="Resource_hfpin"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eye"
+SpriteName = &"Forward"
+SpriteRegion = Rect2i(96, 16, 16, 16)
+
+[sub_resource type="Resource" id="Resource_flvfa"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eye"
+SpriteName = &"Narrow"
+SpriteRegion = Rect2i(112, 16, 16, 16)
+
+[sub_resource type="Resource" id="Resource_ev63m"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eye"
+SpriteName = &"NarrowBack"
+SpriteRegion = Rect2i(112, 16, 16, 16)
+AlternateID = 1
+
+[sub_resource type="Resource" id="Resource_mp3sf"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eye"
+SpriteName = &"Out"
+SpriteRegion = Rect2i(176, 16, 16, 16)
+
+[sub_resource type="Resource" id="Resource_8k1ui"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eye"
+SpriteName = &"UpLeft"
+SpriteRegion = Rect2i(144, 16, 16, 16)
+AlternateID = 1
+
+[sub_resource type="Resource" id="Resource_g2kcu"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eye"
+SpriteName = &"UpRight"
+SpriteRegion = Rect2i(144, 16, 16, 16)
+
+[sub_resource type="Resource" id="Resource_5458v"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eyebrow"
+SpriteName = &"Arch"
+SpriteRegion = Rect2i(144, 0, 16, 16)
+
+[sub_resource type="Resource" id="Resource_3hg21"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eyebrow"
+SpriteName = &"ArchDown"
+SpriteRegion = Rect2i(144, 0, 16, 16)
+AlternateID = 1
+
+[sub_resource type="Resource" id="Resource_13w2d"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eyebrow"
+SpriteName = &"BigSlant"
+SpriteRegion = Rect2i(128, 0, 16, 16)
+
+[sub_resource type="Resource" id="Resource_xh7pw"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eyebrow"
+SpriteName = &"BigSlantBack"
+SpriteRegion = Rect2i(128, 0, 16, 16)
+AlternateID = 1
+
+[sub_resource type="Resource" id="Resource_j337b"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eyebrow"
+SpriteName = &"Empty"
+SpriteRegion = Rect2i(160, 0, 16, 16)
+
+[sub_resource type="Resource" id="Resource_i5w6e"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eyebrow"
+SpriteName = &"Flat"
+SpriteRegion = Rect2i(96, 0, 16, 16)
+
+[sub_resource type="Resource" id="Resource_gwdhq"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eyebrow"
+SpriteName = &"Raised"
+SpriteRegion = Rect2i(96, 0, 16, 16)
+AlternateID = 1
+
+[sub_resource type="Resource" id="Resource_5ddh6"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eyebrow"
+SpriteName = &"Slant"
+SpriteRegion = Rect2i(112, 0, 16, 16)
+
+[sub_resource type="Resource" id="Resource_0qh1j"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eyebrow"
+SpriteName = &"SlantBack"
+SpriteRegion = Rect2i(112, 0, 16, 16)
+AlternateID = 1
+
+[sub_resource type="Resource" id="Resource_nhg00"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Hand"
+SpriteName = &"Finger"
+SpriteRegion = Rect2i(48, 80, 16, 16)
+
+[sub_resource type="Resource" id="Resource_lywqb"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Hand"
+SpriteName = &"FingerDown"
+SpriteRegion = Rect2i(80, 80, 16, 16)
+
+[sub_resource type="Resource" id="Resource_2owd2"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Hand"
+SpriteName = &"Palm"
+SpriteRegion = Rect2i(48, 48, 32, 32)
+
+[sub_resource type="Resource" id="Resource_xqfa1"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Hand"
+SpriteName = &"PalmFlat"
+SpriteRegion = Rect2i(112, 80, 16, 16)
+
+[sub_resource type="Resource" id="Resource_dfn7k"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Hand"
+SpriteName = &"Thumb"
+SpriteRegion = Rect2i(64, 80, 16, 16)
+
+[sub_resource type="Resource" id="Resource_ixpwb"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Hand"
+SpriteName = &"ThumbDown"
+SpriteRegion = Rect2i(96, 80, 16, 16)
+
+[sub_resource type="Resource" id="Resource_t8bea"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Mouth"
+SpriteName = &"Frown"
+SpriteRegion = Rect2i(128, 32, 16, 16)
+
+[sub_resource type="Resource" id="Resource_wi3ks"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Mouth"
+SpriteName = &"Neutral"
+SpriteRegion = Rect2i(96, 32, 16, 16)
+
+[sub_resource type="Resource" id="Resource_igxrx"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Mouth"
+SpriteName = &"Open"
+SpriteRegion = Rect2i(144, 32, 16, 16)
+
+[sub_resource type="Resource" id="Resource_hph46"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Mouth"
+SpriteName = &"OpenSmile"
+SpriteRegion = Rect2i(160, 32, 16, 16)
+
+[sub_resource type="Resource" id="Resource_p7t0v"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Mouth"
+SpriteName = &"Smile"
+SpriteRegion = Rect2i(112, 32, 16, 16)
+
+[sub_resource type="Resource" id="Resource_fwxcc"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Mouth"
+SpriteName = &"Tounge"
+SpriteRegion = Rect2i(176, 32, 16, 16)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l2htu"]
 texture = ExtResource("1_4r33w")
@@ -8,7 +271,7 @@ texture = ExtResource("1_4r33w")
 0:0/0 = 0
 0:0/0/custom_data_0 = &"Body"
 0:0/0/custom_data_1 = &"Upper"
-0:0/0/custom_data_2 = Vector2(-2.81, -13.11)
+0:0/0/custom_data_2 = Vector2(-2.015, -13.11)
 0:3/size_in_atlas = Vector2i(3, 3)
 0:3/0 = 0
 0:3/0/custom_data_0 = &"Body"
@@ -24,61 +287,50 @@ texture = ExtResource("1_4r33w")
 6:0/0/custom_data_0 = &"Eyebrow"
 6:0/0/custom_data_1 = &"Flat"
 6:0/0/custom_data_2 = Vector2(0.315, -1.1)
-6:0/0/custom_data_3 = true
 6:0/1 = 1
 6:0/1/custom_data_0 = &"Eyebrow"
 6:0/1/custom_data_1 = &"Raised"
 6:0/1/custom_data_2 = Vector2(0, -3.535)
-6:0/1/custom_data_3 = true
 7:0/next_alternative_id = 2
 7:0/0 = 0
 7:0/0/custom_data_0 = &"Eyebrow"
 7:0/0/custom_data_1 = &"Slant"
-7:0/0/custom_data_3 = true
 7:0/1 = 1
 7:0/1/flip_h = true
 7:0/1/custom_data_0 = &"Eyebrow"
 7:0/1/custom_data_1 = &"SlantBack"
 7:0/1/custom_data_2 = Vector2(-1.71, 0)
-7:0/1/custom_data_3 = true
 8:0/next_alternative_id = 2
 8:0/0 = 0
 8:0/0/custom_data_0 = &"Eyebrow"
 8:0/0/custom_data_1 = &"BigSlant"
-8:0/0/custom_data_3 = true
 8:0/1 = 1
 8:0/1/flip_h = true
 8:0/1/custom_data_0 = &"Eyebrow"
 8:0/1/custom_data_1 = &"BigSlantBack"
-8:0/1/custom_data_3 = true
 6:1/next_alternative_id = 2
 6:1/0 = 0
 6:1/0/custom_data_0 = &"Eye"
 6:1/0/custom_data_1 = &"Forward"
 6:1/0/custom_data_2 = Vector2(-0.29, -1.25)
-6:1/0/custom_data_3 = true
 6:1/1 = 1
 6:1/1/flip_h = true
 6:1/1/custom_data_0 = &"Eye"
 6:1/1/custom_data_1 = &"Back"
 6:1/1/custom_data_2 = Vector2(1.365, -1.285)
-6:1/1/custom_data_3 = true
 7:1/next_alternative_id = 2
 7:1/0 = 0
 7:1/0/custom_data_0 = &"Eye"
 7:1/0/custom_data_1 = &"Narrow"
 7:1/0/custom_data_2 = Vector2(-0.065, -1.52)
-7:1/0/custom_data_3 = true
 7:1/1 = 1
 7:1/1/flip_h = true
 7:1/1/custom_data_0 = &"Eye"
 7:1/1/custom_data_1 = &"NarrowBack"
 7:1/1/custom_data_2 = Vector2(1.05, -1.535)
-7:1/1/custom_data_3 = true
 8:1/0 = 0
 8:1/0/custom_data_0 = &"Eye"
 8:1/0/custom_data_1 = &"Closed"
-8:1/0/custom_data_3 = true
 3:3/size_in_atlas = Vector2i(2, 2)
 3:3/0 = 0
 3:3/0/custom_data_0 = &"Hand"
@@ -93,46 +345,38 @@ texture = ExtResource("1_4r33w")
 9:0/0 = 0
 9:0/0/custom_data_0 = &"Eyebrow"
 9:0/0/custom_data_1 = &"Arch"
-9:0/0/custom_data_3 = true
 9:0/1 = 1
 9:0/1/flip_v = true
 9:0/1/custom_data_0 = &"Eyebrow"
 9:0/1/custom_data_1 = &"ArchDown"
 9:0/1/custom_data_2 = Vector2(0, -1.335)
-9:0/1/custom_data_3 = true
 10:0/0 = 0
 10:0/0/custom_data_0 = &"Eyebrow"
 10:0/0/custom_data_1 = &"Empty"
-10:0/0/custom_data_3 = true
 9:1/next_alternative_id = 2
 9:1/0 = 0
 9:1/0/custom_data_0 = &"Eye"
 9:1/0/custom_data_1 = &"UpRight"
 9:1/0/custom_data_2 = Vector2(-0.095, -1.06)
-9:1/0/custom_data_3 = true
 9:1/1 = 1
 9:1/1/flip_h = true
 9:1/1/custom_data_0 = &"Eye"
 9:1/1/custom_data_1 = &"UpLeft"
 9:1/1/custom_data_2 = Vector2(1.095, -1.045)
-9:1/1/custom_data_3 = true
 10:1/next_alternative_id = 2
 10:1/0 = 0
 10:1/0/custom_data_0 = &"Eye"
 10:1/0/custom_data_1 = &"DownRight"
 10:1/0/custom_data_2 = Vector2(-0.28, -1.3)
-10:1/0/custom_data_3 = true
 10:1/1 = 1
 10:1/1/flip_h = true
 10:1/1/custom_data_0 = &"Eye"
 10:1/1/custom_data_1 = &"DownLeft"
 10:1/1/custom_data_2 = Vector2(1.455, -0.985)
-10:1/1/custom_data_3 = true
 11:1/0 = 0
 11:1/0/custom_data_0 = &"Eye"
 11:1/0/custom_data_1 = &"Out"
 11:1/0/custom_data_2 = Vector2(-0.525, -1.17)
-11:1/0/custom_data_3 = true
 6:2/0 = 0
 6:2/0/custom_data_0 = &"Mouth"
 6:2/0/custom_data_1 = &"Neutral"
@@ -144,11 +388,11 @@ texture = ExtResource("1_4r33w")
 8:2/0/custom_data_1 = &"Frown"
 3:5/0 = 0
 3:5/0/custom_data_0 = &"Hand"
-3:5/0/custom_data_1 = &"Finger"
+3:5/0/custom_data_1 = &"FingerUp"
 3:5/0/custom_data_2 = Vector2(0.08, -5.795)
 4:5/0 = 0
 4:5/0/custom_data_0 = &"Hand"
-4:5/0/custom_data_1 = &"Thumb"
+4:5/0/custom_data_1 = &"ThumbUp"
 4:5/0/custom_data_2 = Vector2(-3.93, -2.23)
 5:5/0 = 0
 5:5/0/custom_data_0 = &"Hand"
@@ -168,19 +412,16 @@ texture = ExtResource("1_4r33w")
 12:1/0/custom_data_0 = &"Eye"
 12:1/0/custom_data_1 = &"Empty"
 12:1/0/custom_data_2 = Vector2(-0.675, -1.235)
-12:1/0/custom_data_3 = true
 13:1/next_alternative_id = 2
 13:1/0 = 0
 13:1/0/custom_data_0 = &"Eye"
 13:1/0/custom_data_1 = &"Arch"
 13:1/0/custom_data_2 = Vector2(0, -0.585)
-13:1/0/custom_data_3 = true
 13:1/1 = 1
 13:1/1/flip_v = true
 13:1/1/custom_data_0 = &"Eye"
 13:1/1/custom_data_1 = &"ArchDown"
 13:1/1/custom_data_2 = Vector2(0, 1.8)
-13:1/1/custom_data_3 = true
 11:2/0 = 0
 11:2/0/custom_data_0 = &"Mouth"
 11:2/0/custom_data_1 = &"Tounge"
@@ -204,6 +445,13 @@ texture = ExtResource("1_4r33w")
 9:3/0/custom_data_0 = &"Body"
 9:3/0/custom_data_1 = &"UpperLeg"
 9:3/0/custom_data_2 = Vector2(1.005, 9.385)
+7:5/0 = 0
+7:5/0/custom_data_0 = &"Hand"
+7:5/0/custom_data_1 = &"PalmFlat"
+7:5/0/custom_data_2 = Vector2(0.85, -2.09)
+8:5/0 = 0
+8:5/0/custom_data_0 = &"Hand"
+8:5/0/custom_data_1 = &"FingerCurl"
 
 [resource]
 custom_data_layer_0/name = "Group"
@@ -212,6 +460,60 @@ custom_data_layer_1/name = "Name"
 custom_data_layer_1/type = 21
 custom_data_layer_2/name = "Offset"
 custom_data_layer_2/type = 5
-custom_data_layer_3/name = "FlatLighting"
-custom_data_layer_3/type = 1
 sources/0 = SubResource("TileSetAtlasSource_l2htu")
+script = ExtResource("1_c13ns")
+SpriteDict = Dictionary[StringName, Dictionary]({
+&"Body": Dictionary[StringName, ExtResource("1_udw1t")]({
+&"Foot": SubResource("Resource_vyy2n"),
+&"Head": SubResource("Resource_slsm3"),
+&"Lower": SubResource("Resource_m2nyv"),
+&"LowerArm": SubResource("Resource_umqtk"),
+&"LowerLeg": SubResource("Resource_oe0fn"),
+&"Upper": SubResource("Resource_udw1t"),
+&"UpperArm": SubResource("Resource_x8s33"),
+&"UpperLeg": SubResource("Resource_po47b")
+}),
+&"Eye": Dictionary[StringName, ExtResource("1_udw1t")]({
+&"Arch": SubResource("Resource_beykp"),
+&"ArchDown": SubResource("Resource_7yrsw"),
+&"Back": SubResource("Resource_hi2vw"),
+&"Closed": SubResource("Resource_cvw7p"),
+&"DownLeft": SubResource("Resource_3w6qw"),
+&"DownRight": SubResource("Resource_skphe"),
+&"Empty": SubResource("Resource_g2h1n"),
+&"Forward": SubResource("Resource_hfpin"),
+&"Narrow": SubResource("Resource_flvfa"),
+&"NarrowBack": SubResource("Resource_ev63m"),
+&"Out": SubResource("Resource_mp3sf"),
+&"UpLeft": SubResource("Resource_8k1ui"),
+&"UpRight": SubResource("Resource_g2kcu")
+}),
+&"Eyebrow": Dictionary[StringName, ExtResource("1_udw1t")]({
+&"Arch": SubResource("Resource_5458v"),
+&"ArchDown": SubResource("Resource_3hg21"),
+&"BigSlant": SubResource("Resource_13w2d"),
+&"BigSlantBack": SubResource("Resource_xh7pw"),
+&"Empty": SubResource("Resource_j337b"),
+&"Flat": SubResource("Resource_i5w6e"),
+&"Raised": SubResource("Resource_gwdhq"),
+&"Slant": SubResource("Resource_5ddh6"),
+&"SlantBack": SubResource("Resource_0qh1j")
+}),
+&"Hand": Dictionary[StringName, ExtResource("1_udw1t")]({
+&"Finger": SubResource("Resource_nhg00"),
+&"FingerDown": SubResource("Resource_lywqb"),
+&"Palm": SubResource("Resource_2owd2"),
+&"PalmFlat": SubResource("Resource_xqfa1"),
+&"Thumb": SubResource("Resource_dfn7k"),
+&"ThumbDown": SubResource("Resource_ixpwb")
+}),
+&"Mouth": Dictionary[StringName, ExtResource("1_udw1t")]({
+&"Frown": SubResource("Resource_t8bea"),
+&"Neutral": SubResource("Resource_wi3ks"),
+&"Open": SubResource("Resource_igxrx"),
+&"OpenSmile": SubResource("Resource_hph46"),
+&"Smile": SubResource("Resource_p7t0v"),
+&"Tounge": SubResource("Resource_fwxcc")
+})
+})
+Textures = Array[Texture2D]([ExtResource("1_4r33w")])

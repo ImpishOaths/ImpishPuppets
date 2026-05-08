@@ -1,5 +1,5 @@
 using Godot;
-using GCollections = Godot.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,86 +7,38 @@ namespace ImpishPuppets;
 
 [Tool]
 [GlobalClass]
-public partial class Puppet3D: Node3D, Puppet
+[Icon("res://addons/ImpishPuppets/Icons/Puppet3DIcon.png")]
+public partial class Puppet3D: PuppetTransform3D, Puppet
 {
+    public Puppet3D()
+    {
+        Puppet = this;
+    }
+    
     [Export]
     public PackedScene Puppet2D;
     [Export]
-    public ShaderMaterial PuppetMaterial {get; private set;}
-    public ShaderMaterial PuppetMaterialFlat {get; private set;}
-
-    public Texture2D PuppetTexture {get; private set;}
-    private TileSet SpriteSheet;
-    public Vector2 TextureSize {get; private set;}
-    private GCollections.Dictionary<StringName, GCollections.Dictionary<StringName, PuppetSpriteData>> SpriteDict = null;
+    public CharacterData CharacterData;
+    [Export]
+    public Godot.Collections.Array<Material> BoneMaterials3D;
+    [Export]
+    public SpriteSheet SpriteSheet {get; private set;}
+    public SpriteSheet GetSheet() => SpriteSheet;
     
-    public Node GetNode() => this;
-
     public Transform3D? InverseTransform {get; private set;} = null;
     public override void _PhysicsProcess(double delta)
     {
         InverseTransform = GlobalTransform.AffineInverse();
     }
 
-    public override void _EnterTree()
-    {
-        PuppetMaterialFlat = PuppetMaterial.Duplicate() as ShaderMaterial;
-        PuppetMaterialFlat.SetShaderParameter("flatLighting", true);
-        
-        if(Puppet2D == null)
-            return;
-        
-        var puppet = Puppet2D.Instantiate<Puppet2D>();
-        LoadPuppetSprites(puppet);
-        puppet.QueueFree();
-    }
-
-    public GCollections.Array<StringName> GetSpriteGroups() => [..SpriteDict.Keys];
-    public GCollections.Array<StringName> GetSpritesInGroup(StringName group)
-    {
-        if(group != null && SpriteDict.TryGetValue(group, out var sprites))
-            return [..sprites.Keys];
-        return [];
-    }
-    public StringName GetFirstGroup()
-    {
-        if(SpriteDict.Count == 0)
-            return null;
-        return SpriteDict.First().Key;
-    }
-    public PuppetSpriteData GetFirstSprite(StringName group)
-    {
-        if(group == null || SpriteDict == null || !SpriteDict.TryGetValue(group, out var sprites) || sprites.Count == 0)
-            return null;
-        return sprites.First().Value;
-    }
-    
-    public PuppetSpriteData GetSpriteReference(StringName group, StringName sprite)
-    {
-        if(group == null || ! SpriteDict.TryGetValue(group, out var sprites))
-            return null;
-        if(sprite == null || ! sprites.TryGetValue(sprite, out var ret))
-            return null;
-        return ret;
-    }
-
-    private void LoadPuppetSprites(Puppet2D puppet)
-    {
-        PuppetTexture = puppet.PuppetTexture;
-        SpriteSheet = puppet.SpriteSheet;
-        TextureSize = PuppetTexture.GetSize();
-        //TileSize = SpriteSheet.TileSize;
-        SpriteDict = SpriteSheet.MakeSpriteDict();
-    }
-
-    //public Vector2 GetResize() => new(1f/TileSize.X, 1f/TileSize.Y);
-
     [ExportToolButton("Reload Puppet")]
     public Callable ReloadPuppetCallable => Callable.From(ReloadPuppet);
     private void ReloadPuppet()
     {
-        var puppet = Puppet2D.Instantiate<Puppet2D>();
-        LoadPuppetSprites(puppet);
+        var puppet2D = Puppet2D.Instantiate<Puppet2D>();
+        SpriteSheet = puppet2D.SpriteSheet;
+        BoneMaterials3D = puppet2D.BoneMaterials3D;
+        CharacterData = puppet2D.CharacterData;
         
         Node storage = new();
         AddChild(storage);
@@ -95,99 +47,58 @@ public partial class Puppet3D: Node3D, Puppet
                 child.Reparent(storage);
         storage.QueueFree();
 
-        List<Node> bone3ds = [];
-        List<PuppetController> controllers = [];
-        List<(int index, NodePath toSwap)> swaps = [];
-        int frontCount = 0;
-        int backwardCount = 0;
+        List<Node> boneOrder = [];
 
-        void initializeComponent(Node parent, Node node)
+        void duplicateStructure(Node parent3D, Node child2D)
         {
-            Node newNode;
-            switch(node)
-            {
-                case DepthMarker mark:
-                    newNode = new Node();
-                    swaps.Add((bone3ds.Count, mark.Marked));
-                    bone3ds.Add(newNode);
-                    break;
-                case PuppetBone2D bone2D:
-                    PuppetBone3D bone3d;
-                    if(bone2D is ClothingBone2D)
-                        bone3d = new ClothingBone3D();
-                    else
-                        bone3d = new PuppetBone3D();
-                    bone3d.Initialize(this, bone2D);
-                    bone3ds.Add(bone3d);
+            if(child2D is DepthSwapper)
+                boneOrder.Add(child2D);
+            if(child2D is not Puppet2Dto3DConverter converter)
+                return;
+            Node child3D = converter.ConvertTo3D(this);
+            child3D.Name = child2D.Name;
+            parent3D.AddChild(child3D);
+            child3D.Owner = Owner ?? this;
+            if(child3D is PuppetBone3D)
+                boneOrder.Add(child3D);
 
-                    if(bone3d.SortOrder == SortOrderEnum.BOTH || bone3d.SortOrder == SortOrderEnum.BACK)
-                        backwardCount++;
-                    if(bone3d.SortOrder == SortOrderEnum.BOTH || bone3d.SortOrder == SortOrderEnum.FRONT)
-                        frontCount++;
-
-                    newNode = bone3d;
-                    break;
-                case PuppetTransform2D trans2D:
-                    var trans3D = new PuppetTransform3D();
-                    trans3D.Initialize(this, trans2D);
-                    newNode = trans3D;
-                    break;
-                case PuppetBoneModifier modifier:
-                    newNode = modifier.MakeDuplicate3D(Vector2.One/VectorHelpers.PixelSizeRoot);
-                    break;
-                case PuppetController controller:
-                    var controller3D = controller.MakeDuplicate3D();
-                    newNode = controller3D;
-                    controllers.Add(controller3D);
-                    break;
-                default:
-                    return;
-            }
-
-            newNode.Name = node.Name;
-            parent.AddChild(newNode, true);
-            newNode.Owner = Owner ?? this;
-
-            foreach(var child in node.GetChildren())
-                initializeComponent(newNode, child);
+            foreach(var grandchild2D in child2D.GetChildren())
+                duplicateStructure(child3D, grandchild2D);
         }
-
-        foreach(var child in puppet.GetChildren())
-            initializeComponent(this, child);
-
-        foreach(var (index, toSwap) in swaps)
+        foreach(var child2D in puppet2D.GetChildren())
+            duplicateStructure(this, child2D);
+        
+        int backwardTotal = 0;
+        for(var i = 0; i < boneOrder.Count; ++i)
         {
-            var node = bone3ds[index];
-            var bone = node.GetNode(toSwap);
-            var boneIndex = bone3ds.FindIndex(bone.Equals);
-            bone3ds[boneIndex] = node;
-            bone3ds[index] = bone;
-            node.QueueFree();
+            if(boneOrder[i] is DepthSwapper swapper)
+            {
+                Node toSwap = GetNodeOrNull(swapper.SwapPath);
+                if(toSwap == null)
+                    continue;
+                var index = boneOrder.IndexOf(toSwap);
+                if(index == -1)
+                    continue;
+                boneOrder[index] = swapper;
+                boneOrder[i] = toSwap;
+            }
+            else if(boneOrder[i] is PuppetBone3D bone && bone.SortOrder.HasFlag(SortOrderEnum.BACK))
+                backwardTotal += 1;
         }
 
         int forward = 0;
-        int clothing = 0;
-        int backward = backwardCount+1;
-        foreach(var node in bone3ds)
+        int backward = -backwardTotal;
+        foreach(var node in boneOrder)
         {
             if(node is not PuppetBone3D bone)
                 continue;
-            
-            var order = Vector2I.Zero;
-            if(bone.SortOrder == SortOrderEnum.FRONT || bone.SortOrder == SortOrderEnum.BOTH)
-                order.X = forward++;
-            if(bone.SortOrder == SortOrderEnum.BACK || bone.SortOrder == SortOrderEnum.BOTH)
-                order.Y = -backward--;
-            if(bone.SortOrder == SortOrderEnum.CLOTHING)
-                order.X = frontCount + clothing++;
-            bone.SetOrderValues(order);
+            if(bone.SortOrder.HasFlag(SortOrderEnum.FRONT))
+                bone.FrontBackOrder.X = forward++;
+            if(bone.SortOrder.HasFlag(SortOrderEnum.BACK))
+                bone.FrontBackOrder.Y = backward++;
+            bone.SetOrder(bone.Order);
         }
 
-        foreach(var control in controllers)
-            control.Initialize();
-        
-        puppet.QueueFree();
+        puppet2D.QueueFree();
     }
-
-    public void MakeTilesDirty() {}
 }

@@ -1,0 +1,90 @@
+[gd_resource type="Resource" script_class="ExpressionList" format=3 uid="uid://wme1dvvhgsqa"]
+
+[ext_resource type="Script" uid="uid://cce266amaoah5" path="res://addons/ImpishPuppets/Controllers/ExpressionList.cs" id="1_in5n2"]
+[ext_resource type="Script" uid="uid://bicpct7vta1bk" path="res://addons/ImpishPuppets/Controllers/Expression.cs" id="1_isbap"]
+
+[sub_resource type="Curve" id="Curve_77ngs"]
+_limits = [0.0, 1.5, 0.0, 1.0]
+_data = [Vector2(0, 0.076349795), 0.0, 3.1488087, 0, 0, Vector2(1, 1), -1.3434932, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_scere"]
+_limits = [0.0, 1.5, 0.0, 1.0]
+_data = [Vector2(0, 0.076349795), 0.0, 3.1488087, 0, 0, Vector2(1, 1), -1.3434932, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Resource" id="Resource_77ngs"]
+script = ExtResource("1_isbap")
+ExpressionName = &"Anger"
+Position = Vector2(10.121, -17.56)
+ScaleXCurve = SubResource("Curve_77ngs")
+ScaleYCurve = SubResource("Curve_scere")
+Time = 0.3
+metadata/_custom_type_script = "uid://bicpct7vta1bk"
+
+[sub_resource type="Curve" id="Curve_efxa2"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, -0.0033123493), 0.0, 0.0, 0, 0, Vector2(0.21652424, 1), 0.0, 0.0, 0, 0, Vector2(0.22364673, -1), 0.0, 0.0, 0, 0, Vector2(0.33475786, -1), 0.0, 0.0, 0, 0, Vector2(0.43447292, -1), 0.0, 0.0, 0, 0, Vector2(0.43589744, 1), 0.0, 0.0, 0, 0, Vector2(0.5427351, 1), 0.0, 0.0, 0, 0, Vector2(0.6723647, 1), 0.0, 0.0, 0, 0, Vector2(0.7820513, 1), 0.0, 0.0, 0, 0, Vector2(0.7834758, -1), 0.0, 0.0, 0, 0, Vector2(0.8803419, -1), 0.14493142, 0.14493142, 0, 0, Vector2(0.88888896, 1), 0.0, 0.0, 0, 0, Vector2(1, -0.0076184273), 0.0, 0.0, 0, 0]
+point_count = 13
+
+[sub_resource type="Curve" id="Curve_cn0p1"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 0.018217921), 0.0, 0.0, 0, 0, Vector2(0.22364673, -1), 0.0, 0.0, 0, 0, Vector2(0.22934473, 1), 0.0, 0.0, 0, 0, Vector2(0.33333334, 1), 0.0, 0.0, 0, 0, Vector2(0.33475786, -1), 0.0, 0.0, 0, 0, Vector2(0.43447292, -1), 0.0, 0.0, 0, 0, Vector2(0.5512821, -1), 0.0, 0.0, 0, 0, Vector2(0.5584046, 1), 0.0, 0.0, 0, 0, Vector2(0.6723647, 1), 0.0, 0.0, 0, 0, Vector2(0.67806274, -1), 0.0, 0.0, 0, 0, Vector2(0.77777785, -1), 0.0, 0.0, 0, 0, Vector2(0.7820513, 1), 0.0, 0.0, 0, 0, Vector2(0.88888896, 1), 0.0, 0.0, 0, 0, Vector2(1, -0.011924505), 0.0, 0.0, 0, 0]
+point_count = 14
+
+[sub_resource type="Resource" id="Resource_f0sht"]
+script = ExtResource("1_isbap")
+ExpressionName = &"Grumble"
+Position = Vector2(-2.6346016, -30.434174)
+ScaleXCurve = SubResource("Curve_efxa2")
+ScaleYCurve = SubResource("Curve_cn0p1")
+Time = 0.7
+metadata/_custom_type_script = "uid://bicpct7vta1bk"
+
+[sub_resource type="Resource" id="Resource_scere"]
+script = ExtResource("1_isbap")
+ExpressionName = &"None"
+metadata/_custom_type_script = "uid://bicpct7vta1bk"
+
+[sub_resource type="Curve" id="Curve_f0sht"]
+_limits = [-0.46, 2.73, 0.0, 1.0]
+_data = [Vector2(0, -0.46), 0.0, 3.4699395, 0, 0, Vector2(0.74358976, 1.2602122), 0.59210736, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_mhcge"]
+_limits = [0.0, 1.5, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 3.8102791, 0, 0, Vector2(0.73504263, 0.7410567), -1.1612202, -1.1612202, 0, 0, Vector2(1, 0), 0.03977452, -2.4290829, 0, 0]
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_m0w15"]
+script = ExtResource("1_isbap")
+ExpressionName = &"Star"
+Position = Vector2(10.921, -9.478)
+ScaleXCurve = SubResource("Curve_mhcge")
+ScaleYCurve = SubResource("Curve_mhcge")
+RotationCurve = SubResource("Curve_f0sht")
+Time = 0.5
+metadata/_custom_type_script = "uid://bicpct7vta1bk"
+
+[sub_resource type="Curve" id="Curve_isbap"]
+_data = [Vector2(0.0056980066, 0.009605885), 0.0, 3.742582, 0, 0, Vector2(0.9943021, 0.99354094), 0.09751111, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Resource" id="Resource_isbap"]
+script = ExtResource("1_isbap")
+ExpressionName = &"Sweat"
+Position = Vector2(-14.144, -21.687)
+ScaleYCurve = SubResource("Curve_isbap")
+Time = 0.5
+metadata/_custom_type_script = "uid://bicpct7vta1bk"
+
+[resource]
+script = ExtResource("1_in5n2")
+Expressions = {
+&"Anger": SubResource("Resource_77ngs"),
+&"Grumble": SubResource("Resource_f0sht"),
+&"None": SubResource("Resource_scere"),
+&"Star": SubResource("Resource_m0w15"),
+&"Sweat": SubResource("Resource_isbap")
+}
+metadata/_custom_type_script = "uid://cce266amaoah5"

@@ -135,10 +135,4 @@ public partial class FootControl : PuppetController
         _Ready();
         SetPose(LeftFacing, FlipSide);
     }
-
-    public override PuppetController MakeDuplicate3D()
-    {
-        return Duplicate() as FootControl;
-    }
-
 }

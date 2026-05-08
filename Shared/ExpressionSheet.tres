@@ -1,0 +1,167 @@
+[gd_resource type="TileSet" script_class="SpriteSheet" format=3 uid="uid://ctnkxfrf7uy77"]
+
+[ext_resource type="Script" uid="uid://dymuauvdcbbpm" path="res://addons/ImpishPuppets/Shared/PuppetSpriteData.cs" id="1_a3pgu"]
+[ext_resource type="Script" uid="uid://dbg5vomegny22" path="res://addons/ImpishPuppets/Shared/SpriteSheet.cs" id="1_ynv3k"]
+[ext_resource type="Texture2D" uid="uid://cnv7hr7e8v6ci" path="res://addons/ImpishPuppets/Shared/Expressions.png" id="2_yisd4"]
+
+[sub_resource type="Resource" id="Resource_y24ax"]
+script = ExtResource("1_a3pgu")
+SpriteGroup = &"Expression"
+SpriteName = &"Anger"
+SpriteRegion = Rect2i(0, 32, 16, 16)
+
+[sub_resource type="Resource" id="Resource_yisd4"]
+script = ExtResource("1_a3pgu")
+SpriteGroup = &"Expression"
+SpriteName = &"Blush"
+SpriteRegion = Rect2i(0, 16, 16, 16)
+
+[sub_resource type="Resource" id="Resource_24fj6"]
+script = ExtResource("1_a3pgu")
+SpriteGroup = &"Expression"
+SpriteName = &"Exclamation"
+SpriteRegion = Rect2i(32, 0, 16, 16)
+
+[sub_resource type="Resource" id="Resource_se3ai"]
+script = ExtResource("1_a3pgu")
+SpriteGroup = &"Expression"
+SpriteName = &"Grumble"
+SpriteRegion = Rect2i(16, 0, 16, 16)
+
+[sub_resource type="Resource" id="Resource_gsaye"]
+script = ExtResource("1_a3pgu")
+SpriteGroup = &"Expression"
+SpriteName = &"None"
+SpriteRegion = Rect2i(16, 48, 16, 16)
+
+[sub_resource type="Resource" id="Resource_bpr5j"]
+script = ExtResource("1_a3pgu")
+SpriteGroup = &"Expression"
+SpriteName = &"Question"
+SpriteRegion = Rect2i(32, 16, 16, 16)
+
+[sub_resource type="Resource" id="Resource_g2sw3"]
+script = ExtResource("1_a3pgu")
+SpriteGroup = &"Expression"
+SpriteName = &"Shock"
+SpriteRegion = Rect2i(32, 32, 16, 16)
+
+[sub_resource type="Resource" id="Resource_w4e1f"]
+script = ExtResource("1_a3pgu")
+SpriteGroup = &"Expression"
+SpriteName = &"Sigh"
+SpriteRegion = Rect2i(16, 16, 16, 16)
+
+[sub_resource type="Resource" id="Resource_6dmic"]
+script = ExtResource("1_a3pgu")
+SpriteGroup = &"Expression"
+SpriteName = &"Singsong"
+SpriteRegion = Rect2i(16, 32, 16, 16)
+
+[sub_resource type="Resource" id="Resource_bk7br"]
+script = ExtResource("1_a3pgu")
+SpriteGroup = &"Expression"
+SpriteName = &"Star"
+SpriteRegion = Rect2i(0, 48, 16, 16)
+
+[sub_resource type="Resource" id="Resource_a3pgu"]
+script = ExtResource("1_a3pgu")
+SpriteGroup = &"Expression"
+SpriteName = &"Sweat"
+SpriteRegion = Rect2i(0, 0, 16, 16)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_24fj6"]
+texture = ExtResource("2_yisd4")
+0:0/0 = 0
+0:0/0/custom_data_0 = &"Expression"
+0:0/0/custom_data_1 = &"Sweat"
+0:0/0/custom_data_2 = Vector2(0.475, 6.275)
+0:0/0/custom_data_3 = Color(0.052799992, 0.31592005, 0.66, 1)
+0:0/0/custom_data_5 = Color(1, 1, 1, 1)
+0:0/0/custom_data_6 = true
+0:1/0 = 0
+0:1/0/custom_data_0 = &"Expression"
+0:1/0/custom_data_1 = &"Blush"
+0:1/0/custom_data_3 = Color(1, 0.62, 0.7466667, 1)
+0:1/0/custom_data_4 = Color(1, 0.38, 0.58666676, 1)
+0:1/0/custom_data_6 = true
+1:0/0 = 0
+1:0/0/custom_data_0 = &"Expression"
+1:0/0/custom_data_1 = &"Grumble"
+1:0/0/custom_data_2 = Vector2(0.145, 0)
+1:0/0/custom_data_4 = Color(1, 1, 1, 1)
+1:1/0 = 0
+1:1/0/custom_data_0 = &"Expression"
+1:1/0/custom_data_1 = &"Sigh"
+1:1/0/custom_data_2 = Vector2(5.005, -1.535)
+1:1/0/custom_data_3 = Color(1, 1, 1, 1)
+1:1/0/custom_data_6 = true
+2:0/0 = 0
+2:0/0/custom_data_0 = &"Expression"
+2:0/0/custom_data_1 = &"Exclamation"
+2:0/0/custom_data_3 = Color(1, 0.772, 0.24000001, 1)
+2:0/0/custom_data_6 = true
+2:1/0 = 0
+2:1/0/custom_data_0 = &"Expression"
+2:1/0/custom_data_1 = &"Question"
+2:1/0/custom_data_3 = Color(0.25379997, 0.037599992, 0.47, 1)
+2:1/0/custom_data_6 = true
+0:2/0 = 0
+0:2/0/custom_data_0 = &"Expression"
+0:2/0/custom_data_1 = &"Anger"
+0:2/0/custom_data_3 = Color(1, 0, 0, 1)
+1:2/0 = 0
+1:2/0/custom_data_0 = &"Expression"
+1:2/0/custom_data_1 = &"Singsong"
+1:2/0/custom_data_2 = Vector2(2.225, 5.325)
+1:2/0/custom_data_3 = Color(0.39499998, 0.75, 0.21750002, 1)
+1:2/0/custom_data_6 = true
+2:2/0 = 0
+2:2/0/custom_data_0 = &"Expression"
+2:2/0/custom_data_1 = &"Shock"
+2:2/0/custom_data_3 = Color(1, 0.662, 0.22000003, 1)
+2:2/0/custom_data_6 = true
+0:3/0 = 0
+0:3/0/custom_data_0 = &"Expression"
+0:3/0/custom_data_1 = &"Star"
+0:3/0/custom_data_2 = Vector2(2.24, -11.15)
+0:3/0/custom_data_3 = Color(0.9, 0.765, 0.225, 1)
+0:3/0/custom_data_6 = true
+1:3/0 = 0
+1:3/0/custom_data_0 = &"Expression"
+1:3/0/custom_data_1 = &"None"
+
+[resource]
+custom_data_layer_0/name = "Group"
+custom_data_layer_0/type = 21
+custom_data_layer_1/name = "Name"
+custom_data_layer_1/type = 21
+custom_data_layer_2/name = "Offset"
+custom_data_layer_2/type = 5
+custom_data_layer_3/name = "Color1"
+custom_data_layer_3/type = 20
+custom_data_layer_4/name = "Color2"
+custom_data_layer_4/type = 20
+custom_data_layer_5/name = "Color3"
+custom_data_layer_5/type = 20
+custom_data_layer_6/name = "Shaded"
+custom_data_layer_6/type = 1
+sources/0 = SubResource("TileSetAtlasSource_24fj6")
+script = ExtResource("1_ynv3k")
+SpriteDict = Dictionary[StringName, Dictionary]({
+&"Expression": Dictionary[StringName, ExtResource("1_a3pgu")]({
+&"Anger": SubResource("Resource_y24ax"),
+&"Blush": SubResource("Resource_yisd4"),
+&"Exclamation": SubResource("Resource_24fj6"),
+&"Grumble": SubResource("Resource_se3ai"),
+&"None": SubResource("Resource_gsaye"),
+&"Question": SubResource("Resource_bpr5j"),
+&"Shock": SubResource("Resource_g2sw3"),
+&"Sigh": SubResource("Resource_w4e1f"),
+&"Singsong": SubResource("Resource_6dmic"),
+&"Star": SubResource("Resource_bk7br"),
+&"Sweat": SubResource("Resource_a3pgu")
+})
+})
+Textures = Array[Texture2D]([ExtResource("2_yisd4")])
+metadata/_custom_type_script = "uid://dbg5vomegny22"

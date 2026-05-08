@@ -1,130 +1,90 @@
 [gd_scene format=3 uid="uid://b8kgi7v0unxjb"]
 
-[ext_resource type="PackedScene" uid="uid://t6q3eb47qb52" path="res://addons/ImpishPuppets/Template/TemplatePuppet.tscn" id="1_u1d8m"]
+[ext_resource type="PackedScene" uid="uid://t6q3eb47qb52" path="res://addons/ImpishPuppets/Template/TemplatePuppet.tscn" id="1_0hn3i"]
+[ext_resource type="Script" uid="uid://ccna7chaidskr" path="res://addons/ImpishPuppets/Shared/WorldTarget.cs" id="2_3owec"]
 [ext_resource type="PackedScene" uid="uid://yevfyrtpydur" path="res://addons/ImpishPuppets/Animations/Handles/PuppetHandles.tscn" id="2_gmftw"]
-[ext_resource type="Shader" uid="uid://cg6d0044dreyc" path="res://addons/ImpishPuppets/Shared/Puppet2DMaterial.gdshader" id="2_wif16"]
-[ext_resource type="Texture2D" uid="uid://qtldcoc7ao6o" path="res://addons/ImpishPuppets/Template/TemplateGradient.tres" id="3_rxbe7"]
-[ext_resource type="Texture2D" uid="uid://dwxxbug8ihu73" path="res://addons/ImpishPuppets/Shared/JiggleTexture.tres" id="4_8tdt1"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wif16"]
-shader = ExtResource("2_wif16")
-shader_parameter/colorGradient = ExtResource("3_rxbe7")
-shader_parameter/noiseTexture = ExtResource("4_8tdt1")
-shader_parameter/flatLighting = true
 
 [node name="AnimationEditor2d" type="Node2D" unique_id=322972169]
 
-[node name="Puppet" parent="." unique_id=255594330 instance=ExtResource("1_u1d8m")]
+[node name="Puppet" parent="." unique_id=255594330 instance=ExtResource("1_0hn3i")]
 
-[node name="Lower" parent="Puppet" index="0" unique_id=277780547]
-position = Vector2(-1e-45, -31.854998)
+[node name="HandTarget" type="Node2D" parent="." unique_id=398779402]
+position = Vector2(-22.865189, -68.95696)
+rotation = -3.0504956
 
-[node name="LowerLegL" parent="Puppet/Lower" index="1" unique_id=956932968]
-position = Vector2(8.174559, 6.2735863)
-rotation = 1.573519
-scale = Vector2(1.0000104, 1.0000104)
-
-[node name="UpperLegL" parent="Puppet/Lower" index="2" unique_id=308092256]
-position = Vector2(3.5964732, -2.6169224)
-rotation = 1.0952677
-scale = Vector2(0.9999928, 0.9999928)
-
-[node name="LowerLegR" parent="Puppet/Lower" index="3" unique_id=1582483114]
-position = Vector2(-4.724904, 7.14526)
-rotation = 1.8607022
-scale = Vector2(1.000002, 1.000002)
-
-[node name="UpperLegR" parent="Puppet/Lower" index="4" unique_id=405211307]
-position = Vector2(-6.328302, -2.725359)
-rotation = 1.4097614
-scale = Vector2(0.99998385, 0.99998385)
-
-[node name="Upper" parent="Puppet" index="1" unique_id=1060946086]
-position = Vector2(-7.115532e-13, -46.414997)
-
-[node name="LowerArmL" parent="Puppet/Upper" index="1" unique_id=1877030737]
-position = Vector2(17.145525, -10.916832)
-rotation = -0.14944166
-scale = Vector2(0.9999652, 0.9999652)
-
-[node name="UpperArmL" parent="Puppet/Upper" index="2" unique_id=1940855150]
-position = Vector2(5.342597, -13.08268)
-rotation = 0.1814819
-scale = Vector2(1.0000006, 1.0000006)
-
-[node name="LowerArmR" parent="Puppet/Upper" index="3" unique_id=191811376]
-position = Vector2(-19.39426, -10.35516)
-rotation = -2.9242702
-scale = Vector2(1.0000063, -1.0000063)
-
-[node name="UpperArmR" parent="Puppet/Upper" index="4" unique_id=2018587864]
-position = Vector2(-7.8490167, -13.627369)
-rotation = 2.865411
-scale = Vector2(0.99998313, -0.99998313)
-
-[node name="Head" parent="Puppet" index="2" unique_id=1057896294]
-position = Vector2(-1.6396025e-12, -65.40499)
-
-[node name="EyebrowL" parent="Puppet/Head" index="1" unique_id=1383033255]
-material = SubResource("ShaderMaterial_wif16")
-SpriteOffset = Vector2(0.315, -1.1)
-SpriteName = &"Flat"
-SpriteNameDropdown = &"Flat"
-
-[node name="EyebrowR" parent="Puppet/Head" index="2" unique_id=414328429]
-material = SubResource("ShaderMaterial_wif16")
-SpriteOffset = Vector2(0.315, -1.1)
-SpriteName = &"Flat"
-SpriteNameDropdown = &"Flat"
-
-[node name="EyeL" parent="Puppet/Head" index="3" unique_id=1167460960]
-material = SubResource("ShaderMaterial_wif16")
-
-[node name="EyeR" parent="Puppet/Head" index="4" unique_id=1958819600]
-material = SubResource("ShaderMaterial_wif16")
-
-[node name="FaceControl" parent="Puppet/Head" index="6" unique_id=855846661]
-EyebrowL = &"Flat"
-EyebrowR = &"Flat"
-BothEyebrows = &"Flat"
-
-[node name="FootL" parent="Puppet" index="3" unique_id=104345523]
-position = Vector2(8.6050005, -1.7580729e-13)
-
-[node name="FootR" parent="Puppet" index="4" unique_id=635307844]
-position = Vector2(-8.604999, -2.3440676e-14)
-
-[node name="HandL" parent="Puppet" index="5" unique_id=1921299967]
-position = Vector2(32.209995, -59.6)
-rotation = 1.4374696
-
-[node name="HandR" parent="Puppet" index="6" unique_id=492871974]
-position = Vector2(-32.210003, -59.6)
-rotation = 1.4847465
-scale = Vector2(1, -1)
+[node name="HandTarget" type="Node" parent="HandTarget" unique_id=409015298]
+script = ExtResource("2_3owec")
 
 [node name="Handles" parent="." unique_id=492839593 instance=ExtResource("2_gmftw")]
+BodyHeight = 31.82
+UpperHeight = 15.6
+HeadHeight = 19.42
+ArmHeight = 11.835
+ArmLengthL = 27.295
+ArmLengthR = 32.7
+StanceWidth = 8.27
 
-[node name="FaceController" parent="Handles/Root/Body/Lower/Upper" parent_id_path=PackedInt32Array(492839593, 1242228626) index="1" unique_id=716115665]
+[node name="Body" parent="Handles/Root" parent_id_path=PackedInt32Array(492839593, 555935945) index="0" unique_id=744214372]
+position = Vector2(0, -31.82)
+
+[node name="Lower" parent="Handles/Root/Body" index="0" unique_id=1373695785]
+WorldTargetID = &""
+
+[node name="Upper" parent="Handles/Root/Body/Lower" index="0" unique_id=1242228626]
+position = Vector2(0, -15.6)
+WorldTargetID = &""
+
+[node name="Head" parent="Handles/Root/Body/Lower/Upper" index="0" unique_id=861515038]
+position = Vector2(0, -19.42)
+WorldTargetID = &""
+
+[node name="FaceController" parent="Handles/Root/Body/Lower/Upper" index="1" unique_id=716115665]
 EyeL = &"Forward"
 EyeR = &"Forward"
 EyebrowL = &"Flat"
 EyebrowR = &"Flat"
+Expression = &"None"
 BothEyebrows = &"Flat"
 BothEyes = &"Forward"
 Mouth = &"Smile"
 
-[node name="HandLController" parent="Handles/Root/Body/Lower/Upper/ArmL" parent_id_path=PackedInt32Array(492839593, 1167558759) index="1" unique_id=252082476]
+[node name="ArmL" parent="Handles/Root/Body/Lower/Upper" index="2" unique_id=1167558759]
+position = Vector2(27.295, -11.835)
+
+[node name="HandL" parent="Handles/Root/Body/Lower/Upper/ArmL" index="0" unique_id=809054792]
+scale = Vector2(1.6325572, 0.8475655)
+WorldTargetID = &""
+WorldTargetPercent = 1.0
+
+[node name="HandLController" parent="Handles/Root/Body/Lower/Upper/ArmL" index="1" unique_id=252082476]
 PoseDropdown = "Open"
 
-[node name="HandRController" parent="Handles/Root/Body/Lower/Upper/ArmR" parent_id_path=PackedInt32Array(492839593, 341703210) index="1" unique_id=2146322764]
+[node name="ArmR" parent="Handles/Root/Body/Lower/Upper" index="3" unique_id=341703210]
+position = Vector2(-32.7, -11.835)
+
+[node name="HandR" parent="Handles/Root/Body/Lower/Upper/ArmR" index="0" unique_id=600413615]
+WorldTargetID = &""
+WorldTargetPercent = 1.0
+
+[node name="HandRController" parent="Handles/Root/Body/Lower/Upper/ArmR" index="1" unique_id=2146322764]
 PoseDropdown = "Open"
 
-[node name="FootLController" parent="Handles/Root/LegL" parent_id_path=PackedInt32Array(492839593, 520820005) index="1" unique_id=669630985]
+[node name="LegL" parent="Handles/Root" parent_id_path=PackedInt32Array(492839593, 555935945) index="1" unique_id=520820005]
+position = Vector2(8.27, 0)
+
+[node name="FootL" parent="Handles/Root/LegL" index="0" unique_id=15089121]
+WorldTargetID = &""
+
+[node name="FootLController" parent="Handles/Root/LegL" index="1" unique_id=669630985]
 PoseDropdown = "Right"
 
-[node name="FootRController" parent="Handles/Root/LegR" parent_id_path=PackedInt32Array(492839593, 1270790663) index="1" unique_id=857391671]
+[node name="LegR" parent="Handles/Root" parent_id_path=PackedInt32Array(492839593, 555935945) index="2" unique_id=1270790663]
+position = Vector2(-8.27, 0)
+
+[node name="FootR" parent="Handles/Root/LegR" index="0" unique_id=1564026178]
+WorldTargetID = &""
+
+[node name="FootRController" parent="Handles/Root/LegR" index="1" unique_id=857391671]
 PoseDropdown = "Right"
 
-[editable path="Puppet"]
 [editable path="Handles"]

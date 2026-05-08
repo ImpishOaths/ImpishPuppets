@@ -6,16 +6,16 @@ vec2 maxIndex(vec2 a, vec2 b)
 	return b;
 }
 
-vec2 chooseColor(vec4 col)
+ivec2 chooseColor(vec4 col)
 {
-	vec2 val = maxIndex(vec2(col.r, 0.25), vec2(col.g, 0.50));
-	val = maxIndex(val, vec2(col.b, 0.75));
+	vec2 val = maxIndex(vec2(col.r, 1), vec2(col.g, 2));
+	val = maxIndex(val, vec2(col.b, 3));
 	if(val.x < 0.33)
 		val = vec2(0, 0);
-	float a = 1.0;
+	int a = 1;
 	if(col.a < 0.5)
-		a = 0.0;
-	return vec2(val.y, a);
+		a = 0;
+	return ivec2(int(val.y), a);
 }
 
 global uniform vec2 LightDir;
@@ -35,14 +35,24 @@ vec2 getJiggleOffset(vec2 screenUV)
 	return (texture(JiggleTexture, (screenUV+t)*JiggleScale).xy*2.0-1.0)*pow(JiggleAmount, 2.0);
 }
 
-vec3 chooseColor(float choice, vec3 color1, vec3 color2, vec3 color3)
+vec4 getLightTint(sampler2D sprites, vec2 uv, vec2 lightDir)
 {
-	if(choice < 0.2)
-		return vec3(0);
-	else if(choice < 0.3)
-		return color1;
-	else if(choice < 0.6)
-		return color2;
+	vec4 lightCol = texture(sprites, uv+(lightDir*LightStrength));
+	ivec2 lightChoice = chooseColor(lightCol);
+	
+	if(lightChoice.x == 0 && lightChoice.y > 0)
+		return LightColor;
 	else
-		return color3;
+		return vec4(1);
+}
+
+vec4 getShadowTint(sampler2D sprites, vec2 uv, vec2 lightDir)
+{
+	vec4 shadowCol = texture(sprites, uv-(lightDir*LightStrength));
+	ivec2 shadowChoice = chooseColor(shadowCol);
+	
+	if(shadowChoice.x == 0 && shadowChoice.y > 0)
+		return ShadowColor;
+	else
+		return vec4(1);
 }

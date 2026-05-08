@@ -1,7 +1,7 @@
 [gd_resource type="NoiseTexture2D" format=3 uid="uid://dwxxbug8ihu73"]
 
 [sub_resource type="Gradient" id="Gradient_3efxl"]
-offsets = PackedFloat32Array(0, 0.2579035, 0.61896837, 0.9450915)
+offsets = PackedFloat32Array(0.1, 0.3263889, 0.7513889, 0.9013889)
 colors = PackedColorArray(0, 0, 0, 1, 1, 0, 0, 1, 0.9529412, 1, 0, 1, 0, 1, 0, 1)
 metadata/_snap_count = 4
 
