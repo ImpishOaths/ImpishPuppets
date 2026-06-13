@@ -140,7 +140,8 @@ public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
                 Texture = PuppetTexture,
                 MaterialOverride = PuppetMaterial,
                 RegionEnabled = true,
-                PixelSize = 1f/(VectorHelpers.PixelSizeRoot*VectorHelpers.PixelSizeRoot)
+                PixelSize = 1f/(VectorHelpers.PixelSizeRoot*VectorHelpers.PixelSizeRoot),
+                CastShadow = GeometryInstance3D.ShadowCastingSetting.Off
             };
             AddChild(sprite, true, InternalMode.Front);
         }

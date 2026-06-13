@@ -1,0 +1,125 @@
+[gd_resource type="Resource" script_class="EyePoseList" format=3 uid="uid://37pfhbpwjjp8"]
+
+[ext_resource type="Script" uid="uid://bccx1s0gs2j3u" path="res://addons/ImpishPuppets/Controllers/Face/EyePose.cs" id="1_03yro"]
+[ext_resource type="Script" uid="uid://c7tacydcfaun7" path="res://addons/ImpishPuppets/Controllers/Face/EyePoseList.cs" id="1_ig3oo"]
+
+[sub_resource type="Resource" id="Resource_w8gnq"]
+script = ExtResource("1_03yro")
+ShowPupil = false
+EyeShape = &"Arch"
+DoBlinks = false
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_hvgt3"]
+script = ExtResource("1_03yro")
+ShowPupil = false
+EyeShape = &"ArchDown"
+DoBlinks = false
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_lq3hn"]
+script = ExtResource("1_03yro")
+PupilOffset = Vector2(-2.02, -0.18)
+EyeShape = &"Full"
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_03yro"]
+script = ExtResource("1_03yro")
+ShowPupil = false
+EyeShape = &"Closed"
+DoBlinks = false
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_wl5bs"]
+script = ExtResource("1_03yro")
+PupilOffset = Vector2(0, 1.05)
+EyeShape = &"Full"
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_2g3n7"]
+script = ExtResource("1_03yro")
+PupilOffset = Vector2(-1.715, 0.95)
+EyeShape = &"Full"
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_i3fqe"]
+script = ExtResource("1_03yro")
+PupilOffset = Vector2(2.205, 0.55)
+EyeShape = &"Full"
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_hffdu"]
+script = ExtResource("1_03yro")
+ShowPupil = false
+EyeShape = &"Full"
+DoBlinks = false
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_aawk4"]
+script = ExtResource("1_03yro")
+PupilOffset = Vector2(1.8, -0.245)
+EyeShape = &"Full"
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_7ihsq"]
+script = ExtResource("1_03yro")
+PupilOffset = Vector2(-1.825, 0.105)
+EyeShape = &"Narrow"
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_o2dbm"]
+script = ExtResource("1_03yro")
+PupilOffset = Vector2(1.9, -0.1)
+EyeShape = &"Narrow"
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_6d7fs"]
+script = ExtResource("1_03yro")
+EyeShape = &"Narrow"
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_ogflr"]
+script = ExtResource("1_03yro")
+EyeShape = &"Full"
+DoBlinks = false
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_i0v7f"]
+script = ExtResource("1_03yro")
+PupilOffset = Vector2(0, -1.505)
+EyeShape = &"Full"
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_3u70c"]
+script = ExtResource("1_03yro")
+PupilOffset = Vector2(-1.7, -1.495)
+EyeShape = &"Full"
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[sub_resource type="Resource" id="Resource_os0qu"]
+script = ExtResource("1_03yro")
+PupilOffset = Vector2(2.215, -1.515)
+EyeShape = &"Full"
+metadata/_custom_type_script = "uid://bccx1s0gs2j3u"
+
+[resource]
+script = ExtResource("1_ig3oo")
+Poses = Dictionary[StringName, Object]({
+&"Arch": SubResource("Resource_w8gnq"),
+&"ArchDown": SubResource("Resource_hvgt3"),
+&"Back": SubResource("Resource_lq3hn"),
+&"Closed": SubResource("Resource_03yro"),
+&"Down": SubResource("Resource_wl5bs"),
+&"DownLeft": SubResource("Resource_2g3n7"),
+&"DownRight": SubResource("Resource_i3fqe"),
+&"Empty": SubResource("Resource_hffdu"),
+&"Forward": SubResource("Resource_aawk4"),
+&"NarrowBack": SubResource("Resource_7ihsq"),
+&"NarrowForward": SubResource("Resource_o2dbm"),
+&"NarrowOut": SubResource("Resource_6d7fs"),
+&"Out": SubResource("Resource_ogflr"),
+&"Up": SubResource("Resource_i0v7f"),
+&"UpLeft": SubResource("Resource_3u70c"),
+&"UpRight": SubResource("Resource_os0qu")
+})
+metadata/_custom_type_script = "uid://c7tacydcfaun7"

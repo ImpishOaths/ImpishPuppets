@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://1fw4ypxm1p4t"]
+
+[ext_resource type="PackedScene" uid="uid://dtt24e07d3vy4" path="res://addons/ImpishPuppets/Template/TemplatePuppet3D.tscn" id="1_nacw3"]
+[ext_resource type="PackedScene" uid="uid://yevfyrtpydur" path="res://addons/ImpishPuppets/Animations/Handles/PuppetHandles.tscn" id="2_k42pn"]
+
+[node name="AnimationEditor3d" type="Node3D" unique_id=348997447]
+
+[node name="Puppet" parent="." unique_id=2137562994 instance=ExtResource("1_nacw3")]
+
+[node name="Lower" parent="Puppet" index="0" unique_id=1395600623]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4971875, 0)
+
+[node name="LowerLegL" parent="Puppet/Lower" index="1" unique_id=1573001036]
+transform = Transform3D(-0.021112276, 1.0000223, 0, -1.0000226, -0.021112284, 0, 0, 0, 1, 0.12669615, -0.09860259, 0)
+
+[node name="UpperLegL" parent="Puppet/Lower" index="2" unique_id=1898768626]
+transform = Transform3D(0.450696, 0.89267653, 0, -0.89270234, 0.450732, 0, 0, 0, 1, 0.056274835, 0.040878236, 0)
+
+[node name="LowerLegR" parent="Puppet/Lower" index="3" unique_id=2075657556]
+transform = Transform3D(-0.2810495, 0.960703, 0, -0.96070737, -0.28074047, 0, 0, 0, 1, -0.06727619, -0.10220343, 0)
+
+[node name="UpperLegR" parent="Puppet/Lower" index="4" unique_id=1756146274]
+transform = Transform3D(0.10669981, 0.9943175, 0, -0.99433863, 0.10707403, 0, 0, 0, 1, -0.0839476, 0.053154647, 0)
+
+[node name="Upper" parent="Puppet" index="1" unique_id=906474256]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7409375, 0)
+
+[node name="LowerArmL" parent="Puppet/Upper" index="1" unique_id=1995343158]
+transform = Transform3D(0.93648523, -0.35678408, 0, 0.3572434, 0.93439984, 0, 0, 0, 1, 0.24966794, 0.11755544, 0)
+
+[node name="UpperArmL" parent="Puppet/Upper" index="2" unique_id=1902948362]
+transform = Transform3D(0.943503, 0.3336413, 0, -0.33362862, 0.9426984, 0, 0, 0, 1, 0.07289492, 0.18006587, 0)
+
+[node name="LowerArmR" parent="Puppet/Upper" index="3" unique_id=1596729089]
+transform = Transform3D(-0.9548798, 0.3035049, 0, 0.30291277, 0.95301765, 0, 0, 0, 1, -0.32383353, 0.1254515, 0)
+
+[node name="UpperArmR" parent="Puppet/Upper" index="4" unique_id=1721152080]
+transform = Transform3D(-0.96227217, -0.27484784, 0, -0.27484736, 0.9613936, 0, 0, 0, 1, -0.14354348, 0.17694664, 0)
+
+[node name="Head" parent="Puppet" index="2" unique_id=966577037]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.044375, 0)
+
+[node name="EyebrowR" parent="Puppet/Head" index="5" unique_id=1131430403]
+transform = Transform3D(1, -1.509958e-07, 8.742278e-08, -1.509958e-07, -1, 0, -8.742278e-08, 1.3200472e-14, 1, -0.10462922, 0.27766538, 0)
+
+[node name="FootL" parent="Puppet" index="3" unique_id=1430328546]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12921876, 0, 0)
+
+[node name="FootR" parent="Puppet" index="4" unique_id=281198850]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12921876, 0, 0)
+
+[node name="HandL" parent="Puppet" index="5" unique_id=1454383024]
+transform = Transform3D(0.13293219, 0.9911251, 0, -0.9911251, 0.13293219, 0, 0, 0, 1, 0.42648438, 0.92585933, 0)
+
+[node name="ThumbUp" parent="Puppet/HandL" index="1" unique_id=830022606]
+transform = Transform3D(0.9930696, 0.11752906, 0, -0.11752906, 0.9930696, 0, 0, 0, 1, -0.06284813, 0.022872303, 0)
+
+[node name="Pinky" parent="Puppet/HandL" index="2" unique_id=1072454706]
+transform = Transform3D(0.9646253, 0.2636248, 0, -0.2636248, 0.9646253, 0, 0, 0, 1, 0.060569473, 0.08024125, 0)
+
+[node name="Middle" parent="Puppet/HandL" index="4" unique_id=1821533140]
+transform = Transform3D(0.99945086, -0.033136245, 0, 0.033136245, 0.99945086, 0, 0, 0, 1, -0.025543135, 0.09672184, 0)
+
+[node name="Index" parent="Puppet/HandL" index="5" unique_id=844398028]
+transform = Transform3D(0.990542, -0.13720995, 0, 0.13720995, 0.990542, 0, 0, 0, 1, -0.07030622, 0.08620003, 0)
+
+[node name="ThumbDown" parent="Puppet/HandL" index="6" unique_id=1211540842]
+transform = Transform3D(0.9985124, -0.05452562, 0, 0.05452562, 0.9985124, 0, 0, 0, 1, -0.105274774, 0.03585054, 0)
+
+[node name="HandR" parent="Puppet" index="6" unique_id=1111837056]
+transform = Transform3D(0.08594383, -0.9963, 0, -0.9963, -0.08594383, 0, 0, 0, 1, -0.5109375, 0.92585933, 0)
+
+[node name="ThumbUp" parent="Puppet/HandR" index="1" unique_id=621439853]
+transform = Transform3D(0.9930696, 0.11752906, 0, -0.11752906, 0.9930696, 0, 0, 0, 1, -0.06284813, 0.022872303, 0)
+
+[node name="Pinky" parent="Puppet/HandR" index="2" unique_id=1202949337]
+transform = Transform3D(0.9646253, 0.2636248, 0, -0.2636248, 0.9646253, 0, 0, 0, 1, 0.060569473, 0.08024125, 0)
+
+[node name="Middle" parent="Puppet/HandR" index="4" unique_id=354795499]
+transform = Transform3D(0.99945086, -0.033136245, 0, 0.033136245, 0.99945086, 0, 0, 0, 1, -0.025543135, 0.09672184, 0)
+
+[node name="Index" parent="Puppet/HandR" index="5" unique_id=2094684518]
+transform = Transform3D(0.990542, -0.13720995, 0, 0.13720995, 0.990542, 0, 0, 0, 1, -0.07030622, 0.08620003, 0)
+
+[node name="ThumbDown" parent="Puppet/HandR" index="6" unique_id=1642758766]
+transform = Transform3D(0.9985124, -0.05452562, 0, 0.05452562, 0.9985124, 0, 0, 0, 1, -0.105274774, 0.03585054, 0)
+
+[node name="Handles" parent="." unique_id=1405510454 instance=ExtResource("2_k42pn")]
+BodyHeight = 31.82
+UpperHeight = 15.6
+HeadHeight = 19.42
+ArmHeight = 11.835
+ArmLengthL = 27.295
+ArmLengthR = 32.7
+StanceWidth = 8.27
+
+[node name="Root" parent="Handles" index="0" unique_id=555935945]
+scale = Vector2(0.125, 0.125)
+
+[node name="Body" parent="Handles/Root" index="0" unique_id=744214372]
+position = Vector2(0, -31.82)
+
+[node name="Lower" parent="Handles/Root/Body" index="0" unique_id=1373695785]
+WorldTargetID = &""
+
+[node name="Upper" parent="Handles/Root/Body/Lower" index="0" unique_id=1242228626]
+position = Vector2(0, -15.6)
+WorldTargetID = &""
+
+[node name="Head" parent="Handles/Root/Body/Lower/Upper" index="0" unique_id=861515038]
+position = Vector2(0, -19.42)
+WorldTargetID = &""
+
+[node name="FaceController" parent="Handles/Root/Body/Lower/Upper" index="1" unique_id=716115665]
+EyeL = &"Forward"
+EyeR = &"Forward"
+EyebrowL = &"Flat"
+EyebrowR = &"Flat"
+Expression = &"None"
+BothEyebrows = &"Flat"
+BothEyes = &"Forward"
+Mouth = &"Smile"
+
+[node name="ArmL" parent="Handles/Root/Body/Lower/Upper" index="2" unique_id=1167558759]
+position = Vector2(27.295, -11.835)
+
+[node name="HandL" parent="Handles/Root/Body/Lower/Upper/ArmL" index="0" unique_id=809054792]
+WorldTargetID = &""
+
+[node name="HandLController" parent="Handles/Root/Body/Lower/Upper/ArmL" index="1" unique_id=252082476]
+PoseDropdown = &"Open"
+
+[node name="ArmR" parent="Handles/Root/Body/Lower/Upper" index="3" unique_id=341703210]
+position = Vector2(-32.7, -11.835)
+
+[node name="HandR" parent="Handles/Root/Body/Lower/Upper/ArmR" index="0" unique_id=600413615]
+WorldTargetID = &""
+
+[node name="HandRController" parent="Handles/Root/Body/Lower/Upper/ArmR" index="1" unique_id=2146322764]
+PoseDropdown = &"Open"
+
+[node name="LegL" parent="Handles/Root" index="1" unique_id=520820005]
+position = Vector2(8.27, 0)
+
+[node name="FootL" parent="Handles/Root/LegL" index="0" unique_id=15089121]
+WorldTargetID = &""
+
+[node name="FootLController" parent="Handles/Root/LegL" index="1" unique_id=669630985]
+PoseDropdown = "Right"
+
+[node name="LegR" parent="Handles/Root" index="2" unique_id=1270790663]
+position = Vector2(-8.27, 0)
+
+[node name="FootR" parent="Handles/Root/LegR" index="0" unique_id=1564026178]
+WorldTargetID = &""
+
+[node name="FootRController" parent="Handles/Root/LegR" index="1" unique_id=857391671]
+PoseDropdown = "Right"
+
+[editable path="Puppet"]
+[editable path="Handles"]

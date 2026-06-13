@@ -19,7 +19,7 @@ public partial class PendulumModifier: ImpulseModifier
         if(Absolute)
         {
             var rootTrans = Receiver.GetRootTransform();
-            rootTrans = new(AbsoluteDir.Angle()+value+AngleOffset, rootTrans.Scale, rootTrans.Skew, rootTrans.Origin);
+            rootTrans = new(AbsoluteDir.Angle()+value+AngleOffset, rootTrans.Scale * Mathf.Sign(rootTrans.Scale.X * rootTrans.Scale.Y), rootTrans.Skew, rootTrans.Origin);
             Receiver.SetRootTransform(rootTrans);
         }
         else

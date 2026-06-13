@@ -238,6 +238,8 @@ public partial class HandControl: PuppetController
         handData.Middle = Middle.GetRealTransform();
         handData.Index = Index.GetRealTransform();
         handData.ThumbDown = ThumbDown.GetRealTransform();
+
+        ResourceSaver.Save(handData);
     }
 
 }

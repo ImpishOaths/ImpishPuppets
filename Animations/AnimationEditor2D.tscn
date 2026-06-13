@@ -1,19 +1,133 @@
 [gd_scene format=3 uid="uid://b8kgi7v0unxjb"]
 
 [ext_resource type="PackedScene" uid="uid://t6q3eb47qb52" path="res://addons/ImpishPuppets/Template/TemplatePuppet.tscn" id="1_0hn3i"]
-[ext_resource type="Script" uid="uid://ccna7chaidskr" path="res://addons/ImpishPuppets/Shared/WorldTarget.cs" id="2_3owec"]
 [ext_resource type="PackedScene" uid="uid://yevfyrtpydur" path="res://addons/ImpishPuppets/Animations/Handles/PuppetHandles.tscn" id="2_gmftw"]
 
 [node name="AnimationEditor2d" type="Node2D" unique_id=322972169]
 
 [node name="Puppet" parent="." unique_id=255594330 instance=ExtResource("1_0hn3i")]
 
-[node name="HandTarget" type="Node2D" parent="." unique_id=398779402]
-position = Vector2(-22.865189, -68.95696)
-rotation = -3.0504956
+[node name="Lower" parent="Puppet" index="0" unique_id=277780547]
+position = Vector2(0.43525696, -37.188187)
 
-[node name="HandTarget" type="Node" parent="HandTarget" unique_id=409015298]
-script = ExtResource("2_3owec")
+[node name="LowerLegL" parent="Puppet/Lower" index="1" unique_id=956932968]
+position = Vector2(3.5686216, 7.3839035)
+rotation = 1.8026776
+scale = Vector2(0.99983543, 0.99983543)
+
+[node name="UpperLegL" parent="Puppet/Lower" index="2" unique_id=308092256]
+position = Vector2(3.5967207, -2.6160583)
+rotation = 1.5736063
+scale = Vector2(0.99989617, 0.99989617)
+
+[node name="LowerLegR" parent="Puppet/Lower" index="3" unique_id=1582483114]
+position = Vector2(0.9604435, 4.335449)
+rotation = 1.5815818
+scale = Vector2(0.9998712, 0.9998712)
+
+[node name="UpperLegR" parent="Puppet/Lower" index="4" unique_id=405211307]
+position = Vector2(-5.3747034, -3.4018555)
+rotation = 0.88470894
+scale = Vector2(0.99988997, 0.99988997)
+
+[node name="Upper" parent="Puppet" index="1" unique_id=1060946086]
+position = Vector2(0.43525696, -52.788185)
+
+[node name="LowerArmL" parent="Puppet/Upper" index="1" unique_id=1877030737]
+position = Vector2(2.8850834, 0.34365082)
+rotation = 1.3031553
+scale = Vector2(0.99996156, 0.99996156)
+
+[node name="UpperArmL" parent="Puppet/Upper" index="2" unique_id=1940855150]
+position = Vector2(4.664323, -11.523712)
+rotation = 1.719615
+scale = Vector2(0.9998421, 0.9998421)
+
+[node name="LowerArmR" parent="Puppet/Upper" index="3" unique_id=191811376]
+position = Vector2(-15.802868, -1.2153625)
+rotation = 1.5874553
+scale = Vector2(-1, 1)
+
+[node name="UpperArmR" parent="Puppet/Upper" index="4" unique_id=2018587864]
+position = Vector2(-9.337423, -11.324669)
+rotation = 2.139793
+scale = Vector2(-1, 1)
+
+[node name="Head" parent="Puppet" index="2" unique_id=1057896294]
+position = Vector2(0.43525696, -72.20818)
+
+[node name="FaceControl" parent="Puppet/Head" index="7" unique_id=855846661]
+EyebrowL = &"Flat"
+EyebrowR = &"Flat"
+BothEyebrows = &"Flat"
+Mouth = &"Smile"
+
+[node name="FootL" parent="Puppet" index="3" unique_id=104345523]
+position = Vector2(0.14518356, 0.29016876)
+rotation = -0.01940587
+
+[node name="FootR" parent="Puppet" index="4" unique_id=635307844]
+position = Vector2(-8.269985, -14.798766)
+rotation = 1.1847662
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="HandL" parent="Puppet" index="5" unique_id=1921299967]
+position = Vector2(6.982958, -39.088047)
+rotation = 2.6671934
+
+[node name="ThumbUp" parent="Puppet/HandL" index="3" unique_id=1308316120]
+position = Vector2(-4.02228, -1.4638274)
+
+[node name="Pinky" parent="Puppet/HandL" index="4" unique_id=1885699557]
+SpriteOffset = Vector2(0.67, -1.695)
+SpriteName = &"FingerDown"
+SpriteNameDropdown = &"FingerDown"
+
+[node name="Ring" parent="Puppet/HandL" index="5" unique_id=460985537]
+SpriteOffset = Vector2(0.67, -1.695)
+SpriteName = &"FingerDown"
+SpriteNameDropdown = &"FingerDown"
+
+[node name="Middle" parent="Puppet/HandL" index="6" unique_id=501577660]
+SpriteOffset = Vector2(0.67, -1.695)
+SpriteName = &"FingerDown"
+SpriteNameDropdown = &"FingerDown"
+
+[node name="Index" parent="Puppet/HandL" index="7" unique_id=295720259]
+position = Vector2(-4.499598, -5.516802)
+rotation = -0.13764417
+scale = Vector2(1, 1)
+SpriteOffset = Vector2(0.67, -1.695)
+SpriteName = &"FingerDown"
+SpriteNameDropdown = &"FingerDown"
+
+[node name="ThumbDown" parent="Puppet/HandL" index="8" unique_id=1913621818]
+position = Vector2(-6.7375855, -2.2944345)
+rotation = -0.054552674
+
+[node name="HandR" parent="Puppet" index="6" unique_id=492871974]
+position = Vector2(-15.579853, -41.264336)
+rotation = 2.5572848
+
+[node name="Pinky" parent="Puppet/HandR" index="4" unique_id=625672428]
+SpriteOffset = Vector2(0.67, -1.695)
+SpriteName = &"FingerDown"
+SpriteNameDropdown = &"FingerDown"
+
+[node name="Ring" parent="Puppet/HandR" index="5" unique_id=1889229923]
+SpriteOffset = Vector2(0.67, -1.695)
+SpriteName = &"FingerDown"
+SpriteNameDropdown = &"FingerDown"
+
+[node name="Middle" parent="Puppet/HandR" index="6" unique_id=291451989]
+SpriteOffset = Vector2(0.67, -1.695)
+SpriteName = &"FingerDown"
+SpriteNameDropdown = &"FingerDown"
+
+[node name="Index" parent="Puppet/HandR" index="7" unique_id=669334059]
+SpriteOffset = Vector2(0.67, -1.695)
+SpriteName = &"FingerDown"
+SpriteNameDropdown = &"FingerDown"
 
 [node name="Handles" parent="." unique_id=492839593 instance=ExtResource("2_gmftw")]
 BodyHeight = 31.82
@@ -57,7 +171,7 @@ WorldTargetID = &""
 WorldTargetPercent = 1.0
 
 [node name="HandLController" parent="Handles/Root/Body/Lower/Upper/ArmL" index="1" unique_id=252082476]
-PoseDropdown = "Open"
+PoseDropdown = &"Open"
 
 [node name="ArmR" parent="Handles/Root/Body/Lower/Upper" index="3" unique_id=341703210]
 position = Vector2(-32.7, -11.835)
@@ -67,7 +181,7 @@ WorldTargetID = &""
 WorldTargetPercent = 1.0
 
 [node name="HandRController" parent="Handles/Root/Body/Lower/Upper/ArmR" index="1" unique_id=2146322764]
-PoseDropdown = "Open"
+PoseDropdown = &"Open"
 
 [node name="LegL" parent="Handles/Root" parent_id_path=PackedInt32Array(492839593, 555935945) index="1" unique_id=520820005]
 position = Vector2(8.27, 0)
@@ -87,4 +201,8 @@ WorldTargetID = &""
 [node name="FootRController" parent="Handles/Root/LegR" index="1" unique_id=857391671]
 PoseDropdown = "Right"
 
+[node name="Full" parent="Handles" index="1" unique_id=2014818475]
+deterministic = false
+
+[editable path="Puppet"]
 [editable path="Handles"]

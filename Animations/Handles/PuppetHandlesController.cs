@@ -11,6 +11,8 @@ public partial class PuppetHandlesController: Node
     [Export]
     public string PuppetPath = "../Puppet";
     public Node Puppet;
+    [Export]
+    public bool Mode3D = false;
 
     [Export]
     public float BodyHeight
@@ -73,7 +75,7 @@ public partial class PuppetHandlesController: Node
         }
     }
     private float _HeadHeightScale = 1;
-    
+
     [Export]
     public float ArmHeight
     {
@@ -131,11 +133,25 @@ public partial class PuppetHandlesController: Node
         set
         {
             _StanceWidth = value;
-            LegL?.SetPosition(new Vector2(_StanceWidth, 0));
-            LegR?.SetPosition(new Vector2(-_StanceWidth, 0));
+            var height = Mathf.Tan(_StanceAngle)*_StanceWidth;
+            LegL?.SetPosition(new Vector2(_StanceWidth, height));
+            LegR?.SetPosition(new Vector2(-_StanceWidth, -height));
         }
     }
     private float _StanceWidth = 10;
+    [Export]
+    public float StanceAngle
+    {
+        get => _StanceAngle;
+        set
+        {
+            _StanceAngle = value;
+            var height = Mathf.Tan(_StanceAngle)*_StanceWidth;
+            LegL?.SetPosition(new Vector2(_StanceWidth, height));
+            LegR?.SetPosition(new Vector2(-_StanceWidth, -height));
+        }
+    }
+    private float _StanceAngle = 0;
 
     [Export]
     public Vector2 FootMotionScale
@@ -149,6 +165,30 @@ public partial class PuppetHandlesController: Node
         }
     }
     private Vector2 _FootMotionScale = Vector2.One;
+
+    [Export]
+    public float PuppetRotate
+    {
+        get => Puppet != null && Puppet is Puppet3D puppet3D ? puppet3D.Rotation.Y : default;
+        set
+        {
+            if(Puppet == null || Puppet is not Puppet3D puppet3D)
+                return;
+            var add = PuppetFlip?-Mathf.Pi:0;
+            puppet3D.Rotation = new(puppet3D.Rotation.X, value, add);
+        }
+    }
+    [Export]
+    public bool PuppetFlip
+    {
+        get => Puppet != null && Puppet is Puppet3D puppet3D && puppet3D.Flip;
+        set
+        {
+            if(Puppet == null || Puppet is not Puppet3D puppet3D)
+                return;
+            puppet3D.SetFlip(value);
+        }
+    }
 
 
     private RemoteController FaceController;
@@ -167,12 +207,13 @@ public partial class PuppetHandlesController: Node
     private Node2D LegL;
     private Node2D LegR;
 
+    private CharacterData CharacterData = null;
+
     public AnimationPlayer Animator {get; private set;}
 
-    public override void _Ready()
+    public void ChangePuppet(Node puppet)
     {
-        Puppet = GetNodeOrNull(PuppetPath);
-        CharacterData data = null;
+        Puppet = puppet;
 
         if(Puppet != null)
         {
@@ -180,32 +221,20 @@ public partial class PuppetHandlesController: Node
             {
                 child.SetReceiver(Puppet);
             }
-            data = (Puppet as PuppetTransform).GetCharacterData();
+            CharacterData = (Puppet as PuppetTransform).GetCharacterData();
         }
-
-        Root = GetNode<Node2D>("Root");
-        Root.Scale = Vector2.One / (Puppet is Node3D ? VectorHelpers.PixelSizeRoot : 1f);
-
-        Body = Root.GetNode<Node2D>("Body");
-        Lower = Body.GetNode<Node2D>("Lower");
-        Upper = Lower.GetNode<Node2D>("Upper");
-        Head = Upper.GetNode<Node2D>("Head");
-        ArmL = Upper.GetNode<Node2D>("ArmL");
-        ArmR = Upper.GetNode<Node2D>("ArmR");
-        LegL = Root.GetNode<Node2D>("LegL");
-        LegR = Root.GetNode<Node2D>("LegR");
-
-        if(data != null)
+        
+        if(CharacterData != null)
         {
-            BodyHeight = data.BodyHeight;
-            UpperHeight = data.UpperHeight;
-            HeadHeight = data.HeadHeight;
-            ArmHeight = data.ArmHeight;
-            ArmLengthL = data.ArmLengthL;
-            ArmLengthR = data.ArmLengthR;
-            HandMotionScale = data.HandMotionScale;
-            StanceWidth = data.StanceWidth;
-            FootMotionScale = data.FootMotionScale;
+            BodyHeight = CharacterData.BodyHeight;
+            UpperHeight = CharacterData.UpperHeight;
+            HeadHeight = CharacterData.HeadHeight;
+            ArmHeight = CharacterData.ArmHeight;
+            ArmLengthL = CharacterData.ArmLengthL;
+            ArmLengthR = CharacterData.ArmLengthR;
+            HandMotionScale = CharacterData.HandMotionScale;
+            StanceWidth = CharacterData.StanceWidth;
+            FootMotionScale = CharacterData.FootMotionScale;
         }
         else
         {
@@ -220,19 +249,37 @@ public partial class PuppetHandlesController: Node
             FootMotionScale = _FootMotionScale;
         }
 
+        FaceController.SetReceiver(Puppet);
+        HandLController.SetReceiver(Puppet);
+        HandRController.SetReceiver(Puppet);
+        FootLController.SetReceiver(Puppet);
+        FootRController.SetReceiver(Puppet);
+    }
+
+    public override void _Ready()
+    {
+        Root = GetNode<Node2D>("Root");
+        if(Mode3D)
+            Root.Scale = Vector2.One/VectorHelpers.PixelSizeRoot;
+
+        Body = Root.GetNode<Node2D>("Body");
+        Lower = Body.GetNode<Node2D>("Lower");
+        Upper = Lower.GetNode<Node2D>("Upper");
+        Head = Upper.GetNode<Node2D>("Head");
+        ArmL = Upper.GetNode<Node2D>("ArmL");
+        ArmR = Upper.GetNode<Node2D>("ArmR");
+        LegL = Root.GetNode<Node2D>("LegL");
+        LegR = Root.GetNode<Node2D>("LegR");
+        
         FaceController = GetNode<RemoteController>("%FaceController");
         HandLController = GetNode<RemoteController>("%HandLController");
         HandRController = GetNode<RemoteController>("%HandRController");
         FootLController = GetNode<RemoteController>("%FootLController");
         FootRController = GetNode<RemoteController>("%FootRController");
 
-        FaceController.SetReceiver(Puppet);
-        HandLController.SetReceiver(Puppet);
-        HandRController.SetReceiver(Puppet);
-        FootLController.SetReceiver(Puppet);
-        FootRController.SetReceiver(Puppet);
-
         Animator = GetNode<AnimationPlayer>("Full");
+
+        ChangePuppet(GetNode(PuppetPath));
     }
 
     [ExportToolButton("Register Scales")]

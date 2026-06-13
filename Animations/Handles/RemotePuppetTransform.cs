@@ -7,10 +7,12 @@ namespace ImpishPuppets;
 [GlobalClass]
 public partial class RemotePuppetTransform: Node2D
 {
-    private static readonly float GlobalDelay = 0.4f;
+    private static readonly float GlobalDelay = 1f;
 
     [Export]
     public string ReceiverPath;
+    [Export]
+    public bool Flip;
 
     [Export]
     public StringName WorldTargetID
@@ -48,7 +50,12 @@ public partial class RemotePuppetTransform: Node2D
 
         var oldTrans = Receiver.GetRootTransform();
 
-        float angle = Mathf.LerpAngle(oldTrans.Rotation, GlobalRotation, GlobalDelay);
+        float angle = GlobalRotation;
+        if(Flip)
+        {
+            angle += Mathf.Pi;
+        }
+        angle = Mathf.LerpAngle(oldTrans.Rotation, angle, GlobalDelay);
         Vector2 origin = oldTrans.Origin.Lerp(GlobalPosition, GlobalDelay);
         if(_WorldTarget != null)
         {
@@ -58,10 +65,24 @@ public partial class RemotePuppetTransform: Node2D
         }
         var trans = new Transform2D(
             angle,
-            new Vector2(1, Receiver.GetFlip() ? -1 : 1), 0,
+            new Vector2(1, (Receiver.GetFlip() || Flip) ? -1 : 1), 0,
             origin
         );
-        
+
         Receiver.SetRootTransform(trans);
+        if(Receiver is not PuppetTransform3D receiver3D)
+            return;
+        receiver3D.RotateObjectLocal(Vector3.Up, AxisAngle);
     }
+
+    public void SetAxisRotation(float angle)
+    {
+        if(Receiver is not PuppetTransform3D receiver3D)
+            return;
+        receiver3D.RotateObjectLocal(Vector3.Up, -AxisAngle);
+        AxisAngle = angle;
+        receiver3D.RotateObjectLocal(Vector3.Up, AxisAngle);
+    }
+    [Export]
+    private float AxisAngle = 0;
 }

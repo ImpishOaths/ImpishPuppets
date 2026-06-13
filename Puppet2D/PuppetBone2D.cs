@@ -37,19 +37,25 @@ public partial class PuppetBone2D: PuppetTransform2D, PuppetBone, Puppet2Dto3DCo
     {
         get
         {
-            var data = SpriteSheet?.GetSpriteData(_SpriteGroup, _SpriteName);
-            if(data == null)
-                return default;
-            return data?.GetCustomData("Offset").AsVector2() ?? Vector2.Zero;
+            if(Sprite != null)
+                return Sprite.Offset;
+            return default;
         }
         set
         {
-            if(SpriteSheet != null)
-            {
-                SpriteSheet.UpdateData(_SpriteGroup, _SpriteName, "Offset", value);
-                UpdateLook();
-            }
+            if(Sprite != null)
+                Sprite.Offset = value;
         }
+    }
+
+    [ExportToolButton("Commit Offset")]
+    public Callable CommitOffsetCallable => Callable.From(CommitOffset);
+    public void CommitOffset()
+    {
+        if(SpriteSheet == null)
+            return;
+        SpriteSheet.UpdateData(_SpriteGroup, _SpriteName, "Offset", SpriteOffset);
+        UpdateLook();
     }
 
     [Export]

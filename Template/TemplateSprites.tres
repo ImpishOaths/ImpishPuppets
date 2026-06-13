@@ -52,88 +52,42 @@ SpriteGroup = &"Body"
 SpriteName = &"UpperLeg"
 SpriteRegion = Rect2i(144, 48, 32, 32)
 
-[sub_resource type="Resource" id="Resource_beykp"]
+[sub_resource type="Resource" id="Resource_cvw7p"]
 script = ExtResource("1_udw1t")
 SpriteGroup = &"Eye"
-SpriteName = &"Arch"
-SpriteRegion = Rect2i(208, 16, 16, 16)
+SpriteName = &"Arc"
+SpriteRegion = Rect2i(160, 16, 16, 16)
 
-[sub_resource type="Resource" id="Resource_7yrsw"]
+[sub_resource type="Resource" id="Resource_g2kcu"]
 script = ExtResource("1_udw1t")
 SpriteGroup = &"Eye"
-SpriteName = &"ArchDown"
-SpriteRegion = Rect2i(208, 16, 16, 16)
+SpriteName = &"ArcDown"
+SpriteRegion = Rect2i(160, 16, 16, 16)
 AlternateID = 1
+
+[sub_resource type="Resource" id="Resource_ev63m"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Eye"
+SpriteName = &"Closed"
+SpriteRegion = Rect2i(144, 16, 16, 16)
 
 [sub_resource type="Resource" id="Resource_hi2vw"]
 script = ExtResource("1_udw1t")
 SpriteGroup = &"Eye"
-SpriteName = &"Back"
-SpriteRegion = Rect2i(96, 16, 16, 16)
-AlternateID = 1
-
-[sub_resource type="Resource" id="Resource_cvw7p"]
-script = ExtResource("1_udw1t")
-SpriteGroup = &"Eye"
-SpriteName = &"Closed"
-SpriteRegion = Rect2i(128, 16, 16, 16)
-
-[sub_resource type="Resource" id="Resource_3w6qw"]
-script = ExtResource("1_udw1t")
-SpriteGroup = &"Eye"
-SpriteName = &"DownLeft"
-SpriteRegion = Rect2i(160, 16, 16, 16)
-AlternateID = 1
-
-[sub_resource type="Resource" id="Resource_skphe"]
-script = ExtResource("1_udw1t")
-SpriteGroup = &"Eye"
-SpriteName = &"DownRight"
-SpriteRegion = Rect2i(160, 16, 16, 16)
-
-[sub_resource type="Resource" id="Resource_g2h1n"]
-script = ExtResource("1_udw1t")
-SpriteGroup = &"Eye"
-SpriteName = &"Empty"
-SpriteRegion = Rect2i(192, 16, 16, 16)
-
-[sub_resource type="Resource" id="Resource_hfpin"]
-script = ExtResource("1_udw1t")
-SpriteGroup = &"Eye"
-SpriteName = &"Forward"
-SpriteRegion = Rect2i(96, 16, 16, 16)
+SpriteName = &"Full"
+SpriteRegion = Rect2i(112, 16, 16, 16)
 
 [sub_resource type="Resource" id="Resource_flvfa"]
 script = ExtResource("1_udw1t")
 SpriteGroup = &"Eye"
 SpriteName = &"Narrow"
-SpriteRegion = Rect2i(112, 16, 16, 16)
+SpriteRegion = Rect2i(128, 16, 16, 16)
 
-[sub_resource type="Resource" id="Resource_ev63m"]
+[sub_resource type="Resource" id="Resource_hfpin"]
 script = ExtResource("1_udw1t")
 SpriteGroup = &"Eye"
-SpriteName = &"NarrowBack"
-SpriteRegion = Rect2i(112, 16, 16, 16)
-AlternateID = 1
-
-[sub_resource type="Resource" id="Resource_mp3sf"]
-script = ExtResource("1_udw1t")
-SpriteGroup = &"Eye"
-SpriteName = &"Out"
-SpriteRegion = Rect2i(176, 16, 16, 16)
-
-[sub_resource type="Resource" id="Resource_8k1ui"]
-script = ExtResource("1_udw1t")
-SpriteGroup = &"Eye"
-SpriteName = &"UpLeft"
-SpriteRegion = Rect2i(144, 16, 16, 16)
-AlternateID = 1
-
-[sub_resource type="Resource" id="Resource_g2kcu"]
-script = ExtResource("1_udw1t")
-SpriteGroup = &"Eye"
-SpriteName = &"UpRight"
-SpriteRegion = Rect2i(144, 16, 16, 16)
+SpriteName = &"Pupil"
+SpriteRegion = Rect2i(96, 16, 16, 16)
 
 [sub_resource type="Resource" id="Resource_5458v"]
 script = ExtResource("1_udw1t")
@@ -193,17 +147,17 @@ SpriteName = &"SlantBack"
 SpriteRegion = Rect2i(112, 0, 16, 16)
 AlternateID = 1
 
-[sub_resource type="Resource" id="Resource_nhg00"]
-script = ExtResource("1_udw1t")
-SpriteGroup = &"Hand"
-SpriteName = &"Finger"
-SpriteRegion = Rect2i(48, 80, 16, 16)
-
 [sub_resource type="Resource" id="Resource_lywqb"]
 script = ExtResource("1_udw1t")
 SpriteGroup = &"Hand"
 SpriteName = &"FingerDown"
 SpriteRegion = Rect2i(80, 80, 16, 16)
+
+[sub_resource type="Resource" id="Resource_nhg00"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Hand"
+SpriteName = &"FingerUp"
+SpriteRegion = Rect2i(48, 80, 16, 16)
 
 [sub_resource type="Resource" id="Resource_2owd2"]
 script = ExtResource("1_udw1t")
@@ -217,49 +171,49 @@ SpriteGroup = &"Hand"
 SpriteName = &"PalmFlat"
 SpriteRegion = Rect2i(112, 80, 16, 16)
 
-[sub_resource type="Resource" id="Resource_dfn7k"]
-script = ExtResource("1_udw1t")
-SpriteGroup = &"Hand"
-SpriteName = &"Thumb"
-SpriteRegion = Rect2i(64, 80, 16, 16)
-
 [sub_resource type="Resource" id="Resource_ixpwb"]
 script = ExtResource("1_udw1t")
 SpriteGroup = &"Hand"
 SpriteName = &"ThumbDown"
 SpriteRegion = Rect2i(96, 80, 16, 16)
 
-[sub_resource type="Resource" id="Resource_t8bea"]
+[sub_resource type="Resource" id="Resource_dfn7k"]
+script = ExtResource("1_udw1t")
+SpriteGroup = &"Hand"
+SpriteName = &"ThumbUp"
+SpriteRegion = Rect2i(64, 80, 16, 16)
+
+[sub_resource type="Resource" id="Resource_3w6qw"]
 script = ExtResource("1_udw1t")
 SpriteGroup = &"Mouth"
 SpriteName = &"Frown"
 SpriteRegion = Rect2i(128, 32, 16, 16)
 
-[sub_resource type="Resource" id="Resource_wi3ks"]
+[sub_resource type="Resource" id="Resource_8k1ui"]
 script = ExtResource("1_udw1t")
 SpriteGroup = &"Mouth"
 SpriteName = &"Neutral"
 SpriteRegion = Rect2i(96, 32, 16, 16)
 
-[sub_resource type="Resource" id="Resource_igxrx"]
+[sub_resource type="Resource" id="Resource_mp3sf"]
 script = ExtResource("1_udw1t")
 SpriteGroup = &"Mouth"
 SpriteName = &"Open"
 SpriteRegion = Rect2i(144, 32, 16, 16)
 
-[sub_resource type="Resource" id="Resource_hph46"]
+[sub_resource type="Resource" id="Resource_g2h1n"]
 script = ExtResource("1_udw1t")
 SpriteGroup = &"Mouth"
 SpriteName = &"OpenSmile"
 SpriteRegion = Rect2i(160, 32, 16, 16)
 
-[sub_resource type="Resource" id="Resource_p7t0v"]
+[sub_resource type="Resource" id="Resource_skphe"]
 script = ExtResource("1_udw1t")
 SpriteGroup = &"Mouth"
 SpriteName = &"Smile"
 SpriteRegion = Rect2i(112, 32, 16, 16)
 
-[sub_resource type="Resource" id="Resource_fwxcc"]
+[sub_resource type="Resource" id="Resource_beykp"]
 script = ExtResource("1_udw1t")
 SpriteGroup = &"Mouth"
 SpriteName = &"Tounge"
@@ -308,29 +262,6 @@ texture = ExtResource("1_4r33w")
 8:0/1/flip_h = true
 8:0/1/custom_data_0 = &"Eyebrow"
 8:0/1/custom_data_1 = &"BigSlantBack"
-6:1/next_alternative_id = 2
-6:1/0 = 0
-6:1/0/custom_data_0 = &"Eye"
-6:1/0/custom_data_1 = &"Forward"
-6:1/0/custom_data_2 = Vector2(-0.29, -1.25)
-6:1/1 = 1
-6:1/1/flip_h = true
-6:1/1/custom_data_0 = &"Eye"
-6:1/1/custom_data_1 = &"Back"
-6:1/1/custom_data_2 = Vector2(1.365, -1.285)
-7:1/next_alternative_id = 2
-7:1/0 = 0
-7:1/0/custom_data_0 = &"Eye"
-7:1/0/custom_data_1 = &"Narrow"
-7:1/0/custom_data_2 = Vector2(-0.065, -1.52)
-7:1/1 = 1
-7:1/1/flip_h = true
-7:1/1/custom_data_0 = &"Eye"
-7:1/1/custom_data_1 = &"NarrowBack"
-7:1/1/custom_data_2 = Vector2(1.05, -1.535)
-8:1/0 = 0
-8:1/0/custom_data_0 = &"Eye"
-8:1/0/custom_data_1 = &"Closed"
 3:3/size_in_atlas = Vector2i(2, 2)
 3:3/0 = 0
 3:3/0/custom_data_0 = &"Hand"
@@ -353,30 +284,6 @@ texture = ExtResource("1_4r33w")
 10:0/0 = 0
 10:0/0/custom_data_0 = &"Eyebrow"
 10:0/0/custom_data_1 = &"Empty"
-9:1/next_alternative_id = 2
-9:1/0 = 0
-9:1/0/custom_data_0 = &"Eye"
-9:1/0/custom_data_1 = &"UpRight"
-9:1/0/custom_data_2 = Vector2(-0.095, -1.06)
-9:1/1 = 1
-9:1/1/flip_h = true
-9:1/1/custom_data_0 = &"Eye"
-9:1/1/custom_data_1 = &"UpLeft"
-9:1/1/custom_data_2 = Vector2(1.095, -1.045)
-10:1/next_alternative_id = 2
-10:1/0 = 0
-10:1/0/custom_data_0 = &"Eye"
-10:1/0/custom_data_1 = &"DownRight"
-10:1/0/custom_data_2 = Vector2(-0.28, -1.3)
-10:1/1 = 1
-10:1/1/flip_h = true
-10:1/1/custom_data_0 = &"Eye"
-10:1/1/custom_data_1 = &"DownLeft"
-10:1/1/custom_data_2 = Vector2(1.455, -0.985)
-11:1/0 = 0
-11:1/0/custom_data_0 = &"Eye"
-11:1/0/custom_data_1 = &"Out"
-11:1/0/custom_data_2 = Vector2(-0.525, -1.17)
 6:2/0 = 0
 6:2/0/custom_data_0 = &"Mouth"
 6:2/0/custom_data_1 = &"Neutral"
@@ -408,20 +315,6 @@ texture = ExtResource("1_4r33w")
 10:2/0 = 0
 10:2/0/custom_data_0 = &"Mouth"
 10:2/0/custom_data_1 = &"OpenSmile"
-12:1/0 = 0
-12:1/0/custom_data_0 = &"Eye"
-12:1/0/custom_data_1 = &"Empty"
-12:1/0/custom_data_2 = Vector2(-0.675, -1.235)
-13:1/next_alternative_id = 2
-13:1/0 = 0
-13:1/0/custom_data_0 = &"Eye"
-13:1/0/custom_data_1 = &"Arch"
-13:1/0/custom_data_2 = Vector2(0, -0.585)
-13:1/1 = 1
-13:1/1/flip_v = true
-13:1/1/custom_data_0 = &"Eye"
-13:1/1/custom_data_1 = &"ArchDown"
-13:1/1/custom_data_2 = Vector2(0, 1.8)
 11:2/0 = 0
 11:2/0/custom_data_0 = &"Mouth"
 11:2/0/custom_data_1 = &"Tounge"
@@ -449,9 +342,30 @@ texture = ExtResource("1_4r33w")
 7:5/0/custom_data_0 = &"Hand"
 7:5/0/custom_data_1 = &"PalmFlat"
 7:5/0/custom_data_2 = Vector2(0.85, -2.09)
-8:5/0 = 0
-8:5/0/custom_data_0 = &"Hand"
-8:5/0/custom_data_1 = &"FingerCurl"
+6:1/0 = 0
+6:1/0/custom_data_0 = &"Eye"
+6:1/0/custom_data_1 = &"Pupil"
+6:1/0/custom_data_2 = Vector2(0.74, -0.29)
+7:1/next_alternative_id = 2
+7:1/0 = 0
+7:1/0/custom_data_0 = &"Eye"
+7:1/0/custom_data_1 = &"Full"
+7:1/0/custom_data_2 = Vector2(0, -1.58)
+8:1/0 = 0
+8:1/0/custom_data_0 = &"Eye"
+8:1/0/custom_data_1 = &"Narrow"
+8:1/0/custom_data_2 = Vector2(0, -1.005)
+9:1/0 = 0
+9:1/0/custom_data_0 = &"Eye"
+9:1/0/custom_data_1 = &"Closed"
+10:1/next_alternative_id = 2
+10:1/0 = 0
+10:1/0/custom_data_0 = &"Eye"
+10:1/0/custom_data_1 = &"Arch"
+10:1/1 = 1
+10:1/1/flip_v = true
+10:1/1/custom_data_0 = &"Eye"
+10:1/1/custom_data_1 = &"ArchDown"
 
 [resource]
 custom_data_layer_0/name = "Group"
@@ -474,19 +388,12 @@ SpriteDict = Dictionary[StringName, Dictionary]({
 &"UpperLeg": SubResource("Resource_po47b")
 }),
 &"Eye": Dictionary[StringName, ExtResource("1_udw1t")]({
-&"Arch": SubResource("Resource_beykp"),
-&"ArchDown": SubResource("Resource_7yrsw"),
-&"Back": SubResource("Resource_hi2vw"),
-&"Closed": SubResource("Resource_cvw7p"),
-&"DownLeft": SubResource("Resource_3w6qw"),
-&"DownRight": SubResource("Resource_skphe"),
-&"Empty": SubResource("Resource_g2h1n"),
-&"Forward": SubResource("Resource_hfpin"),
+&"Arc": SubResource("Resource_cvw7p"),
+&"ArcDown": SubResource("Resource_g2kcu"),
+&"Closed": SubResource("Resource_ev63m"),
+&"Full": SubResource("Resource_hi2vw"),
 &"Narrow": SubResource("Resource_flvfa"),
-&"NarrowBack": SubResource("Resource_ev63m"),
-&"Out": SubResource("Resource_mp3sf"),
-&"UpLeft": SubResource("Resource_8k1ui"),
-&"UpRight": SubResource("Resource_g2kcu")
+&"Pupil": SubResource("Resource_hfpin")
 }),
 &"Eyebrow": Dictionary[StringName, ExtResource("1_udw1t")]({
 &"Arch": SubResource("Resource_5458v"),
@@ -500,20 +407,20 @@ SpriteDict = Dictionary[StringName, Dictionary]({
 &"SlantBack": SubResource("Resource_0qh1j")
 }),
 &"Hand": Dictionary[StringName, ExtResource("1_udw1t")]({
-&"Finger": SubResource("Resource_nhg00"),
 &"FingerDown": SubResource("Resource_lywqb"),
+&"FingerUp": SubResource("Resource_nhg00"),
 &"Palm": SubResource("Resource_2owd2"),
 &"PalmFlat": SubResource("Resource_xqfa1"),
-&"Thumb": SubResource("Resource_dfn7k"),
-&"ThumbDown": SubResource("Resource_ixpwb")
+&"ThumbDown": SubResource("Resource_ixpwb"),
+&"ThumbUp": SubResource("Resource_dfn7k")
 }),
 &"Mouth": Dictionary[StringName, ExtResource("1_udw1t")]({
-&"Frown": SubResource("Resource_t8bea"),
-&"Neutral": SubResource("Resource_wi3ks"),
-&"Open": SubResource("Resource_igxrx"),
-&"OpenSmile": SubResource("Resource_hph46"),
-&"Smile": SubResource("Resource_p7t0v"),
-&"Tounge": SubResource("Resource_fwxcc")
+&"Frown": SubResource("Resource_3w6qw"),
+&"Neutral": SubResource("Resource_8k1ui"),
+&"Open": SubResource("Resource_mp3sf"),
+&"OpenSmile": SubResource("Resource_g2h1n"),
+&"Smile": SubResource("Resource_skphe"),
+&"Tounge": SubResource("Resource_beykp")
 })
 })
 Textures = Array[Texture2D]([ExtResource("1_4r33w")])

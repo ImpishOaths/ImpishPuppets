@@ -1,9 +1,0 @@
-[gd_resource type="ShaderMaterial" format=3 uid="uid://bqwdqmph53pe3"]
-
-[ext_resource type="Shader" uid="uid://cg6d0044dreyc" path="res://addons/ImpishPuppets/Puppet2D/Puppet2DShader.gdshader" id="1_48l14"]
-[ext_resource type="Texture2D" uid="uid://qtldcoc7ao6o" path="res://addons/ImpishPuppets/Template/TemplateGradient.tres" id="2_r51p8"]
-
-[resource]
-shader = ExtResource("1_48l14")
-shader_parameter/gradient = ExtResource("2_r51p8")
-shader_parameter/shaded = false

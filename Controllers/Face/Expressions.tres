@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ExpressionList" format=3 uid="uid://wme1dvvhgsqa"]
 
-[ext_resource type="Script" uid="uid://cce266amaoah5" path="res://addons/ImpishPuppets/Controllers/ExpressionList.cs" id="1_in5n2"]
-[ext_resource type="Script" uid="uid://bicpct7vta1bk" path="res://addons/ImpishPuppets/Controllers/Expression.cs" id="1_isbap"]
+[ext_resource type="Script" uid="uid://bicpct7vta1bk" path="res://addons/ImpishPuppets/Controllers/Face/Expression.cs" id="1_4sqin"]
+[ext_resource type="Script" uid="uid://cce266amaoah5" path="res://addons/ImpishPuppets/Controllers/Face/ExpressionList.cs" id="2_kneht"]
 
 [sub_resource type="Curve" id="Curve_77ngs"]
 _limits = [0.0, 1.5, 0.0, 1.0]
@@ -14,7 +14,7 @@ _data = [Vector2(0, 0.076349795), 0.0, 3.1488087, 0, 0, Vector2(1, 1), -1.343493
 point_count = 2
 
 [sub_resource type="Resource" id="Resource_77ngs"]
-script = ExtResource("1_isbap")
+script = ExtResource("1_4sqin")
 ExpressionName = &"Anger"
 Position = Vector2(10.121, -17.56)
 ScaleXCurve = SubResource("Curve_77ngs")
@@ -33,7 +33,7 @@ _data = [Vector2(0, 0.018217921), 0.0, 0.0, 0, 0, Vector2(0.22364673, -1), 0.0, 
 point_count = 14
 
 [sub_resource type="Resource" id="Resource_f0sht"]
-script = ExtResource("1_isbap")
+script = ExtResource("1_4sqin")
 ExpressionName = &"Grumble"
 Position = Vector2(-2.6346016, -30.434174)
 ScaleXCurve = SubResource("Curve_efxa2")
@@ -42,7 +42,7 @@ Time = 0.7
 metadata/_custom_type_script = "uid://bicpct7vta1bk"
 
 [sub_resource type="Resource" id="Resource_scere"]
-script = ExtResource("1_isbap")
+script = ExtResource("1_4sqin")
 ExpressionName = &"None"
 metadata/_custom_type_script = "uid://bicpct7vta1bk"
 
@@ -57,7 +57,7 @@ _data = [Vector2(0, 0), 0.0, 3.8102791, 0, 0, Vector2(0.73504263, 0.7410567), -1
 point_count = 3
 
 [sub_resource type="Resource" id="Resource_m0w15"]
-script = ExtResource("1_isbap")
+script = ExtResource("1_4sqin")
 ExpressionName = &"Star"
 Position = Vector2(10.921, -9.478)
 ScaleXCurve = SubResource("Curve_mhcge")
@@ -71,7 +71,7 @@ _data = [Vector2(0.0056980066, 0.009605885), 0.0, 3.742582, 0, 0, Vector2(0.9943
 point_count = 2
 
 [sub_resource type="Resource" id="Resource_isbap"]
-script = ExtResource("1_isbap")
+script = ExtResource("1_4sqin")
 ExpressionName = &"Sweat"
 Position = Vector2(-14.144, -21.687)
 ScaleYCurve = SubResource("Curve_isbap")
@@ -79,7 +79,7 @@ Time = 0.5
 metadata/_custom_type_script = "uid://bicpct7vta1bk"
 
 [resource]
-script = ExtResource("1_in5n2")
+script = ExtResource("2_kneht")
 Expressions = {
 &"Anger": SubResource("Resource_77ngs"),
 &"Grumble": SubResource("Resource_f0sht"),

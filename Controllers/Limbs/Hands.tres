@@ -1,7 +1,13 @@
 [gd_resource type="Resource" script_class="HandPoseList" format=3 uid="uid://dqtgtepl6wkfp"]
 
-[ext_resource type="Script" uid="uid://clj3otv10wr8u" path="res://addons/ImpishPuppets/Controllers/HandPose.cs" id="1_kgvde"]
-[ext_resource type="Script" uid="uid://bue3srhbiyql5" path="res://addons/ImpishPuppets/Controllers/HandPoseList.cs" id="2_jmxve"]
+[ext_resource type="Script" uid="uid://clj3otv10wr8u" path="res://addons/ImpishPuppets/Controllers/Limbs/HandPose.cs" id="1_kgvde"]
+[ext_resource type="Script" uid="uid://bue3srhbiyql5" path="res://addons/ImpishPuppets/Controllers/Limbs/HandPoseList.cs" id="2_jmxve"]
+
+[sub_resource type="Resource" id="Resource_cteav"]
+script = ExtResource("1_kgvde")
+PalmFlat = true
+MiddleUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
 
 [sub_resource type="Resource" id="Resource_q5lov"]
 script = ExtResource("1_kgvde")
@@ -48,32 +54,6 @@ IndexUp = true
 ThumbUp = true
 metadata/_custom_type_script = "uid://clj3otv10wr8u"
 
-[sub_resource type="Resource" id="Resource_gjyt7"]
-script = ExtResource("1_kgvde")
-FlipSide = true
-PinkyUp = true
-RingUp = true
-MiddleUp = true
-IndexUp = true
-ThumbUp = true
-metadata/_custom_type_script = "uid://clj3otv10wr8u"
-
-[sub_resource type="Resource" id="Resource_7a3s4"]
-script = ExtResource("1_kgvde")
-IndexUp = true
-metadata/_custom_type_script = "uid://clj3otv10wr8u"
-
-[sub_resource type="Resource" id="Resource_kgvde"]
-script = ExtResource("1_kgvde")
-PinkyUp = true
-IndexUp = true
-metadata/_custom_type_script = "uid://clj3otv10wr8u"
-
-[sub_resource type="Resource" id="Resource_2kal3"]
-script = ExtResource("1_kgvde")
-ThumbUp = true
-metadata/_custom_type_script = "uid://clj3otv10wr8u"
-
 [sub_resource type="Resource" id="Resource_e5ews"]
 script = ExtResource("1_kgvde")
 PalmFlat = true
@@ -91,17 +71,37 @@ RingUp = true
 ThumbUp = true
 metadata/_custom_type_script = "uid://clj3otv10wr8u"
 
-[sub_resource type="Resource" id="Resource_cteav"]
+[sub_resource type="Resource" id="Resource_gjyt7"]
 script = ExtResource("1_kgvde")
-PalmFlat = true
+FlipSide = true
+PinkyUp = true
+RingUp = true
+MiddleUp = true
 IndexUp = true
+ThumbUp = true
 metadata/_custom_type_script = "uid://clj3otv10wr8u"
 
 [sub_resource type="Resource" id="Resource_qkd2f"]
 script = ExtResource("1_kgvde")
 PalmFlat = true
-RingUp = true
 MiddleUp = true
+IndexUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_7a3s4"]
+script = ExtResource("1_kgvde")
+IndexUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_kgvde"]
+script = ExtResource("1_kgvde")
+PinkyUp = true
+IndexUp = true
+metadata/_custom_type_script = "uid://clj3otv10wr8u"
+
+[sub_resource type="Resource" id="Resource_2kal3"]
+script = ExtResource("1_kgvde")
+ThumbUp = true
 metadata/_custom_type_script = "uid://clj3otv10wr8u"
 
 [resource]

@@ -70,7 +70,7 @@ public partial class SpriteSheet: TileSet
         GetSpriteData(group, sprite)?.SetCustomData(layerName, value);
         EmitChanged();
     }
-    
+
     public void ReloadSpriteDict()
     {
         SpriteDict = [];
@@ -111,5 +111,7 @@ public partial class SpriteSheet: TileSet
                 }
             }
         }
+
+        ResourceSaver.Save(this);
     }
 }

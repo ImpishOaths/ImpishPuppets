@@ -9,9 +9,9 @@ namespace ImpishPuppets;
 public partial class FaceControl: PuppetController
 {
     public static readonly StringName EyeGroup = "Eye";
+    public static readonly StringName DefaultEye = "Forward";
     public static readonly StringName EyebrowGroup = "Eyebrow";
     public static readonly StringName MouthGroup = "Mouth";
-    public static readonly Array<StringName> BlinkExceptions = ["Closed","Arch","ArchDown"];
     public static readonly StringName BlinkName = "Closed";
     public static readonly StringName ExpressionGroup = "Expression";
 
@@ -20,6 +20,8 @@ public partial class FaceControl: PuppetController
     private SpriteSheet SpriteSheet;
     [Export]
     private ExpressionList ExpressionList;
+    [Export]
+    private EyePoseList EyesList;
 
     [Export]
     public bool DoBlinks = true;
@@ -27,6 +29,8 @@ public partial class FaceControl: PuppetController
     public float BlinkDuration = 0.1f;
     [Export]
     public float OpenDuration = 5f;
+    [Export]
+    public Vector2 EyeScale = Vector2.One;
     [Export]
     public Vector2 FaceScale = Vector2.One;
     
@@ -153,7 +157,7 @@ public partial class FaceControl: PuppetController
         if(SpriteSheet == null)
             return properties;
             
-        var eyes = string.Join(",", SpriteSheet.GetSpritesInGroup(EyeGroup));
+        var eyes = string.Join(",", EyesList.Poses.Keys);
         var eyebrows = string.Join(',', SpriteSheet.GetSpritesInGroup(EyebrowGroup));
         var mouths = string.Join(',', SpriteSheet.GetSpritesInGroup(MouthGroup));
         properties.Add(new()
@@ -225,7 +229,9 @@ public partial class FaceControl: PuppetController
 
     private PuppetTransform Head;
     private PuppetBone EyeRBone;
+    private PuppetBone PupilRBone;
     private PuppetBone EyeLBone;
+    private PuppetBone PupilLBone;
     private PuppetBone EyebrowLBone;
     private PuppetBone EyebrowRBone;
     private PuppetBone MouthBone;
@@ -238,15 +244,18 @@ public partial class FaceControl: PuppetController
         EyebrowLBone = parent.GetNodeOrNull<PuppetBone>("EyebrowL");
         EyebrowRBone = parent.GetNodeOrNull<PuppetBone>("EyebrowR");
         EyeLBone = parent.GetNodeOrNull<PuppetBone>("EyeL");
-        _EyeL = EyeLBone.SpriteName;
+        PupilLBone = parent.GetNodeOrNull<PuppetBone>("EyeL/PupilL");
         EyeRBone = parent.GetNodeOrNull<PuppetBone>("EyeR");
-        _EyeR = EyeRBone.SpriteName;
+        PupilRBone = parent.GetNodeOrNull<PuppetBone>("EyeR/PupilR");
         MouthBone = parent.GetNodeOrNull<PuppetBone>("Mouth");
         ExpressionBone = parent.GetNodeOrNull<PuppetBone>("Expression");
 
         SpriteSheet = GetNodeOrNull<Puppet>(PuppetPath)?.GetSheet();
 
-        StopBlink();
+        _EyeR = DefaultEye;
+        _EyeL = DefaultEye;
+
+        Blink();
     }
 
     public override void Initialize()
@@ -259,7 +268,7 @@ public partial class FaceControl: PuppetController
         if(DoBlinks == false || IsBlinking || SpriteSheet == null)
             return;
 
-        if(BlinkExceptions.Contains(EyeR) || BlinkExceptions.Contains(EyeL))
+        if(!EyesList.Poses[_EyeR].DoBlinks || !EyesList.Poses[_EyeL].DoBlinks)
         {
             PauseBlinking = true;
             StopBlink();
@@ -272,8 +281,8 @@ public partial class FaceControl: PuppetController
         }
         PauseBlinking = false;
         
-        EyeRBone?.SetSprite(EyeGroup, BlinkName);
-        EyeLBone?.SetSprite(EyeGroup, BlinkName);
+        SetEyeLook(BlinkName, true);
+        SetEyeLook(BlinkName, false);
         IsBlinking = true;
         BlinkTimer = 0;
         OpenTimer = 0;
@@ -291,11 +300,28 @@ public partial class FaceControl: PuppetController
         if(SpriteSheet == null)
             return;
         
-        EyeRBone?.SetSprite(EyeGroup, _EyeR);
-        EyeLBone?.SetSprite(EyeGroup, _EyeL);
+        SetEyeLook(_EyeR, true);
+        SetEyeLook(_EyeL, false);
         IsBlinking = false;
         BlinkTimer = 0;
         OpenTimer = 0;
+    }
+
+    public void SetEyeLook(StringName eyePoseName, bool right)
+    {
+        var eyePose = EyesList.Poses[eyePoseName];
+        var bone = right?EyeRBone:EyeLBone;
+        var pupil = right?PupilRBone:PupilLBone;
+        bone?.SetSprite(EyeGroup, eyePose.EyeShape);
+        if(eyePose.ShowPupil)
+        {
+            pupil?.SetVisible(true);
+            pupil?.SetLocalTransform(new Transform2D(0,eyePose.PupilOffset*EyeScale));
+        }
+        else
+        {
+            pupil?.SetVisible(false);
+        }
     }
 
     public override void _Process(double delta)
@@ -388,6 +414,7 @@ public partial class FaceControl: PuppetController
     {
         var resize = VectorHelpers.PixelResize;
         var duplicate = Duplicate() as FaceControl;
+        duplicate.EyeScale *= resize;
         duplicate.FaceScale *= resize;
         return duplicate;
     }

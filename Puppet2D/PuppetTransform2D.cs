@@ -94,6 +94,7 @@ public partial class PuppetTransform2D: Node2D, PuppetTransform, Puppet2Dto3DCon
             Position = (Position / (VectorHelpers.PixelSizeRoot * VectorHelpers.PixelSizeRoot)).ToVec3pos(),
             Rotation = new Vector3(0, 0, -Rotation),
             Puppet = puppet,
+            Visible = Visible,
             Flip = _Flip
         };
     }
