@@ -26,7 +26,7 @@ public abstract partial class ImpulseModifier: PuppetBoneModifier
         if(PreviousPosition == null)
             PreviousPosition = pos;
 
-        var diff = pos - PreviousPosition.Value;
+        var diff = pos - PreviousPosition.Value - WindController.GlobalWindDirection*WindController.GlobalWindStrength;
         var normDir = ImpulseDir.Normalized().Rotated(rootAngle);
 
         var power = diff.Dot(normDir) * Sensitivity;

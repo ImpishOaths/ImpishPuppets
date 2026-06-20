@@ -11,13 +11,22 @@ public partial class IKTipModifier: IKModifier
     public NodePath TargetPath;
     private PuppetTransform Target = null;
 
+    const float DistEpislon = 0f;
+
+    private Vector2? PrevTargetPos = null;
+
     public override void Apply(float delta)
     {
         Target ??= GetNodeOrNull<PuppetTransform>(TargetPath);
         if(Target == null || ! Target.Active())
             return;
 
-        ForwardPass(Target, Target.GetFlip(), null);
+        Vector2 targetPos = Target.GetRootTransform().Origin;
+        if(PrevTargetPos == null || PrevTargetPos.Value.DistanceTo(targetPos) > DistEpislon)
+        {
+            ForwardPass(Target, Target.GetFlip(), null);
+            PrevTargetPos = targetPos;
+        }
     }
 
     public override Node ConvertTo3D(Puppet3D puppet)
