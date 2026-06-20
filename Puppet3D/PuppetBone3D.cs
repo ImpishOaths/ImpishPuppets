@@ -8,7 +8,7 @@ namespace ImpishPuppets;
 [Icon("res://addons/ImpishPuppets/Icons/Bone3DIcon.png")]
 public partial class PuppetBone3D: PuppetTransform3D, PuppetBone
 {
-    public const float ZSpacing = 0.0003f;
+    public const float ZSpacing = 0.003f;
     protected virtual SpriteSheet SpriteSheet => Puppet?.SpriteSheet;
     protected virtual Texture2D PuppetTexture => SpriteSheet.GetSpriteTexture(0);
     protected virtual Material PuppetMaterial => Puppet?.BoneMaterials3D[MaterialChoice];

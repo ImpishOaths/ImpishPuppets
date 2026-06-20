@@ -15,10 +15,24 @@
 [ext_resource type="Script" uid="uid://bvei2omffd38e" path="res://addons/ImpishPuppets/Controllers/Limbs/HandControl.cs" id="9_56q1y"]
 [ext_resource type="Resource" uid="uid://dqtgtepl6wkfp" path="res://addons/ImpishPuppets/Controllers/Limbs/Hands.tres" id="10_sddgr"]
 [ext_resource type="Script" uid="uid://bbg4xblg3iwte" path="res://addons/ImpishPuppets/Puppet3D/CustomPuppetBone3D.cs" id="11_qyl3a"]
+[ext_resource type="TileSet" uid="uid://lhyaebudj43s" path="res://Clothing/Toga/TogaSprites.tres" id="12_2jibq"]
 [ext_resource type="TileSet" uid="uid://ctnkxfrf7uy77" path="res://addons/ImpishPuppets/Shared/ExpressionSheet.tres" id="12_ibsqd"]
 [ext_resource type="Material" uid="uid://wke243fvehrx" path="res://addons/ImpishPuppets/Shared/Expressions3D.tres" id="13_bok3t"]
+[ext_resource type="Material" uid="uid://bhcf42quwxu55" path="res://Clothing/Toga/TogaMaterial3D.tres" id="13_h2p0b"]
 [ext_resource type="Resource" uid="uid://wme1dvvhgsqa" path="res://addons/ImpishPuppets/Controllers/Face/Expressions.tres" id="15_w0o0v"]
 [ext_resource type="Resource" uid="uid://37pfhbpwjjp8" path="res://addons/ImpishPuppets/Controllers/Face/Eyes.tres" id="17_bok3t"]
+[ext_resource type="Script" uid="uid://c3fa35atmykfq" path="res://addons/ImpishPuppets/Controllers/Clothing/ClothingController.cs" id="22_y062l"]
+[ext_resource type="Script" uid="uid://vei4ktdel8l6" path="res://addons/ImpishPuppets/Controllers/Clothing/NodeList.cs" id="23_rkgvd"]
+
+[sub_resource type="Resource" id="Resource_ol7xt"]
+script = ExtResource("23_rkgvd")
+Nodes = Array[String](["Lower/LowerClothes"])
+metadata/_custom_type_script = "uid://vei4ktdel8l6"
+
+[sub_resource type="Resource" id="Resource_ts6ap"]
+script = ExtResource("23_rkgvd")
+Nodes = Array[String](["Upper/UpperClothes"])
+metadata/_custom_type_script = "uid://vei4ktdel8l6"
 
 [node name="Puppet" type="Node3D" unique_id=2137562994 node_paths=PackedStringArray("Puppet")]
 script = ExtResource("1_s66gx")
@@ -29,12 +43,12 @@ SpriteSheet = ExtResource("5_tmr0e")
 Puppet = NodePath(".")
 metadata/_custom_type_script = "uid://bv7kleaud465x"
 
-[node name="Lower" type="Node3D" parent="." unique_id=135966938 node_paths=PackedStringArray("Puppet")]
+[node name="Lower" type="Node3D" parent="." unique_id=1164566550 node_paths=PackedStringArray("Puppet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50082815, 0)
 script = ExtResource("4_o0n8c")
 Puppet = NodePath("..")
 
-[node name="LowerBody" type="Node3D" parent="Lower" unique_id=1504057750 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="LowerBody" type="Node3D" parent="Lower" unique_id=1898004104 node_paths=PackedStringArray("Sprite", "Puppet")]
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
 SortOrder = 1
@@ -42,43 +56,43 @@ SpriteGroup = &"Body"
 SpriteName = &"Lower"
 Puppet = NodePath("../..")
 
-[node name="Squish" type="Node" parent="Lower/LowerBody" unique_id=1223601494]
+[node name="Squish" type="Node" parent="Lower/LowerBody" unique_id=351575170]
 script = ExtResource("6_uftkn")
 SquishAmount = Vector2(-0.1, 0.1)
 ImpulseDir = Vector2(0, 1)
 Sensitivity = 80.0
 RestoreForce = 100.0
 
-[node name="LowerLegL" type="Node3D" parent="Lower" unique_id=525793689 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="LowerLegL" type="Node3D" parent="Lower" unique_id=1290291152 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(-0.14409797, 0.98956, 0, -0.98956, -0.14409797, 0, 0, 0, 1, 0.11774354, -0.10274461, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(11, -26)
+FrontBackOrder = Vector2i(12, -26)
 SortOrder = 3
 RotationOffset = -1.571
 SpriteGroup = &"Body"
 SpriteName = &"LowerLeg"
 Puppet = NodePath("../..")
 
-[node name="LowerLegL" type="Node" parent="Lower/LowerLegL" unique_id=382213921]
+[node name="LowerLegL" type="Node" parent="Lower/LowerLegL" unique_id=1672350807]
 script = ExtResource("7_4q2sr")
 TargetPath = NodePath("../../../FootL/Foot")
 NextPath = NodePath("../../UpperLegL/UpperLegL")
 Length = 1.5
 metadata/_custom_type_script = "uid://hg46v38qaprs"
 
-[node name="UpperLegL" type="Node3D" parent="Lower" unique_id=670277771 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="UpperLegL" type="Node3D" parent="Lower" unique_id=286155503 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.3938417, 0.9191779, 0, -0.9191779, 0.3938417, 0, 0, 0, 1, 0.05620575, 0.040876985, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(12, -25)
+FrontBackOrder = Vector2i(13, -25)
 SortOrder = 3
 RotationOffset = -1.571
 SpriteGroup = &"Body"
 SpriteName = &"UpperLeg"
 Puppet = NodePath("../..")
 
-[node name="UpperLegL" type="Node" parent="Lower/UpperLegL" unique_id=1962309678]
+[node name="UpperLegL" type="Node" parent="Lower/UpperLegL" unique_id=632608008]
 script = ExtResource("8_uu8co")
 NextPath = NodePath("")
 Length = 1.25
@@ -86,11 +100,11 @@ AngleNudge = -0.1
 LockAngleSign = 1.0
 metadata/_custom_type_script = "uid://cs4bqyhnd7q6m"
 
-[node name="LowerLegR" type="Node3D" parent="Lower" unique_id=1289175139 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="LowerLegR" type="Node3D" parent="Lower" unique_id=151317031 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(-0.28003883, 0.9599863, 0, -0.9599863, -0.28003883, 0, 0, 0, 1, -0.054147165, -0.100219846, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(14, -23)
+FrontBackOrder = Vector2i(15, -23)
 SortOrder = 3
 Order = true
 RotationOffset = -1.571
@@ -98,18 +112,18 @@ SpriteGroup = &"Body"
 SpriteName = &"LowerLeg"
 Puppet = NodePath("../..")
 
-[node name="LowerLegR" type="Node" parent="Lower/LowerLegR" unique_id=402101122]
+[node name="LowerLegR" type="Node" parent="Lower/LowerLegR" unique_id=1180217314]
 script = ExtResource("7_4q2sr")
 TargetPath = NodePath("../../../FootR/Foot")
 NextPath = NodePath("../../UpperLegR/UpperLegR")
 Length = 1.5
 metadata/_custom_type_script = "uid://hg46v38qaprs"
 
-[node name="UpperLegR" type="Node3D" parent="Lower" unique_id=981680786 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="UpperLegR" type="Node3D" parent="Lower" unique_id=1782953887 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.19092983, 0.9816013, 0, -0.9816013, 0.19092983, 0, 0, 0, 1, -0.083980024, 0.05315572, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(15, -22)
+FrontBackOrder = Vector2i(16, -22)
 SortOrder = 3
 Order = true
 RotationOffset = -1.571
@@ -117,7 +131,7 @@ SpriteGroup = &"Body"
 SpriteName = &"UpperLeg"
 Puppet = NodePath("../..")
 
-[node name="UpperLegR" type="Node" parent="Lower/UpperLegR" unique_id=1034903961]
+[node name="UpperLegR" type="Node" parent="Lower/UpperLegR" unique_id=282485007]
 script = ExtResource("8_uu8co")
 NextPath = NodePath("")
 Length = 1.25
@@ -125,12 +139,23 @@ AngleNudge = -0.1
 LockAngleSign = 1.0
 metadata/_custom_type_script = "uid://cs4bqyhnd7q6m"
 
-[node name="Upper" type="Node3D" parent="." unique_id=1656618383 node_paths=PackedStringArray("Puppet")]
+[node name="LowerClothes" type="Node3D" parent="Lower" unique_id=1055636921 node_paths=PackedStringArray("Sprite", "Puppet")]
+script = ExtResource("11_qyl3a")
+Sheet = ExtResource("12_2jibq")
+Material3D = ExtResource("13_h2p0b")
+Sprite = NodePath("Sprite")
+FrontBackOrder = Vector2i(18, 0)
+SortOrder = 1
+SpriteGroup = &"Lower"
+SpriteName = &"Lower"
+Puppet = NodePath("../..")
+
+[node name="Upper" type="Node3D" parent="." unique_id=1517998082 node_paths=PackedStringArray("Puppet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75167185, 0)
 script = ExtResource("4_o0n8c")
 Puppet = NodePath("..")
 
-[node name="UpperBody" type="Node3D" parent="Upper" unique_id=622586063 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="UpperBody" type="Node3D" parent="Upper" unique_id=1720600978 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02432388, -0.008460462, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
@@ -140,41 +165,41 @@ SpriteGroup = &"Body"
 SpriteName = &"Upper"
 Puppet = NodePath("../..")
 
-[node name="Squish" type="Node" parent="Upper/UpperBody" unique_id=723588540]
+[node name="Squish" type="Node" parent="Upper/UpperBody" unique_id=2000899434]
 script = ExtResource("6_uftkn")
 SquishAmount = Vector2(-0.1, 0.1)
 ImpulseDir = Vector2(0, 1)
 Sensitivity = 80.0
 RestoreForce = 100.0
 
-[node name="LowerArmL" type="Node3D" parent="Upper" unique_id=780099353 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="LowerArmL" type="Node3D" parent="Upper" unique_id=1085782422 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.92022896, -0.39137945, 0, 0.39137945, 0.92022896, 0, 0, 0, 1, 0.260184, 0.18866831, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(17, -20)
+FrontBackOrder = Vector2i(19, -20)
 SortOrder = 3
 SpriteGroup = &"Body"
 SpriteName = &"LowerArm"
 Puppet = NodePath("../..")
 
-[node name="LowerArmL" type="Node" parent="Upper/LowerArmL" unique_id=1970941917]
+[node name="LowerArmL" type="Node" parent="Upper/LowerArmL" unique_id=1457234232]
 script = ExtResource("7_4q2sr")
 TargetPath = NodePath("../../../HandL")
 NextPath = NodePath("../../UpperArmL/UpperArmL")
 Length = 1.25
 metadata/_custom_type_script = "uid://hg46v38qaprs"
 
-[node name="UpperArmL" type="Node3D" parent="Upper" unique_id=167828255 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="UpperArmL" type="Node3D" parent="Upper" unique_id=1867267675 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.9989443, -0.045905367, 0, 0.045905367, 0.9989443, 0, 0, 0, 1, 0.07288164, 0.18006104, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(18, -19)
+FrontBackOrder = Vector2i(20, -19)
 SortOrder = 3
 SpriteGroup = &"Body"
 SpriteName = &"UpperArm"
 Puppet = NodePath("../..")
 
-[node name="UpperArmL" type="Node" parent="Upper/UpperArmL" unique_id=131050144]
+[node name="UpperArmL" type="Node" parent="Upper/UpperArmL" unique_id=2056569916]
 script = ExtResource("8_uu8co")
 NextPath = NodePath("")
 Length = 1.5
@@ -182,11 +207,11 @@ AngleNudge = 0.1
 LockAngleSign = -1.0
 metadata/_custom_type_script = "uid://cs4bqyhnd7q6m"
 
-[node name="LowerArmR" type="Node3D" parent="Upper" unique_id=1613351765 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="LowerArmR" type="Node3D" parent="Upper" unique_id=114770654 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(-0.96270114, 0.27056676, 0, 0.27056676, 0.96270114, 0, 0, 0, 1, -0.33175105, 0.15215361, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(27, -10)
+FrontBackOrder = Vector2i(29, -10)
 SortOrder = 3
 Order = true
 SpriteGroup = &"Body"
@@ -194,18 +219,18 @@ SpriteName = &"LowerArm"
 Puppet = NodePath("../..")
 Flip = true
 
-[node name="LowerArmR" type="Node" parent="Upper/LowerArmR" unique_id=1018506786]
+[node name="LowerArmR" type="Node" parent="Upper/LowerArmR" unique_id=2136973085]
 script = ExtResource("7_4q2sr")
 TargetPath = NodePath("../../../HandR")
 NextPath = NodePath("../../UpperArmR/UpperArmR")
 Length = 1.25
 metadata/_custom_type_script = "uid://hg46v38qaprs"
 
-[node name="UpperArmR" type="Node3D" parent="Upper" unique_id=1787381718 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="UpperArmR" type="Node3D" parent="Upper" unique_id=968245632 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(-0.99122095, -0.13221551, 0, -0.13221551, 0.99122095, 0, 0, 0, 1, -0.14589709, 0.17694402, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(28, -9)
+FrontBackOrder = Vector2i(30, -9)
 SortOrder = 3
 Order = true
 SpriteGroup = &"Body"
@@ -213,7 +238,7 @@ SpriteName = &"UpperArm"
 Puppet = NodePath("../..")
 Flip = true
 
-[node name="UpperArmR" type="Node" parent="Upper/UpperArmR" unique_id=177999688]
+[node name="UpperArmR" type="Node" parent="Upper/UpperArmR" unique_id=346364237]
 script = ExtResource("8_uu8co")
 NextPath = NodePath("")
 Length = 1.5
@@ -221,81 +246,82 @@ AngleNudge = 0.1
 LockAngleSign = -1.0
 metadata/_custom_type_script = "uid://cs4bqyhnd7q6m"
 
-[node name="Head" type="Node3D" parent="." unique_id=466875229 node_paths=PackedStringArray("Puppet")]
+[node name="UpperClothes" type="Node3D" parent="Upper" unique_id=1519312322 node_paths=PackedStringArray("Sprite", "Puppet")]
+script = ExtResource("11_qyl3a")
+Sheet = ExtResource("12_2jibq")
+Material3D = ExtResource("13_h2p0b")
+Sprite = NodePath("Sprite")
+FrontBackOrder = Vector2i(2, 0)
+SortOrder = 1
+SpriteGroup = &"Upper"
+SpriteName = &"Upper"
+Puppet = NodePath("../..")
+
+[node name="Head" type="Node3D" parent="." unique_id=1415336747 node_paths=PackedStringArray("Puppet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0515625, 0)
 script = ExtResource("4_o0n8c")
 Puppet = NodePath("..")
 
-[node name="Head" type="Node3D" parent="Head" unique_id=2069507098 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="Head" type="Node3D" parent="Head" unique_id=658415870 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.030102253, 0.00174582, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(2, 0)
+FrontBackOrder = Vector2i(3, 0)
 SortOrder = 1
 SpriteGroup = &"Body"
 SpriteName = &"Head"
 Puppet = NodePath("../..")
 
-[node name="Mouth" type="Node3D" parent="Head" unique_id=907188269 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="Mouth" type="Node3D" parent="Head" unique_id=1518767844 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.004140079, 0.093719006, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(3, 0)
+FrontBackOrder = Vector2i(4, 0)
 SortOrder = 1
 SpriteGroup = &"Mouth"
 SpriteName = &"Smile"
 Puppet = NodePath("../..")
 
-[node name="EyeL" type="Node3D" parent="Head" unique_id=237677376 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="EyeL" type="Node3D" parent="Head" unique_id=1465474106 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06569153, 0.17547297, 0)
-script = ExtResource("5_stc45")
-Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(4, 0)
-SortOrder = 1
-SpriteGroup = &"Eye"
-SpriteName = &"Full"
-Puppet = NodePath("../..")
-
-[node name="PupilL" type="Node3D" parent="Head/EyeL" unique_id=1882389742 node_paths=PackedStringArray("Sprite", "Puppet")]
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
 FrontBackOrder = Vector2i(5, 0)
 SortOrder = 1
 SpriteGroup = &"Eye"
-SpriteName = &"Pupil"
-Puppet = NodePath("../../..")
+SpriteName = &"Full"
+Puppet = NodePath("../..")
 
-[node name="EyeR" type="Node3D" parent="Head" unique_id=1269474859 node_paths=PackedStringArray("Sprite", "Puppet")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09441012, 0.17547297, 0)
+[node name="PupilL" type="Node3D" parent="Head/EyeL" unique_id=917831575 node_paths=PackedStringArray("Sprite", "Puppet")]
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
 FrontBackOrder = Vector2i(6, 0)
 SortOrder = 1
 SpriteGroup = &"Eye"
-SpriteName = &"Full"
-Puppet = NodePath("../..")
+SpriteName = &"Pupil"
+Puppet = NodePath("../../..")
 
-[node name="PupilR" type="Node3D" parent="Head/EyeR" unique_id=1141465506 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="EyeR" type="Node3D" parent="Head" unique_id=812299580 node_paths=PackedStringArray("Sprite", "Puppet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09441012, 0.17547297, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
 FrontBackOrder = Vector2i(7, 0)
 SortOrder = 1
 SpriteGroup = &"Eye"
-SpriteName = &"Pupil"
-Puppet = NodePath("../../..")
+SpriteName = &"Full"
+Puppet = NodePath("../..")
 
-[node name="EyebrowL" type="Node3D" parent="Head" unique_id=1661654580 node_paths=PackedStringArray("Sprite", "Puppet")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08102018, 0.27596235, 0)
+[node name="PupilR" type="Node3D" parent="Head/EyeR" unique_id=367218140 node_paths=PackedStringArray("Sprite", "Puppet")]
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
 FrontBackOrder = Vector2i(8, 0)
 SortOrder = 1
-SpriteGroup = &"Eyebrow"
-SpriteName = &"Flat"
-Puppet = NodePath("../..")
+SpriteGroup = &"Eye"
+SpriteName = &"Pupil"
+Puppet = NodePath("../../..")
 
-[node name="EyebrowR" type="Node3D" parent="Head" unique_id=759706205 node_paths=PackedStringArray("Sprite", "Puppet")]
-transform = Transform3D(-1, 8.742278e-08, 8.742278e-08, 8.742278e-08, 1, 0, 8.742278e-08, -7.642742e-15, 1, -0.10462922, 0.27766538, 0)
+[node name="EyebrowL" type="Node3D" parent="Head" unique_id=111106215 node_paths=PackedStringArray("Sprite", "Puppet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08102018, 0.27596235, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
 FrontBackOrder = Vector2i(9, 0)
@@ -303,21 +329,31 @@ SortOrder = 1
 SpriteGroup = &"Eyebrow"
 SpriteName = &"Flat"
 Puppet = NodePath("../..")
+
+[node name="EyebrowR" type="Node3D" parent="Head" unique_id=1438888383 node_paths=PackedStringArray("Sprite", "Puppet")]
+transform = Transform3D(-1, 8.742278e-08, 8.742278e-08, 8.742278e-08, 1, 0, 8.742278e-08, -7.642742e-15, 1, -0.10462922, 0.27766538, 0)
+script = ExtResource("5_stc45")
+Sprite = NodePath("Sprite")
+FrontBackOrder = Vector2i(10, 0)
+SortOrder = 1
+SpriteGroup = &"Eyebrow"
+SpriteName = &"Flat"
+Puppet = NodePath("../..")
 Flip = true
 
-[node name="Expression" type="Node3D" parent="Head" unique_id=1215688740 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="Expression" type="Node3D" parent="Head" unique_id=25478828 node_paths=PackedStringArray("Sprite", "Puppet")]
 script = ExtResource("11_qyl3a")
 Sheet = ExtResource("12_ibsqd")
 Material3D = ExtResource("13_bok3t")
 UseCustomMaterial = true
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(10, 0)
+FrontBackOrder = Vector2i(11, 0)
 SortOrder = 1
 SpriteGroup = &"Expression"
 SpriteName = &"None"
 Puppet = NodePath("../..")
 
-[node name="FaceControl" type="Node" parent="Head" unique_id=1818953757]
+[node name="FaceControl" type="Node" parent="Head" unique_id=2077984761]
 script = ExtResource("6_3kxhv")
 PuppetPath = NodePath("../..")
 ExpressionList = ExtResource("15_w0o0v")
@@ -334,22 +370,22 @@ BothEyes = &"Forward"
 Mouth = &"Smile"
 metadata/_custom_type_script = "uid://cp0duot1dk6ar"
 
-[node name="FootL" type="Node3D" parent="." unique_id=152025568 node_paths=PackedStringArray("Puppet")]
+[node name="FootL" type="Node3D" parent="." unique_id=129086743 node_paths=PackedStringArray("Puppet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09290218, 0.007038057, 0)
 script = ExtResource("4_o0n8c")
 Puppet = NodePath("..")
 
-[node name="Foot" type="Node3D" parent="FootL" unique_id=1510263942 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="Foot" type="Node3D" parent="FootL" unique_id=774297276 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00735116, 0.16997063, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(13, -24)
+FrontBackOrder = Vector2i(14, -24)
 SortOrder = 3
 SpriteGroup = &"Body"
 SpriteName = &"Foot"
 Puppet = NodePath("../..")
 
-[node name="FootControl" type="Node" parent="FootL" unique_id=2082314624]
+[node name="FootControl" type="Node" parent="FootL" unique_id=300729812]
 script = ExtResource("9_0nxmo")
 FootPath = NodePath("../Foot")
 FootAccessoryPath = NodePath("")
@@ -357,23 +393,23 @@ UpperLegPath = NodePath("../../Lower/UpperLegL")
 LowerLegPath = NodePath("../../Lower/LowerLegL")
 PoseDropdown = "Right"
 
-[node name="FootR" type="Node3D" parent="." unique_id=1928808737 node_paths=PackedStringArray("Puppet")]
+[node name="FootR" type="Node3D" parent="." unique_id=610637231 node_paths=PackedStringArray("Puppet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11260891, 0.0168913, 0)
 script = ExtResource("4_o0n8c")
 Puppet = NodePath("..")
 
-[node name="Foot" type="Node3D" parent="FootR" unique_id=572659944 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="Foot" type="Node3D" parent="FootR" unique_id=1076742788 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0059435368, 0.16293263, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(16, -21)
+FrontBackOrder = Vector2i(17, -21)
 SortOrder = 3
 Order = true
 SpriteGroup = &"Body"
 SpriteName = &"Foot"
 Puppet = NodePath("../..")
 
-[node name="FootControl" type="Node" parent="FootR" unique_id=1942166602]
+[node name="FootControl" type="Node" parent="FootR" unique_id=264577311]
 script = ExtResource("9_0nxmo")
 FootPath = NodePath("../Foot")
 FootAccessoryPath = NodePath("")
@@ -382,92 +418,92 @@ LowerLegPath = NodePath("../../Lower/LowerLegR")
 RightFoot = true
 PoseDropdown = "Right"
 
-[node name="HandL" type="Node3D" parent="." unique_id=634745559 node_paths=PackedStringArray("Puppet")]
+[node name="HandL" type="Node3D" parent="." unique_id=42898796 node_paths=PackedStringArray("Puppet")]
 transform = Transform3D(0.066440195, 0.9977904, 0, -0.9977904, 0.066440195, 0, 0, 0, 1, 0.47194356, 1.0304029, 0)
 script = ExtResource("4_o0n8c")
 Puppet = NodePath("..")
 
-[node name="PalmBack" type="Node3D" parent="HandL" unique_id=1993447706 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="PalmBack" type="Node3D" parent="HandL" unique_id=1054800383 node_paths=PackedStringArray("Sprite", "Puppet")]
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(19, -18)
+FrontBackOrder = Vector2i(21, -18)
 SortOrder = 3
 SpriteGroup = &"Hand"
 SpriteName = &"Palm"
 Puppet = NodePath("../..")
 
-[node name="ThumbUp" type="Node3D" parent="HandL" unique_id=981474923 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="ThumbUp" type="Node3D" parent="HandL" unique_id=1022894437 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.9930696, 0.11752906, 0, -0.11752906, 0.9930696, 0, 0, 0, 1, -0.06629051, 0.0088349935, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(20, -17)
+FrontBackOrder = Vector2i(22, -17)
 SortOrder = 3
 SpriteGroup = &"Hand"
 SpriteName = &"ThumbUp"
 Puppet = NodePath("../..")
 
-[node name="Pinky" type="Node3D" parent="HandL" unique_id=179652527 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="Pinky" type="Node3D" parent="HandL" unique_id=435672916 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.96462524, 0.26362476, 0, -0.26362476, 0.96462524, 0, 0, 0, 1, 0.060569473, 0.08024125, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(21, -16)
+FrontBackOrder = Vector2i(23, -16)
 SortOrder = 3
 SpriteGroup = &"Hand"
 SpriteName = &"FingerUp"
 Puppet = NodePath("../..")
 
-[node name="Ring" type="Node3D" parent="HandL" unique_id=270094386 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="Ring" type="Node3D" parent="HandL" unique_id=10837419 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.9974434, 0.071461216, 0, -0.071461216, 0.9974434, 0, 0, 0, 1, 0.017761491, 0.09177978, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(22, -15)
+FrontBackOrder = Vector2i(24, -15)
 SortOrder = 3
 SpriteGroup = &"Hand"
 SpriteName = &"FingerUp"
 Puppet = NodePath("../..")
 
-[node name="Middle" type="Node3D" parent="HandL" unique_id=214578432 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="Middle" type="Node3D" parent="HandL" unique_id=1785207865 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.99945086, -0.03313624, 0, 0.03313624, 0.99945086, 0, 0, 0, 1, -0.025543135, 0.09672184, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(23, -14)
+FrontBackOrder = Vector2i(25, -14)
 SortOrder = 3
 SpriteGroup = &"Hand"
 SpriteName = &"FingerUp"
 Puppet = NodePath("../..")
 
-[node name="Index" type="Node3D" parent="HandL" unique_id=1087894060 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="Index" type="Node3D" parent="HandL" unique_id=1384111447 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.9990579, -0.043396045, 0, 0.043396045, 0.9990579, 0, 0, 0, 1, -0.06983465, 0.08628375, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(24, -13)
+FrontBackOrder = Vector2i(26, -13)
 SortOrder = 3
 SpriteGroup = &"Hand"
 SpriteName = &"FingerUp"
 Puppet = NodePath("../..")
 
-[node name="ThumbDown" type="Node3D" parent="HandL" unique_id=121033522 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="ThumbDown" type="Node3D" parent="HandL" unique_id=767922414 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.9993299, -0.0366024, 0, 0.0366024, 0.9993299, 0, 0, 0, 1, -0.09053395, 0.027355801, 0)
 visible = false
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(25, -12)
+FrontBackOrder = Vector2i(27, -12)
 SortOrder = 3
 SpriteGroup = &"Hand"
 SpriteName = &"ThumbDown"
 Puppet = NodePath("../..")
 
-[node name="PalmFront" type="Node3D" parent="HandL" unique_id=212828029 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="PalmFront" type="Node3D" parent="HandL" unique_id=1933488316 node_paths=PackedStringArray("Sprite", "Puppet")]
 visible = false
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(26, -11)
+FrontBackOrder = Vector2i(28, -11)
 SortOrder = 3
 SpriteGroup = &"Hand"
 SpriteName = &"Palm"
 Puppet = NodePath("../..")
 
-[node name="HandControl" type="Node" parent="HandL" unique_id=747402164]
+[node name="HandControl" type="Node" parent="HandL" unique_id=1520992916]
 script = ExtResource("9_56q1y")
 UpperArmPath = NodePath("../../Upper/UpperArmL")
 LowerArmPath = NodePath("../../Upper/LowerArmL")
@@ -476,101 +512,101 @@ SelectedPose = &"Open"
 PoseDropdown = &"Open"
 metadata/_custom_type_script = "uid://bvei2omffd38e"
 
-[node name="HandR" type="Node3D" parent="." unique_id=1907776733 node_paths=PackedStringArray("Puppet")]
+[node name="HandR" type="Node3D" parent="." unique_id=1759400957 node_paths=PackedStringArray("Puppet")]
 transform = Transform3D(0.2291648, -0.97338766, 8.742278e-08, -0.97338766, -0.2291648, 0, -2.0034223e-08, 8.5096254e-08, 1, -0.5418823, 0.96288276, 0)
 script = ExtResource("4_o0n8c")
 Puppet = NodePath("..")
 Flip = true
 
-[node name="PalmBack" type="Node3D" parent="HandR" unique_id=2121993878 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="PalmBack" type="Node3D" parent="HandR" unique_id=528396400 node_paths=PackedStringArray("Sprite", "Puppet")]
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(29, -8)
+FrontBackOrder = Vector2i(31, -8)
 SortOrder = 3
 Order = true
 SpriteGroup = &"Hand"
 SpriteName = &"Palm"
 Puppet = NodePath("../..")
 
-[node name="ThumbUp" type="Node3D" parent="HandR" unique_id=1819499141 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="ThumbUp" type="Node3D" parent="HandR" unique_id=777482868 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.9930696, 0.11752906, 0, -0.11752906, 0.9930696, 0, 0, 0, 1, -0.06284813, 0.022872303, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(30, -7)
+FrontBackOrder = Vector2i(32, -7)
 SortOrder = 3
 Order = true
 SpriteGroup = &"Hand"
 SpriteName = &"ThumbUp"
 Puppet = NodePath("../..")
 
-[node name="Pinky" type="Node3D" parent="HandR" unique_id=965737497 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="Pinky" type="Node3D" parent="HandR" unique_id=1499062105 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.96462524, 0.26362476, 0, -0.26362476, 0.96462524, 0, 0, 0, 1, 0.060569473, 0.08024125, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(31, -6)
+FrontBackOrder = Vector2i(33, -6)
 SortOrder = 3
 Order = true
 SpriteGroup = &"Hand"
 SpriteName = &"FingerUp"
 Puppet = NodePath("../..")
 
-[node name="Ring" type="Node3D" parent="HandR" unique_id=595963421 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="Ring" type="Node3D" parent="HandR" unique_id=1468438865 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.9974434, 0.071461216, 0, -0.071461216, 0.9974434, 0, 0, 0, 1, 0.017761491, 0.09177978, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(32, -5)
+FrontBackOrder = Vector2i(34, -5)
 SortOrder = 3
 Order = true
 SpriteGroup = &"Hand"
 SpriteName = &"FingerUp"
 Puppet = NodePath("../..")
 
-[node name="Middle" type="Node3D" parent="HandR" unique_id=1252712068 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="Middle" type="Node3D" parent="HandR" unique_id=594915753 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.99945086, -0.03313624, 0, 0.03313624, 0.99945086, 0, 0, 0, 1, -0.025543135, 0.09672184, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(33, -4)
+FrontBackOrder = Vector2i(35, -4)
 SortOrder = 3
 Order = true
 SpriteGroup = &"Hand"
 SpriteName = &"FingerUp"
 Puppet = NodePath("../..")
 
-[node name="Index" type="Node3D" parent="HandR" unique_id=178569549 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="Index" type="Node3D" parent="HandR" unique_id=1222394642 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.990542, -0.13720995, 0, 0.13720995, 0.990542, 0, 0, 0, 1, -0.07030622, 0.08620003, 0)
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(34, -3)
+FrontBackOrder = Vector2i(36, -3)
 SortOrder = 3
 Order = true
 SpriteGroup = &"Hand"
 SpriteName = &"FingerUp"
 Puppet = NodePath("../..")
 
-[node name="ThumbDown" type="Node3D" parent="HandR" unique_id=1893029917 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="ThumbDown" type="Node3D" parent="HandR" unique_id=1598107965 node_paths=PackedStringArray("Sprite", "Puppet")]
 transform = Transform3D(0.9985124, -0.05452562, 0, 0.05452562, 0.9985124, 0, 0, 0, 1, -0.105274774, 0.03585054, 0)
 visible = false
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(35, -2)
+FrontBackOrder = Vector2i(37, -2)
 SortOrder = 3
 Order = true
 SpriteGroup = &"Hand"
 SpriteName = &"ThumbDown"
 Puppet = NodePath("../..")
 
-[node name="PalmFront" type="Node3D" parent="HandR" unique_id=1263538225 node_paths=PackedStringArray("Sprite", "Puppet")]
+[node name="PalmFront" type="Node3D" parent="HandR" unique_id=1057722598 node_paths=PackedStringArray("Sprite", "Puppet")]
 visible = false
 script = ExtResource("5_stc45")
 Sprite = NodePath("Sprite")
-FrontBackOrder = Vector2i(36, -1)
+FrontBackOrder = Vector2i(38, -1)
 SortOrder = 3
 Order = true
 SpriteGroup = &"Hand"
 SpriteName = &"Palm"
 Puppet = NodePath("../..")
 
-[node name="HandControl" type="Node" parent="HandR" unique_id=1239280596]
+[node name="HandControl" type="Node" parent="HandR" unique_id=1414331996]
 script = ExtResource("9_56q1y")
 RightHand = true
 UpperArmPath = NodePath("../../Upper/UpperArmR")
@@ -579,3 +615,12 @@ Poses = ExtResource("10_sddgr")
 SelectedPose = &"Open"
 PoseDropdown = &"Open"
 metadata/_custom_type_script = "uid://bvei2omffd38e"
+
+[node name="ClothingController" type="Node" parent="." unique_id=955849991]
+script = ExtResource("22_y062l")
+NodeMap = Dictionary[StringName, Object]({
+&"Lower": SubResource("Resource_ol7xt"),
+&"Upper": SubResource("Resource_ts6ap")
+})
+Mode3D = true
+TestBodyPart = &""

@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using System.IO;
 using System.Linq;
 
 namespace ImpishPuppets;
@@ -113,5 +114,73 @@ public partial class SpriteSheet: TileSet
         }
 
         ResourceSaver.Save(this);
+    }
+
+    [ExportToolButton("Bake Texture")]
+    public Callable BackTexturesCallable => Callable.From(BakeTextures);
+    private void BakeTextures()
+    {
+        foreach(var tex in Textures)
+        {
+            var bakedImg = MakeBakedTexture(tex);
+            var path = ProjectSettings.GlobalizePath(tex.ResourcePath);
+            bakedImg.SavePng(Path.GetDirectoryName(path) + "\\" + Path.GetFileNameWithoutExtension(path) + "_baked.png");
+
+            EditorInterface.Singleton.GetResourceFilesystem().Scan();
+        }
+    }
+
+    private Image MakeBakedTexture(Texture2D tex, int upscale = 2)
+    {
+        Color CompareColor(Color color)
+        {
+            const float AlphaThreshhold = 0.5f;
+            const float BlackThreshhold = 0.33f;
+
+            if(color.A < AlphaThreshhold)
+                return new Color(0, 0, 0, 0);
+
+            int choice = 1;
+            float max = color[0];
+            if(color[1] > max)
+            {
+                choice = 2;
+                max = color[1];
+            }
+            if(color[2] > max)
+            {
+                choice = 3;
+                max = color[2];
+            }
+            if(max < BlackThreshhold)
+            {
+                choice = 0;
+            }
+            return choice switch
+            {
+                1 => new(1, 0, 0, 1),
+                2 => new(0, 1, 0, 1),
+                3 => new(0, 0, 1, 1),
+                _ => new(0, 0, 0, 1),
+            };
+        }
+
+        var img = tex.GetImage();
+        var size = img.GetSize()*upscale;
+        img.Resize(size.X, size.Y, Image.Interpolation.Bilinear);
+        for(int x = 0; x < size.X; ++x)
+        {
+            for(int y = 0; y < size.Y; ++y)
+            {
+                var pix = img.GetPixel(x, y);
+                img.SetPixel(x, y, CompareColor(pix));
+            }
+        }
+        return img;
+    }
+
+    private void MakeNormalTexture()
+    {
+        
     }
 }

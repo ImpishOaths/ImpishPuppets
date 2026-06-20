@@ -14,13 +14,29 @@
 [ext_resource type="Script" uid="uid://bvei2omffd38e" path="res://addons/ImpishPuppets/Controllers/Limbs/HandControl.cs" id="10_ux765"]
 [ext_resource type="Script" uid="uid://7de6awe3bi2m" path="res://addons/ImpishPuppets/Controllers/Limbs/FootControl.cs" id="10_vawqv"]
 [ext_resource type="Resource" uid="uid://dqtgtepl6wkfp" path="res://addons/ImpishPuppets/Controllers/Limbs/Hands.tres" id="11_cjmyk"]
+[ext_resource type="TileSet" uid="uid://lhyaebudj43s" path="res://Clothing/Toga/TogaSprites.tres" id="12_2epkj"]
 [ext_resource type="Material" uid="uid://s3j1rmk703tx" path="res://addons/ImpishPuppets/Puppet2D/CustomMaterial2D.tres" id="12_hsbod"]
+[ext_resource type="Material" uid="uid://dcqeec5e7gv0h" path="res://Clothing/Toga/TogaMaterial2D.tres" id="12_vsn7y"]
 [ext_resource type="Script" uid="uid://v5mvt0aoasl6" path="res://addons/ImpishPuppets/Puppet2D/CustomPuppetBone2D.cs" id="13_6y5pn"]
 [ext_resource type="TileSet" uid="uid://ctnkxfrf7uy77" path="res://addons/ImpishPuppets/Shared/ExpressionSheet.tres" id="14_fpg1d"]
+[ext_resource type="Material" uid="uid://bhcf42quwxu55" path="res://Clothing/Toga/TogaMaterial3D.tres" id="14_kh3vl"]
 [ext_resource type="Material" uid="uid://wke243fvehrx" path="res://addons/ImpishPuppets/Shared/Expressions3D.tres" id="15_8ltii"]
 [ext_resource type="Resource" uid="uid://wme1dvvhgsqa" path="res://addons/ImpishPuppets/Controllers/Face/Expressions.tres" id="17_6y5pn"]
 [ext_resource type="Script" uid="uid://c2i8tpm2x6em1" path="res://addons/ImpishPuppets/Shared/DepthSwapper.cs" id="18_6y5pn"]
 [ext_resource type="Resource" uid="uid://37pfhbpwjjp8" path="res://addons/ImpishPuppets/Controllers/Face/Eyes.tres" id="19_8ltii"]
+[ext_resource type="Script" uid="uid://c3fa35atmykfq" path="res://addons/ImpishPuppets/Controllers/Clothing/ClothingController.cs" id="23_yjboh"]
+[ext_resource type="Script" uid="uid://vei4ktdel8l6" path="res://addons/ImpishPuppets/Controllers/Clothing/NodeList.cs" id="24_vsn7y"]
+[ext_resource type="Resource" uid="uid://7arcnl23327s" path="res://Clothing/Toga/TogaClothes.tres" id="25_kh3vl"]
+
+[sub_resource type="Resource" id="Resource_ol7xt"]
+script = ExtResource("24_vsn7y")
+Nodes = Array[String](["Lower/LowerClothes"])
+metadata/_custom_type_script = "uid://vei4ktdel8l6"
+
+[sub_resource type="Resource" id="Resource_ts6ap"]
+script = ExtResource("24_vsn7y")
+Nodes = Array[String](["Upper/UpperClothes"])
+metadata/_custom_type_script = "uid://vei4ktdel8l6"
 
 [node name="Puppet" type="Node2D" unique_id=255594330 node_paths=PackedStringArray("Puppet")]
 material = ExtResource("1_n5rw6")
@@ -159,6 +175,25 @@ AngleNudge = -0.1
 LockAngleSign = 1.0
 metadata/_custom_type_script = "uid://cs4bqyhnd7q6m"
 
+[node name="LowerClothes" type="Node2D" parent="Lower" unique_id=1419215406 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("12_vsn7y")
+script = ExtResource("13_6y5pn")
+Sheet = ExtResource("12_2epkj")
+Material2D = ExtResource("12_vsn7y")
+Material3D = ExtResource("14_kh3vl")
+Color1 = Color(0, 0, 0, 1)
+Color2 = Color(0, 0, 0, 1)
+Color3 = Color(0, 0, 0, 1)
+SpriteGroupDropdown = &"Lower"
+SpriteNameDropdown = &"Lower"
+SpriteOffset = Vector2(0.275, -6.4)
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Lower"
+SpriteName = &"Lower"
+Puppet = NodePath("../..")
+metadata/_custom_type_script = "uid://v5mvt0aoasl6"
+
 [node name="Upper" type="Node2D" parent="." unique_id=1060946086 node_paths=PackedStringArray("Puppet")]
 use_parent_material = true
 position = Vector2(0, -48.107)
@@ -284,6 +319,25 @@ Length = 12.0
 AngleNudge = 0.1
 LockAngleSign = -1.0
 metadata/_custom_type_script = "uid://cs4bqyhnd7q6m"
+
+[node name="UpperClothes" type="Node2D" parent="Upper" unique_id=951954384 node_paths=PackedStringArray("Sprite", "Puppet")]
+z_index = 1
+material = ExtResource("12_vsn7y")
+script = ExtResource("13_6y5pn")
+Sheet = ExtResource("12_2epkj")
+Material2D = ExtResource("12_vsn7y")
+Material3D = ExtResource("14_kh3vl")
+Color1 = Color(0, 0, 0, 1)
+Color2 = Color(0, 0, 0, 1)
+Color3 = Color(0, 0, 0, 1)
+SpriteGroupDropdown = &"Upper"
+SpriteNameDropdown = &"Upper"
+SpriteOffset = Vector2(-1.545, -7.67)
+Sprite = NodePath("Sprite")
+SpriteGroup = &"Upper"
+SpriteName = &"Upper"
+Puppet = NodePath("../..")
+metadata/_custom_type_script = "uid://v5mvt0aoasl6"
 
 [node name="Head" type="Node2D" parent="." unique_id=1057896294 node_paths=PackedStringArray("Puppet")]
 use_parent_material = true
@@ -508,6 +562,10 @@ UpperLegPath = NodePath("../../Lower/UpperLegR")
 LowerLegPath = NodePath("../../Lower/LowerLegR")
 RightFoot = true
 PoseDropdown = "Right"
+
+[node name="LowerClothes" type="Node" parent="." unique_id=161621835]
+script = ExtResource("18_6y5pn")
+SwapPath = "Lower/LowerClothes"
 
 [node name="HandL" type="Node2D" parent="." unique_id=1921299967 node_paths=PackedStringArray("Puppet")]
 use_parent_material = true
@@ -824,3 +882,13 @@ Poses = ExtResource("11_cjmyk")
 SelectedPose = &"Open"
 PoseDropdown = &"Open"
 metadata/_custom_type_script = "uid://bvei2omffd38e"
+
+[node name="ClothingController" type="Node" parent="." unique_id=1881358436]
+script = ExtResource("23_yjboh")
+NodeMap = Dictionary[StringName, Object]({
+&"Lower": SubResource("Resource_ol7xt"),
+&"Upper": SubResource("Resource_ts6ap")
+})
+TestBodyPart = &"Upper"
+TestClothing = ExtResource("25_kh3vl")
+metadata/_custom_type_script = "uid://c3fa35atmykfq"

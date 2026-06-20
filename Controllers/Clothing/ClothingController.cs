@@ -35,7 +35,6 @@ public partial class ClothingController: Node, Puppet2Dto3DConverter
                 var bone = parent.GetNodeOrNull<CustomPuppetBone3D>(path);
                 if(bone == null)
                     continue;
-                GD.Print("hi");
                 if(clothes != null)
                     Attach3D(bone, clothes);
                 else
