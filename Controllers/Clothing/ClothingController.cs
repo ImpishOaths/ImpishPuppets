@@ -72,6 +72,7 @@ public partial class ClothingController: Node, Puppet2Dto3DConverter
         bone.UseCustomMaterial = false;
         bone.UpdateLook();
         bone.Visible = false;
+        bone.Material = null;
     }
 
     private void Attach3D(CustomPuppetBone3D bone, ClothingObject clothing)

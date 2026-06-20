@@ -15,7 +15,6 @@
 [ext_resource type="Script" uid="uid://7de6awe3bi2m" path="res://addons/ImpishPuppets/Controllers/Limbs/FootControl.cs" id="10_vawqv"]
 [ext_resource type="Resource" uid="uid://dqtgtepl6wkfp" path="res://addons/ImpishPuppets/Controllers/Limbs/Hands.tres" id="11_cjmyk"]
 [ext_resource type="Material" uid="uid://s3j1rmk703tx" path="res://addons/ImpishPuppets/Puppet2D/CustomMaterial2D.tres" id="12_hsbod"]
-[ext_resource type="Material" uid="uid://dcqeec5e7gv0h" path="res://Clothing/Toga/TogaMaterial2D.tres" id="12_vsn7y"]
 [ext_resource type="Script" uid="uid://v5mvt0aoasl6" path="res://addons/ImpishPuppets/Puppet2D/CustomPuppetBone2D.cs" id="13_6y5pn"]
 [ext_resource type="TileSet" uid="uid://ctnkxfrf7uy77" path="res://addons/ImpishPuppets/Shared/ExpressionSheet.tres" id="14_fpg1d"]
 [ext_resource type="Material" uid="uid://wke243fvehrx" path="res://addons/ImpishPuppets/Shared/Expressions3D.tres" id="15_8ltii"]
@@ -175,7 +174,6 @@ metadata/_custom_type_script = "uid://cs4bqyhnd7q6m"
 [node name="LowerClothes" type="Node2D" parent="Lower" unique_id=1419215406 node_paths=PackedStringArray("Sprite", "Puppet")]
 visible = false
 z_index = 1
-material = ExtResource("12_vsn7y")
 script = ExtResource("13_6y5pn")
 Color1 = Color(0, 0, 0, 1)
 Color2 = Color(0, 0, 0, 1)
@@ -315,7 +313,6 @@ metadata/_custom_type_script = "uid://cs4bqyhnd7q6m"
 [node name="UpperClothes" type="Node2D" parent="Upper" unique_id=951954384 node_paths=PackedStringArray("Sprite", "Puppet")]
 visible = false
 z_index = 1
-material = ExtResource("12_vsn7y")
 script = ExtResource("13_6y5pn")
 Color1 = Color(0, 0, 0, 1)
 Color2 = Color(0, 0, 0, 1)
@@ -466,12 +463,12 @@ ExpressionList = ExtResource("17_6y5pn")
 EyesList = ExtResource("19_8ltii")
 EyeL = &"Forward"
 EyeR = &"Forward"
-EyebrowL = &"Flat"
-EyebrowR = &"Flat"
+EyebrowL = null
+EyebrowR = null
 Expression = &"None"
-BothEyebrows = &"Flat"
+BothEyebrows = null
 BothEyes = &"Forward"
-Mouth = &"Smile"
+Mouth = null
 metadata/_custom_type_script = "uid://cp0duot1dk6ar"
 
 [node name="FootL" type="Node2D" parent="." unique_id=104345523 node_paths=PackedStringArray("Puppet")]
